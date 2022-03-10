@@ -156,7 +156,7 @@ Output should give :
 
 You can notice that the instruction will store the address of the caller into the traces storage
 
-## Step 4 : Configure your testnet local environment
+## Step 5 : Configure your testnet local environment
 
 Choose a testnet to deploy
 
@@ -189,7 +189,7 @@ tezos-client get balance for <ACCOUNT_KEY_NAME>
 
 :rocket: You are ready to go :sunglasses: 
 
-## Step 5 : Deploy to testnet
+## Step 6 : Deploy to testnet
 
 Use the tezos-client to deploy the contract
 
