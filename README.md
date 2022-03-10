@@ -12,6 +12,9 @@ Training dapp n°1
 :::info
 :bulb: **Github repository :** get the complete solution [here](https://github.com/marigold-dev/training-dapp-1.git)
 :::
+:::info
+:bulb: **Hackmd original page** [here](https://hackmd.io/sJ2WKZlIRvO58w-YV1jf9A?view)
+:::
 
 # :point_up:  Poke game
 
