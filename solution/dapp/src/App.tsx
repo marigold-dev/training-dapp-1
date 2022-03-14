@@ -62,7 +62,9 @@ function App() {
     <br />
     <div>
     <button onClick={fetchContracts}>Fetch contracts</button>
-    {contracts.map((contract) => <div>{contract.address} (poke guyz:{contract.storage.join(",")})<button onClick={() =>poke(contract)}>Poke</button></div>)}
+    <table><thead><tr><th>address</th><th>people</th><th>action</th></tr></thead><tbody>
+    {contracts.map((contract) => <tr><td style={{borderStyle: "dotted"}}>{contract.address}</td><td style={{borderStyle: "dotted"}}>{contract.storage.join(", ")}</td><td style={{borderStyle: "dotted"}}><button onClick={() =>poke(contract)}>Poke</button></td></tr>)}
+    </tbody></table>
     </div>
     </p>
     

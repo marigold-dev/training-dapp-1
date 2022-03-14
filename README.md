@@ -44,7 +44,7 @@ Please install this software first :
 - [ ] [npm](https://nodejs.org/en/download/)
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 - [ ] [ligo](https://ligolang.org/docs/intro/installation/)
-- [ ] [tezos-client](https://tezos.gitlab.io/introduction/howtoget.html)
+- [ ] [tezos-client (method 1)](https://tezos.gitlab.io/introduction/howtoget.html) or [tezos-client (method 2)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install)
 - [ ] [Temple wallet on browser](https://templewallet.com/)
 
 # :scroll: Smart contract
@@ -449,9 +449,17 @@ Save both file, the dev server should refresh the page
 
 ![](https://hackmd.io/_uploads/ryAnV4Pbq.png)
 
-Click on Connect button
+> Note on Temple wallet configuration :
+> Go to your browser plugin and import an account 
+> ![](https://hackmd.io/_uploads/ByVDnFnb5.png)
+> Choose the private key, copy/paste that is located here : ~/.tezos-client/secret_keys 
+> ![](https://hackmd.io/_uploads/Byv33Y3b5.png)
 
-On the popup, select your Temple wallet, then your account and connect
+
+
+Once Temple is configured well, Click on Connect button
+
+On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "Hangzhounet" testnet
 
 ![](https://hackmd.io/_uploads/ryn-HVw-9.png)
 
@@ -550,13 +558,17 @@ To verify that on the page, we can display the list of poke guyz directly on the
 Replace again the html contracts line by this one
 
 ```html
-{contracts.map((contract) => <div>{contract.address} (poke guyz:{contract.storage.join(",")})<button onClick={() =>poke(contract)}>Poke</button></div>)}
+<table><thead><tr><th>address</th><th>people</th><th>action</th></tr></thead><tbody>
+    {contracts.map((contract) => <tr><td style={{borderStyle: "dotted"}}>{contract.address}</td><td style={{borderStyle: "dotted"}}>{contract.storage.join(", ")}</td><td style={{borderStyle: "dotted"}}><button onClick={() =>poke(contract)}>Poke</button></td></tr>)}
+    </tbody></table>
 ```
 
-Contracts are displaying its poke guyz set now 
+Contracts are displaying its people now 
 
-![](https://hackmd.io/_uploads/B1_PaBwWq.png)
+![](https://hackmd.io/_uploads/HywGr92b9.png)
 
+> :information_source: Wait around few second for blockchain confirmation and click on "fetch contracts" to refresh the list
+ 
 :confetti_ball: Congratulation, you have completed this first dapp training 
 
 # :beach_with_umbrella: Conclusion
