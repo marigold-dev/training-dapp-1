@@ -18,6 +18,8 @@ Training dapp n°1
 
 # :point_up:  Poke game
 
+> dapp : A decentralized application (dApp) is a type of distributed open source software application that runs on a peer-to-peer (P2P) blockchain network rather than on a single computer. DApps are visibly similar to other software applications that are supported on a website or mobile device but are P2P supported
+
 Goal of this training is to develop a poke game with smart contract. You will learn : 
 - create a smart contract in jsligo
 - deploy smart contract
@@ -40,12 +42,12 @@ SM->User:
 
 Please install this software first : 
 
-- [ ] [VS Code](https://code.visualstudio.com/download)
-- [ ] [npm](https://nodejs.org/en/download/)
-- [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
-- [ ] [ligo](https://ligolang.org/docs/intro/installation/)
-- [ ] [tezos-client (method 1)](https://tezos.gitlab.io/introduction/howtoget.html) or [tezos-client (method 2)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install)
-- [ ] [Temple wallet on browser](https://templewallet.com/)
+- [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
+- [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
+- [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another
+- [ ] [ligo](https://ligolang.org/docs/intro/installation/) : high level language that's transpile to michelson low level language and provide lot of development support for Tezos
+- [ ] [tezos-client (method 1)](https://tezos.gitlab.io/introduction/howtoget.html) or [tezos-client (method 2)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install) : the Tezos CLI
+- [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet as browser plugin 
 
 # :scroll: Smart contract
 
@@ -165,12 +167,14 @@ Choose a testnet to deploy
 
 For hangzhounet :
 ```
-tezos-client --endpoint https://hangzhounet.api.tez.ie config update
+tezos-client --endpoint https://hangzhounet.tezos.marigold.dev config update
 ```
 
-You will need an implicit account on your local wallet and get free Tz from a [faucet](https://teztnets.xyz/)
+You will need an implicit account on your local wallet and get free Tz from a [faucet] and download the .json file locally (https://teztnets.xyz/)
 
 > Doc : https://tezos.gitlab.io/introduction/howtouse.html#get-free-tez
+
+Replace <ACCOUNT_KEY_NAME> by account key of your choice : 
 
 ```
 tezos-client activate account <ACCOUNT_KEY_NAME> with "tz1__xxxxxxxxx__.json"
@@ -197,7 +201,7 @@ tezos-client get balance for <ACCOUNT_KEY_NAME>
 Use the tezos-client to deploy the contract
 
 ```
-tezos-client originate contract oracle transferring 0 from <ACCOUNT_KEY_NAME> running pokeGame.tz --init "$(cat pokeGameStorage.tz)" --burn-cap 1
+tezos-client originate contract mycontract transferring 0 from <ACCOUNT_KEY_NAME> running pokeGame.tz --init "$(cat pokeGameStorage.tz)" --burn-cap 1
 ```
 
 Verify the output. a successful output display the address of the new created smart contract on the testnet
@@ -209,13 +213,13 @@ New contract KT1M1sXXUYdLvow9J4tYcDDrYa6aKn3k1NT9 originated.
 Interact now with it, poke it ! :face_with_hand_over_mouth: 
 
 ```
-tezos-client transfer 0 from <ACCOUNT_KEY_NAME> to KT1M1sXXUYdLvow9J4tYcDDrYa6aKn3k1NT9  --burn-cap 0.01 
+tezos-client transfer 0 from <ACCOUNT_KEY_NAME> to mycontract --burn-cap 0.01 
 ```
 
 Check that your address is registered on the storage
 
 ```
-tezos-client get contract storage for KT1M1sXXUYdLvow9J4tYcDDrYa6aKn3k1NT9
+tezos-client get contract storage for mycontract 
 ```
 
 HOORAY :confetti_ball: your smart contract is ready !
@@ -307,7 +311,7 @@ function App() {
 export default App;
 ```
 
-Let's create the 2 missing component files and put code in it
+Let's create the 2 missing src component files and put code in it
 
 ```
 touch ConnectWallet.tsx
