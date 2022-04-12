@@ -26,8 +26,7 @@ Poke sequence diagram
 sequenceDiagram
   Note left of User: Prepare poke
   User->>SM: poke owner
-  Note right of SM: store poke trace
-  SM->>User: 
+  Note right of SM: store poke trace 
 ```
 
 # :memo: Prerequisites
