@@ -25,9 +25,9 @@ Poke sequence diagram
 ```mermaid
 sequenceDiagram
   Note left of User: Prepare poke
-  User->SM: poke owner
+  User->>SM: poke owner
   Note right of SM: store poke trace
-  SM->User: 
+  SM->>User: 
 ```
 
 # :memo: Prerequisites
