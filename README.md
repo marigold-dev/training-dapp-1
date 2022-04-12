@@ -7,15 +7,6 @@ description: Training n°1 for decentralized application
 Training dapp n°1
 ===
 
-[ToC]
-
-:::info
-:bulb: **Github repository :** get the complete solution [here](https://github.com/marigold-dev/training-dapp-1.git)
-:::
-:::info
-:bulb: **Hackmd original page** [here](https://hackmd.io/sJ2WKZlIRvO58w-YV1jf9A?view)
-:::
-
 # :point_up:  Poke game
 
 > dapp : A decentralized application (dApp) is a type of distributed open source software application that runs on a peer-to-peer (P2P) blockchain network rather than on a single computer. DApps are visibly similar to other software applications that are supported on a website or mobile device but are P2P supported
@@ -31,7 +22,7 @@ Goal of this training is to develop a poke game with smart contract. You will le
 The game consists on poking the owner of a smart contract.  The smartcontract keeps a track of user interactions on the storage 
 
 Poke sequence diagram
-```sequence
+```mermaid
 Note left of User: Prepare poke
 User->SM: poke owner
 Note right of SM: store poke trace
