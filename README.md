@@ -441,10 +441,13 @@ Save both file, the dev server should refresh the page
 
 ![](doc/connect.png)
 
-> Note on Temple wallet configuration :
+> Note on Temple wallet configuration
 > Go to your browser plugin and import an account 
 > ![](doc/importaccount.png)
-> Choose the private key, copy/paste that is located here : ~/.tezos-client/secret_keys 
+
+Choose the private key, copy/paste that is located 
+here : ~/.tezos-client/secret_keys 
+
 > ![](doc/privatekey.png)
 
 
