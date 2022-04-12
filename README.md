@@ -17,16 +17,17 @@ Goal of this training is to develop a poke game with smart contract. You will le
 - create a dapp using taquito and interact with browser wallet
 - use an indexer
 
-> :warning: This is not an HTML or REACT training, I will avoid asmuch of possible any complexity relative to these technologies 
+> :warning: This is not an HTML or REACT training, I will avoid as much of possible any complexity relative to these technologies 
 
 The game consists on poking the owner of a smart contract.  The smartcontract keeps a track of user interactions on the storage 
 
 Poke sequence diagram
 ```mermaid
-Note left of User: Prepare poke
-User->SM: poke owner
-Note right of SM: store poke trace
-SM->User: 
+sequenceDiagram
+  Note left of User: Prepare poke
+  User->SM: poke owner
+  Note right of SM: store poke trace
+  SM->User: 
 ```
 
 # :memo: Prerequisites
