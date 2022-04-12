@@ -53,7 +53,7 @@ touch ./smartcontract/pokeGame.jsligo
 
 Add a main function
 
-```javascript=
+```javascript
 type storage = unit;
 
 type parameter =
@@ -133,7 +133,7 @@ ligo compile contract ./smartcontract/pokeGame.jsligo --output-file pokeGame.tz
 
 Compile an initial storage (to pass later during deployment too)
 
-```
+```bash
 ligo compile storage ./smartcontract/pokeGame.jsligo 'Set.empty as set<address>' --output-file pokeGameStorage.tz --entry-point main
 ```
 
@@ -145,7 +145,7 @@ ligo run dry-run ./smartcontract/pokeGame.jsligo 'Poke()' 'Set.empty as set<addr
 
 Output should give : 
 
-```ocaml=
+```ocaml
 ( LIST_EMPTY() ,
   SET_ADD(@"tz1QL8xpMA9JwtUYXXwB6qnJTk8pkEakHpT4" , SET_EMPTY()) )
 ```
@@ -157,7 +157,7 @@ You can notice that the instruction will store the address of the caller into th
 Choose a testnet to deploy
 
 For hangzhounet :
-```
+```bash
 tezos-client --endpoint https://hangzhounet.tezos.marigold.dev config update
 ```
 
@@ -167,13 +167,13 @@ You will need an implicit account on your local wallet and get free Tz from a [f
 
 Replace <ACCOUNT_KEY_NAME> by account key of your choice : 
 
-```
+```bash
 tezos-client activate account <ACCOUNT_KEY_NAME> with "tz1__xxxxxxxxx__.json"
 ```
 
 List all local accounts :
 
-```
+```bash
 tezos-client list known addresses
 ```
 
@@ -181,7 +181,7 @@ Your account should appear on the list now
 
 Check your balance
 
-```
+```bash
 tezos-client get balance for <ACCOUNT_KEY_NAME>
 ```
 
@@ -191,32 +191,29 @@ tezos-client get balance for <ACCOUNT_KEY_NAME>
 
 Use the tezos-client to deploy the contract
 
-```
+```bash
 tezos-client originate contract mycontract transferring 0 from <ACCOUNT_KEY_NAME> running pokeGame.tz --init "$(cat pokeGameStorage.tz)" --burn-cap 1
 ```
 
 Verify the output. a successful output display the address of the new created smart contract on the testnet
 
-```
+```bash
 New contract KT1M1sXXUYdLvow9J4tYcDDrYa6aKn3k1NT9 originated.
 ```
 
-Interact now with it, poke it ! :face_with_hand_over_mouth: 
+Interact now with it, poke it ! :laughing:
 
-```
+```bash
 tezos-client transfer 0 from <ACCOUNT_KEY_NAME> to mycontract --burn-cap 0.01 
 ```
 
 Check that your address is registered on the storage
 
-```
+```bash
 tezos-client get contract storage for mycontract 
 ```
 
 HOORAY :confetti_ball: your smart contract is ready !
-
-
-
 
 
 # :construction_worker:  Dapp 
@@ -231,7 +228,7 @@ cd dapp
 
 Add taquito, tzkt indexer lib
 
-```
+```bash
 yarn add @taquito/taquito @taquito/beacon-wallet
 yarn add @dipdup/tzkt-api
 ```
@@ -241,7 +238,7 @@ yarn add @dipdup/tzkt-api
 
 Start the dev server
 
-```
+```bash
 yarn run start
 ```
 
@@ -304,7 +301,7 @@ export default App;
 
 Let's create the 2 missing src component files and put code in it
 
-```
+```bash
 touch ConnectWallet.tsx
 touch DisconnectWallet.tsx
 ```
@@ -442,13 +439,13 @@ export default DisconnectButton;
 
 Save both file, the dev server should refresh the page
 
-![](https://hackmd.io/_uploads/ryAnV4Pbq.png)
+![](doc/connect.png)
 
 > Note on Temple wallet configuration :
 > Go to your browser plugin and import an account 
-> ![](https://hackmd.io/_uploads/ByVDnFnb5.png)
+> ![](doc/importaccount.png)
 > Choose the private key, copy/paste that is located here : ~/.tezos-client/secret_keys 
-> ![](https://hackmd.io/_uploads/Byv33Y3b5.png)
+> ![](doc/privatekey.png)
 
 
 
@@ -456,7 +453,7 @@ Once Temple is configured well, Click on Connect button
 
 On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "Hangzhounet" testnet
 
-![](https://hackmd.io/_uploads/ryn-HVw-9.png)
+![](doc/logged.png)
 
 :confetti_ball: your are *"logged"*
 
@@ -469,7 +466,7 @@ Instead of querying heavily the rpc node to search where is located your contrac
 
 Add the library
 
-```
+```bash
 yarn add @dipdup/tzkt-api
 ```
 
@@ -505,7 +502,7 @@ On the return 'html templating' section, add this after the display of the user 
 ```
 Save your file and go to the browser. click on Fetch button
 
-![](https://hackmd.io/_uploads/H1oU34Pbc.png)
+![](doc/deployedcontracts.png)
 
 :confetti_ball:  Congrats ! you are able to list all similar deployed contracts
 
@@ -542,7 +539,7 @@ Then replace the line displaying the contract address by this one that will add 
 
 Save and see the page refreshed, then click on Poke button
 
-![](https://hackmd.io/_uploads/ryk3qSv-5.png)
+![](doc/pokecontracts.png)
 
 :confetti_ball:  If you have enough Tz on your wallet for the gas, then it should have successfully call the contract and added you to the list of poke guyz
 
@@ -560,18 +557,16 @@ Replace again the html contracts line by this one
 
 Contracts are displaying its people now 
 
-![](https://hackmd.io/_uploads/HywGr92b9.png)
+![](doc/table.png)
 
 > :information_source: Wait around few second for blockchain confirmation and click on "fetch contracts" to refresh the list
  
 :confetti_ball: Congratulation, you have completed this first dapp training 
 
-# :beach_with_umbrella: Conclusion
+# :palm_tree: Conclusion :sun_with_face:
 
 Now, you are able to create any Smart Contract using Ligo and build a Dapp via Taquito to interact with it
 
 On next training, you will learn how to call a Smart contract inside a Smart Contract and use the callback, write unit test, etc ...
 
 [:arrow_right: NEXT](https://hackmd.io/8N_Efu5VQWiVbehy9H18Xw)
-
-
