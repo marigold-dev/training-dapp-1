@@ -33,8 +33,8 @@ const ConnectButton = ({
       if(!wallet) await createWallet();
       await wallet.requestPermissions({
         network: {
-          type: NetworkType.HANGZHOUNET,
-          rpcUrl: "https://hangzhounet.tezos.marigold.dev"
+          type: NetworkType.ITHACANET,
+          rpcUrl: "https://ithacanet.tezos.marigold.dev"
         }
       });
       // gets user's address
@@ -50,7 +50,7 @@ const ConnectButton = ({
     if(!wallet){
       wallet = new BeaconWallet({
       name: "training",
-      preferredNetwork: NetworkType.HANGZHOUNET
+      preferredNetwork: NetworkType.ITHACANET
     });}
     Tezos.setWalletProvider(wallet);
     setWallet(wallet);

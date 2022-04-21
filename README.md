@@ -158,9 +158,9 @@ You can notice that the instruction will store the address of the caller into th
 
 Choose a testnet to deploy
 
-For hangzhounet :
+For ithacanet :
 ```bash
-tezos-client --endpoint https://hangzhounet.tezos.marigold.dev config update
+tezos-client --endpoint https://ithacanet.tezos.marigold.dev config update
 ```
 
 You will need an implicit account on your local wallet and get free Tz from a [faucet] and download the .json file locally (https://teztnets.xyz/)
@@ -262,7 +262,7 @@ import DisconnectButton from './DisconnectWallet';
 
 function App() {
 
-  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://hangzhounet.tezos.marigold.dev"));
+  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://ithacanet.tezos.marigold.dev"));
   const [wallet, setWallet] = useState<any>(null);
   const [userAddress, setUserAddress] = useState<string>("");
   const [userBalance, setUserBalance] = useState<number>(0);
@@ -348,8 +348,8 @@ const ConnectButton = ({
       if(!wallet) await createWallet();
       await wallet.requestPermissions({
         network: {
-          type: NetworkType.HANGZHOUNET,
-          rpcUrl: "https://hangzhounet.tezos.marigold.dev"
+          type: NetworkType.ITHACANET,
+          rpcUrl: "https://ithacanet.tezos.marigold.dev"
         }
       });
       // gets user's address
@@ -365,7 +365,7 @@ const ConnectButton = ({
     if(!wallet){
       wallet = new BeaconWallet({
       name: "training",
-      preferredNetwork: NetworkType.HANGZHOUNET
+      preferredNetwork: NetworkType.ITHACANET
     });}
     Tezos.setWalletProvider(wallet);
     setWallet(wallet);
@@ -456,7 +456,7 @@ here : ~/.tezos-client/secret_keys
 
 Once Temple is configured well, Click on Connect button
 
-On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "Hangzhounet" testnet
+On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "Ithacanet" testnet
 
 ![](doc/logged.png)
 
@@ -486,7 +486,7 @@ import { Contract, ContractsService } from '@dipdup/tzkt-api';
 Before the return , add this section for the fetch
 
 ```typescript
-  const contractsService = new ContractsService( {baseUrl: "https://api.hangzhounet.tzkt.io" , version : "", withCredentials : false});
+  const contractsService = new ContractsService( {baseUrl: "https://api.ithacanet.tzkt.io" , version : "", withCredentials : false});
   const [contracts, setContracts] = useState<Array<Contract>>([]);
 
   const fetchContracts = () => {
