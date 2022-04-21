@@ -31,7 +31,7 @@ sequenceDiagram
 
 # :memo: Prerequisites
 
-Please install this software first : 
+Please install this software first on your machine or use online alternative : 
 
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
@@ -39,6 +39,8 @@ Please install this software first :
 - [ ] [ligo](https://ligolang.org/docs/intro/installation/) : high level language that's transpile to michelson low level language and provide lot of development support for Tezos
 - [ ] [tezos-client (method 1)](https://tezos.gitlab.io/introduction/howtoget.html) or [tezos-client (method 2)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install) : the Tezos CLI
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet as browser plugin 
+
+Alternative using GitPod : https://gitpod.io/#https://gitlab.com/ligolang/template-ligo (setup may take several minutes the first time)
 
 # :scroll: Smart contract
 
@@ -572,4 +574,4 @@ Now, you are able to create any Smart Contract using Ligo and build a Dapp via T
 
 On next training, you will learn how to call a Smart contract inside a Smart Contract and use the callback, write unit test, etc ...
 
-[:arrow_right: NEXT](https://hackmd.io/8N_Efu5VQWiVbehy9H18Xw)
+[:arrow_right: NEXT (Coming soon)](https://github.com/marigold-dev/training-dapp-2)
