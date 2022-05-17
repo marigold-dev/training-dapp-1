@@ -18,7 +18,7 @@ function App() {
   
   const fetchContracts = () => {
     (async () => {
-      setContracts((await contractsService.getSimilar({address:"KT1BkWWo82kbf2hmz6wWKLvAYzEmhuvfzEGe" , includeStorage:true, sort:{desc:"id"}})));
+      setContracts((await contractsService.getSimilar({address:"KT1Kmtf6JrVGipKtobAbzQkJyrGujXxiY9pX" , includeStorage:true, sort:{desc:"id"}})));
     })();
   }
   
@@ -56,7 +56,7 @@ function App() {
     />
     
     <div>
-    I am {userAddress} with {userBalance} Tz
+    I am {userAddress} with {userBalance} mutez
     </div>
     
     <br />
