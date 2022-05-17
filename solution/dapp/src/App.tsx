@@ -18,7 +18,7 @@ function App() {
   
   const fetchContracts = () => {
     (async () => {
-      setContracts((await contractsService.getSimilar({address:"KT1M1sXXUYdLvow9J4tYcDDrYa6aKn3k1NT9" , includeStorage:true, sort:{desc:"id"}})));
+      setContracts((await contractsService.getSimilar({address:"KT1BkWWo82kbf2hmz6wWKLvAYzEmhuvfzEGe" , includeStorage:true, sort:{desc:"id"}})));
     })();
   }
   
