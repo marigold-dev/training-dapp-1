@@ -63,7 +63,7 @@ type parameter =
 
 type return_ = [list<operation>, storage];
 
-let main = ([action, store] : [parameter, storage]) : return_ => {
+const main = ([action, store] : [parameter, storage]) : return_ => {
     return match (action, {
         Poke: () => poke(store)
     } 
@@ -109,7 +109,7 @@ We want to store every caller address poking the contract. Let's redefine storag
 ```javascript
 type storage = set<address>;
 
-let poke = (store : storage) : return_ => {
+const poke = (store : storage) : return_ => {
     return [  list([]) as list<operation>, Set.add(Tezos.source, store)]; 
 };
 ```
