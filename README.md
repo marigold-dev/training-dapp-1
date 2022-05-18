@@ -42,6 +42,11 @@ Please install this software first on your machine or use online alternative :
 
 Alternative using GitPod : https://gitpod.io/#https://gitlab.com/ligolang/template-ligo (setup may take several minutes the first time)
 
+> Tips for VS Code code highlighting : 
+> * Go to Settings and type "association" on Search bar
+> * Select TextEditor/Files, and add a line for *.jsligo files to be like javascript language
+![](/doc/vscode.png)
+
 # :scroll: Smart contract
 
 ## Step 1 : Create folder & file
