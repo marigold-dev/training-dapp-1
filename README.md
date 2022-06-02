@@ -293,7 +293,7 @@ function App() {
         />
 
         <div>
-        I am {userAddress} with {userBalance} Tz
+        I am {userAddress} with {userBalance} mutez
         </div>
 
         </p>
