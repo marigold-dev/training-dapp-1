@@ -205,7 +205,7 @@ tezos-client originate contract mycontract transferring 0 from <ACCOUNT_KEY_NAME
 Verify the output. a successful output display the address of the new created smart contract on the testnet
 
 ```bash
-New contract KT1M1sXXUYdLvow9J4tYcDDrYa6aKn3k1NT9 originated.
+New contract KT1SkJGvuK4f5MkuYy8c5NeBCyAEBtB9WUoQ originated.
 ```
 
 Interact now with it, poke it ! :laughing:
@@ -496,7 +496,7 @@ Before the return , add this section for the fetch
 
   const fetchContracts = () => {
     (async () => {
-     setContracts((await contractsService.getSimilar({address:"KT1M1sXXUYdLvow9J4tYcDDrYa6aKn3k1NT9" , includeStorage:true, sort:{desc:"id"}})));
+     setContracts((await contractsService.getSimilar({address:"KT1SkJGvuK4f5MkuYy8c5NeBCyAEBtB9WUoQ" , includeStorage:true, sort:{desc:"id"}})));
     })();
   }
 ```
