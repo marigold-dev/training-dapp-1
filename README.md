@@ -250,7 +250,8 @@ yarn add @dipdup/tzkt-api
 > "https": require.resolve("https-browserify"),
 > "os": require.resolve("os-browserify"),
 > "url": require.resolve("url"),
-> "path": require.resolve("path-browserify") 
+> "path": require.resolve("path-browserify")    :warning:
+
 
 
 Start the dev server
