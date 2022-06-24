@@ -37,15 +37,11 @@ Please install this software first on your machine or use online alternative :
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another
 - [ ] [ligo](https://ligolang.org/docs/intro/installation/) : high level language that's transpile to michelson low level language and provide lot of development support for Tezos
+- [] [ligo IDE extension](https://ligolang.org/docs/intro/editor-support/) : for highlighting, completion, etc ..
 - [ ] [tezos-client (method 1)](https://tezos.gitlab.io/introduction/howtoget.html) or [tezos-client (method 2)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install) : the Tezos CLI
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet as browser plugin 
 
-Alternative using GitPod : https://gitpod.io/#https://gitlab.com/ligolang/template-ligo (setup may take several minutes the first time)
-
-> Tips for VS Code code highlighting : 
-> * Go to Settings and type "association" on Search bar
-> * Select TextEditor/Files, and add a line for *.jsligo files to be like javascript language
-![](/doc/vscode.png)
+Alternative dev environment using GitPod (if all above does not work on your machine) : https://gitpod.io/#https://gitlab.com/ligolang/template-ligo (setup may take several minutes the first time)
 
 # :scroll: Smart contract
 
@@ -115,7 +111,7 @@ We want to store every caller address poking the contract. Let's redefine storag
 type storage = set<address>;
 
 const poke = (store : storage) : return_ => {
-    return [  list([]) as list<operation>, Set.add(Tezos.source, store)]; 
+    return [  list([]) as list<operation>, Set.add(Tezos.get_source(), store)]; 
 };
 ```
 
@@ -123,7 +119,7 @@ Set library has specific usage :
 > Doc https://ligolang.org/docs/language-basics/sets-lists-tuples#sets
 
 
-Here, we get the caller address using `Tezos.source`. Tezos library provides useful function for manipulating blockchain objects
+Here, we get the caller address using `Tezos.get_source()`. Tezos library provides useful function for manipulating blockchain objects
 > Doc https://ligolang.org/docs/reference/current-reference
 
 ## Step 4 : Try to poke
@@ -236,11 +232,21 @@ cd dapp
 Add taquito, tzkt indexer lib
 
 ```bash
-yarn add @taquito/taquito @taquito/beacon-wallet
+yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk
 yarn add @dipdup/tzkt-api
 ```
 
 > :warning: If you are using last version 5.x of react-script, follow these steps to rewire webpack for all encountered missing libraries : https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues
+> For example, in my case 
+> yarn add --dev react-app-rewired process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
+>       "crypto": require.resolve("crypto-browserify"),
+>       "stream": require.resolve("stream-browserify"),
+>       "assert": require.resolve("assert"),
+>       "http": require.resolve("stream-http"),
+>       "https": require.resolve("https-browserify"),
+>       "os": require.resolve("os-browserify"),
+>       "url": require.resolve("url"),
+>       "path": require.resolve("path-browserify") 
 
 
 Start the dev server
@@ -306,7 +312,7 @@ function App() {
 export default App;
 ```
 
-Let's create the 2 missing src component files and put code in it
+Let's create the 2 missing src component files and put code in it. On **src** folder, create these files.
 
 ```bash
 touch ConnectWallet.tsx
@@ -501,7 +507,7 @@ Before the return , add this section for the fetch
   }
 ```
 
-On the return 'html templating' section, add this after the display of the user balance div, add this : 
+On the return 'html templating' section, add this after the display of the user balance div `I am {userAddress} with {userBalance} mutez`, add this : 
 
 ```html
 <br />
@@ -541,7 +547,7 @@ Add this new function inside the App function, it will call the entrypoint to po
 
 > :warning: Normally we should call `c.methods.poke()` function , but there is a bug while compiling ligo variant with one unique choice, then the `default` is generated instead of having the name of the function. Also be careful because all entrypoints naming are converting to lowercase whatever variant variable name you can have on source file. 
 
-Then replace the line displaying the contract address by this one that will add a Poke button
+Then replace the line displaying the contract address `{contracts.map((contract) => <div>{contract.address}</div>)}` by this one that will add a Poke button
 
 ```html
     {contracts.map((contract) => <div>{contract.address} <button onClick={() =>poke(contract)}>Poke</button></div>)}
