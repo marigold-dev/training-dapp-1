@@ -38,7 +38,7 @@ Please install this software first on your machine or use online alternative :
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another
 - [ ] [ligo](https://ligolang.org/docs/intro/installation/) : high level language that's transpile to michelson low level language and provide lot of development support for Tezos
 - [ ] [ligo IDE extension](https://ligolang.org/docs/intro/editor-support/) : for highlighting, completion, etc ..
-- [ ] [tezos-client (method 1)](https://tezos.gitlab.io/introduction/howtoget.html) or [tezos-client (method 2)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install) : the Tezos CLI
+- [ ] [tezos-client (method 1)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install) or [tezos-client (method 2)](https://tezos.gitlab.io/introduction/howtoget.html) : the Tezos CLI
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet as browser plugin 
 
 Alternative dev environment using GitPod (if all above does not work on your machine) : https://gitpod.io/#https://gitlab.com/ligolang/template-ligo (setup may take several minutes the first time)
