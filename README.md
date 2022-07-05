@@ -155,7 +155,31 @@ Output should give :
 
 You can notice that the instruction will store the address of the caller into the traces storage
 
-## Step 5 : Configure your testnet local environment
+## Step 5 : Configure your wallet to get free Tez
+
+### Temple
+
+Open your Temple browser extension or on your mobile phone. Do the initial setup to create an implicit account then go to the page [https://faucet.marigold.dev/](https://faucet.marigold.dev/)
+
+Select the Jakarta network and click on the Connect button
+
+![](doc/connect.png)
+
+Select Temple wallet provider, and then your account
+
+![](doc/temple.png)
+
+Click on the button to get 10 free Tez
+
+![](doc/10tez.png)
+
+Wait a bit for the confirmation popup and you are done
+
+You can chek on temple extension that your account has been increased by 10 Tez
+
+### Local wallet
+
+Locally, your tezos-client CLI has also a local wallet. We will import the configuration from Temple
 
 Choose a testnet to deploy
 
@@ -164,17 +188,23 @@ For jakartanet :
 tezos-client --endpoint https://jakartanet.tezos.marigold.dev config update
 ```
 
-You will need an implicit account on your local wallet and get free Tz from a [faucet] and download the .json file locally (https://teztnets.xyz/)
+Export the mnemonic from Temple wallet settings from your browser extension
 
-> Doc : https://tezos.gitlab.io/introduction/howtouse.html#get-free-tez
+![](doc/reveal.png)
 
-Replace <ACCOUNT_KEY_NAME> by account key of your choice : 
+Example of 12 words : 
+`nurse pear excuse foam success aim steel gesture same neutral popular switch`
+
+Import it to your local wallet, we named it here `seed` : 
 
 ```bash
-tezos-client activate account <ACCOUNT_KEY_NAME> with "tz1__xxxxxxxxx__.json"
+tezos-client import keys from mnemonic seed
+
+Enter your mnemonic: <ENTER YOUR MNEMONIC HERE>
+Enter your passphrase: <OPTIONAL, TO SECURE YOUR WALLET>
 ```
 
-List all local accounts :
+List all local accounts to chekc it worked :
 
 ```bash
 tezos-client list known addresses
@@ -189,6 +219,9 @@ tezos-client get balance for <ACCOUNT_KEY_NAME>
 ```
 
 :rocket: You are ready to go :sunglasses: 
+
+ps : for information your local keys are saved here : ~/.tezos-client/secret_keys 
+
 
 ## Step 6 : Deploy to testnet
 
@@ -457,20 +490,7 @@ export default DisconnectButton;
 
 Save both file, the dev server should refresh the page
 
-![](doc/connect.png)
-
-> Note on Temple wallet configuration
-> Go to your browser plugin and import an account 
-> ![](doc/importaccount.png)
-
-Choose the private key, copy/paste that is located 
-here : ~/.tezos-client/secret_keys 
-
-> ![](doc/privatekey.png)
-
-
-
-Once Temple is configured well, Click on Connect button
+As Temple is configured well, Click on Connect button
 
 On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "jakartanet" testnet
 
