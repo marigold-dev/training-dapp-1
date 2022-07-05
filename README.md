@@ -611,4 +611,4 @@ Now, you are able to create any Smart Contract using Ligo and build a Dapp via T
 
 On next training, you will learn how to call a Smart contract inside a Smart Contract and use the callback, write unit test, etc ...
 
-[:arrow_right: NEXT (Coming soon)](https://github.com/marigold-dev/training-dapp-2)
+[:arrow_right: NEXT](https://github.com/marigold-dev/training-dapp-2)
