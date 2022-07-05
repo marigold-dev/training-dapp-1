@@ -110,6 +110,8 @@ We want to store every caller address poking the contract. Let's redefine storag
 ```javascript
 type storage = set<address>;
 
+...
+
 const poke = (store : storage) : return_ => {
     return [  list([]) as list<operation>, Set.add(Tezos.get_source(), store)]; 
 };
