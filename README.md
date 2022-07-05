@@ -131,13 +131,13 @@ The LIGO command-line interpreter provides sub-commands to directly test your LI
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
 ```bash
-ligo compile contract ./smartcontract/pokeGame.jsligo --output-file pokeGame.tz
+ligo compile contract ./smartcontract/pokeGame.jsligo --output-file pokeGame.tz --protocol jakarta
 ```
 
 Compile an initial storage (to pass later during deployment too)
 
 ```bash
-ligo compile storage ./smartcontract/pokeGame.jsligo 'Set.empty as set<address>' --output-file pokeGameStorage.tz --entry-point main
+ligo compile storage ./smartcontract/pokeGame.jsligo 'Set.empty as set<address>' --output-file pokeGameStorage.tz --protocol jakarta
 ```
 
 Dry run (i.e test an execution locally without deploying), pass the contract parameter `Poke()` and the initial on-chain storage with an empty set : 
@@ -159,9 +159,9 @@ You can notice that the instruction will store the address of the caller into th
 
 Choose a testnet to deploy
 
-For ithacanet :
+For jakartanet :
 ```bash
-tezos-client --endpoint https://ithacanet.tezos.marigold.dev config update
+tezos-client --endpoint https://jakartanet.tezos.marigold.dev config update
 ```
 
 You will need an implicit account on your local wallet and get free Tz from a [faucet] and download the .json file locally (https://teztnets.xyz/)
@@ -201,7 +201,7 @@ tezos-client originate contract mycontract transferring 0 from <ACCOUNT_KEY_NAME
 Verify the output. a successful output display the address of the new created smart contract on the testnet
 
 ```bash
-New contract KT1SkJGvuK4f5MkuYy8c5NeBCyAEBtB9WUoQ originated.
+New contract KT1En4q3FEMHLjajQN2CwnMWTVYT16BMmzzq originated.
 ```
 
 Interact now with it, poke it ! :laughing:
@@ -278,7 +278,7 @@ import DisconnectButton from './DisconnectWallet';
 
 function App() {
 
-  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://ithacanet.tezos.marigold.dev"));
+  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://jakartanet.tezos.marigold.dev"));
   const [wallet, setWallet] = useState<any>(null);
   const [userAddress, setUserAddress] = useState<string>("");
   const [userBalance, setUserBalance] = useState<number>(0);
@@ -364,8 +364,8 @@ const ConnectButton = ({
       if(!wallet) await createWallet();
       await wallet.requestPermissions({
         network: {
-          type: NetworkType.ITHACANET,
-          rpcUrl: "https://ithacanet.tezos.marigold.dev"
+          type: NetworkType.JAKARTANET,
+          rpcUrl: "https://jakartanet.tezos.marigold.dev"
         }
       });
       // gets user's address
@@ -381,7 +381,7 @@ const ConnectButton = ({
     if(!wallet){
       wallet = new BeaconWallet({
       name: "training",
-      preferredNetwork: NetworkType.ITHACANET
+      preferredNetwork: NetworkType.JAKARTANET
     });}
     Tezos.setWalletProvider(wallet);
     setWallet(wallet);
@@ -472,7 +472,7 @@ here : ~/.tezos-client/secret_keys
 
 Once Temple is configured well, Click on Connect button
 
-On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "Ithacanet" testnet
+On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "jakartanet" testnet
 
 ![](doc/logged.png)
 
@@ -502,12 +502,12 @@ import { Contract, ContractsService } from '@dipdup/tzkt-api';
 Before the return , add this section for the fetch
 
 ```typescript
-  const contractsService = new ContractsService( {baseUrl: "https://api.ithacanet.tzkt.io" , version : "", withCredentials : false});
+  const contractsService = new ContractsService( {baseUrl: "https://api.jakartanet.tzkt.io" , version : "", withCredentials : false});
   const [contracts, setContracts] = useState<Array<Contract>>([]);
 
   const fetchContracts = () => {
     (async () => {
-     setContracts((await contractsService.getSimilar({address:"KT1SkJGvuK4f5MkuYy8c5NeBCyAEBtB9WUoQ" , includeStorage:true, sort:{desc:"id"}})));
+     setContracts((await contractsService.getSimilar({address:"KT1En4q3FEMHLjajQN2CwnMWTVYT16BMmzzq" , includeStorage:true, sort:{desc:"id"}})));
     })();
   }
 ```
@@ -544,6 +544,7 @@ Add this new function inside the App function, it will call the entrypoint to po
     try {
       const op = await c.methods.default().send();
       await op.confirmation();
+      alert("Tx done");
     } catch (error : any) {
       console.table(`Error: ${JSON.stringify(error, null, 2)}`);
     }

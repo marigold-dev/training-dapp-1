@@ -7,18 +7,18 @@ import { Contract, ContractsService } from '@dipdup/tzkt-api';
 
 function App() {
   
-  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://ithacanet.tezos.marigold.dev"));
+  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://jakartanet.tezos.marigold.dev"));
   const [wallet, setWallet] = useState<any>(null);
   const [userAddress, setUserAddress] = useState<string>("");
   const [userBalance, setUserBalance] = useState<number>(0);
   
   //tzkt
-  const contractsService = new ContractsService( {baseUrl: "https://api.ithacanet.tzkt.io" , version : "", withCredentials : false});
+  const contractsService = new ContractsService( {baseUrl: "https://api.jakartanet.tzkt.io" , version : "", withCredentials : false});
   const [contracts, setContracts] = useState<Array<Contract>>([]);
   
   const fetchContracts = () => {
     (async () => {
-      setContracts((await contractsService.getSimilar({address:"KT1Kmtf6JrVGipKtobAbzQkJyrGujXxiY9pX" , includeStorage:true, sort:{desc:"id"}})));
+      setContracts((await contractsService.getSimilar({address:"KT1En4q3FEMHLjajQN2CwnMWTVYT16BMmzzq" , includeStorage:true, sort:{desc:"id"}})));
     })();
   }
   
@@ -28,6 +28,7 @@ function App() {
     try {
       const op = await c.methods.default().send();
       await op.confirmation();
+      alert("Tx done");
     } catch (error : any) {
       console.log(error);
       console.table(`Error: ${JSON.stringify(error, null, 2)}`);
