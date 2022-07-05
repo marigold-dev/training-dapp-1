@@ -175,7 +175,7 @@ Click on the button to get 10 free Tez
 
 Wait a bit for the confirmation popup and you are done
 
-You can chek on temple extension that your account has been increased by 10 Tez
+You can check on temple extension that your account has been increased by 10 Tez
 
 ### Local wallet
 
