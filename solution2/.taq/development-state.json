@@ -1,0 +1,14 @@
+{
+    "operations": {},
+    "tasks": {
+        "@taqueria/plugin-ligo.compile.1660030463155": {
+            "time": 1660030463155,
+            "output": [
+                {
+                    "contract": "contracts/pokeGame.jsligo",
+                    "artifact": "Not compiled"
+                }
+            ]
+        }
+    }
+}

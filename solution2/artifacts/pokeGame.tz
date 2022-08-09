@@ -1,0 +1,4 @@
+{ parameter unit ;
+  storage (set address) ;
+  code { CDR ; SOURCE ; PUSH bool True ; SWAP ; UPDATE ; NIL operation ; PAIR } }
+

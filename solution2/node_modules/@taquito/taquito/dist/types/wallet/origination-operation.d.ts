@@ -1,0 +1,14 @@
+import { BlockResponse, OperationContentsAndResultOrigination, OperationContentsAndResultReveal } from '@taquito/rpc';
+import { Observable } from 'rxjs';
+import { Context } from '../context';
+import { DefaultWalletType } from '../contract/contract';
+import { WalletOperation, OperationStatus } from './operation';
+export declare class OriginationWalletOperation<TWallet extends DefaultWalletType = DefaultWalletType> extends WalletOperation {
+    readonly opHash: string;
+    protected readonly context: Context;
+    constructor(opHash: string, context: Context, newHead$: Observable<BlockResponse>);
+    originationOperation(): Promise<OperationContentsAndResultOrigination | undefined>;
+    revealOperation(): Promise<OperationContentsAndResultReveal | undefined>;
+    status(): Promise<OperationStatus>;
+    contract(): Promise<TWallet>;
+}

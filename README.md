@@ -40,6 +40,7 @@ Please install this software first on your machine or use online alternative :
 - [ ] [ligo IDE extension](https://ligolang.org/docs/intro/editor-support/) : for highlighting, completion, etc ..
 - [ ] [tezos-client (method 1)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install) or [tezos-client (method 2)](https://tezos.gitlab.io/introduction/howtoget.html) : the Tezos CLI
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet as browser plugin 
+- [ ] https://github.com/ecadlabs/taqueria + https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode
 
 Alternative dev environment using GitPod (if all above does not work on your machine) : https://gitpod.io/#https://gitlab.com/ligolang/template-ligo (setup may take several minutes the first time)
 
@@ -48,8 +49,10 @@ Alternative dev environment using GitPod (if all above does not work on your mac
 ## Step 1 : Create folder & file
 
 ```bash
-mkdir smartcontract
-touch ./smartcontract/pokeGame.jsligo
+taq init training1
+cd training1
+taq install @taqueria/plugin-ligo
+touch ./contracts/pokeGame.jsligo
 ```
 
 ## Step 2 : Edit pokeGame.jsligo
@@ -133,19 +136,19 @@ The LIGO command-line interpreter provides sub-commands to directly test your LI
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
 ```bash
-ligo compile contract ./smartcontract/pokeGame.jsligo --output-file pokeGame.tz --protocol jakarta
+taq compile contracts/pokeGame.jsligo
 ```
 
 Compile an initial storage (to pass later during deployment too)
 
 ```bash
-ligo compile storage ./smartcontract/pokeGame.jsligo 'Set.empty as set<address>' --output-file pokeGameStorage.tz --protocol jakarta
+ligo compile storage ./contracts/pokeGame.jsligo 'Set.empty as set<address>' --output-file ./artifacts/pokeGameStorage.tz --protocol jakarta
 ```
 
 Dry run (i.e test an execution locally without deploying), pass the contract parameter `Poke()` and the initial on-chain storage with an empty set : 
 
 ```bash
-ligo run dry-run ./smartcontract/pokeGame.jsligo 'Poke()' 'Set.empty as set<address>' 
+ligo run dry-run ./contracts/pokeGame.jsligo 'Poke()' 'Set.empty as set<address>' 
 ```
 
 Output should give : 
@@ -224,6 +227,47 @@ tezos-client get balance for <ACCOUNT_KEY_NAME>
 
 ps : for information your local keys are saved here : ~/.tezos-client/secret_keys 
 
+
+## Step 6 : deploy locally with flextesa
+
+
+```
+taq install @taqueria/plugin-flextesa
+
+# it takes some minutes the first time
+taq start sandbox local
+
+#list users
+taq list accounts local
+
+```
+
+Deploy the contract
+
+edit the init storage on file ./.taq/config.json , where the field "environment"
+like this
+```
+"environment": {
+        "default": "development",
+        "development": {
+            "networks": [],
+            "sandboxes": [
+                "local"
+            ],
+            "storage": {
+                "pokeGame.tz" : []
+            }
+        }
+    },
+```
+
+and then
+
+```
+taq install @taqueria/plugin-taquito
+
+taq deploy pokeGame.tz
+```
 
 ## Step 6 : Deploy to testnet
 
