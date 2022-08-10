@@ -1,12 +1,27 @@
 {
     "operations": {},
     "tasks": {
-        "@taqueria/plugin-ligo.compile.1660030463155": {
-            "time": 1660030463155,
+        "@taqueria/plugin-taquito.deploy.1660146651659": {
+            "task": "deploy",
+            "plugin": "@taqueria/plugin-taquito",
+            "time": 1660146651659,
             "output": [
                 {
-                    "contract": "contracts/pokeGame.jsligo",
-                    "artifact": "Not compiled"
+                    "contract": "pokeGame.tz",
+                    "address": "KT1Uj6B3qaW4LWJT3chD7ngPwmcCaLzrPo8V",
+                    "destination": "local"
+                }
+            ]
+        },
+        "@taqueria/plugin-taquito.deploy.1660146716217": {
+            "task": "deploy",
+            "plugin": "@taqueria/plugin-taquito",
+            "time": 1660146716217,
+            "output": [
+                {
+                    "contract": "pokeGame.tz",
+                    "address": "KT1WKfTcxjDn123r3K1t3xmvTtKeqhfBpr3s",
+                    "destination": "local"
                 }
             ]
         }
