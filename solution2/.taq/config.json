@@ -12,6 +12,10 @@
         {
             "name": "@taqueria/plugin-flextesa",
             "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-contract-types",
+            "type": "npm"
         }
     ],
     "contractsDir": "contracts",
@@ -22,7 +26,38 @@
             "hash": "4142d772884200948b9d6a56a6942f5946ce16a8e2fa9e8dd12dcb67ae95c271"
         }
     },
-    "network": {},
+    "network": {
+        "jakartanet": {
+            "label": "Jakartanet Testnet",
+            "rpcUrl": "https://jakartanet.tezos.marigold.dev",
+            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
+            "faucet": {
+                "pkh": "tz1LsNuEoc8vZPJpvjYcjERVD8RYdZCKyume",
+                "mnemonic": [
+                    "bunker",
+                    "maple",
+                    "refuse",
+                    "awful",
+                    "vote",
+                    "series",
+                    "urban",
+                    "hill",
+                    "toddler",
+                    "rural",
+                    "love",
+                    "just",
+                    "toward",
+                    "swear",
+                    "avocado"
+                ],
+                "email": "yvlgzqzr.uypforim@teztnets.xyz",
+                "password": "vlnDLyoUPF",
+                "amount": "16034654271",
+                "activation_code": "ec0978849eb4034d92a69d8b6b193f919715cbc0"
+            }
+        }
+        
+    },
     "sandbox": {
         "local": {
             "label": "Local Tezos Sandbox",
@@ -65,6 +100,15 @@
             "sandboxes": [
                 "local"
             ],
+            "storage": {
+                "pokeGame.tz": []
+            }
+        },
+        "testing": {
+            "networks": [
+                "jakartanet"
+            ],
+            "sandboxes": [],
             "storage": {
                 "pokeGame.tz": []
             }

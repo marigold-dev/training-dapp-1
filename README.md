@@ -12,14 +12,15 @@ Training dapp n°1
 > dapp : A decentralized application (dApp) is a type of distributed open source software application that runs on a peer-to-peer (P2P) blockchain network rather than on a single computer. DApps are visibly similar to other software applications that are supported on a website or mobile device but are P2P supported
 
 Goal of this training is to develop a poke game with smart contract. You will learn : 
+- create a Tezos project with taqueria
 - create a smart contract in jsligo
-- deploy smart contract
-- create a dapp using taquito and interact with browser wallet
+- deploy the smart contract to a local testnet and a real testnet
+- create a dapp using taquito library and interact with a Tezos browser wallet
 - use an indexer
 
 > :warning: This is not an HTML or REACT training, I will avoid as much of possible any complexity relative to these technologies 
 
-The game consists on poking the owner of a smart contract.  The smartcontract keeps a track of user interactions on the storage 
+The game consists on poking the owner of a smart contract.  The smartcontract keeps a track of user interactions on its own storage 
 
 Poke sequence diagram
 ```mermaid
@@ -36,13 +37,10 @@ Please install this software first on your machine or use online alternative :
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another
-- [ ] [ligo](https://ligolang.org/docs/intro/installation/) : high level language that's transpile to michelson low level language and provide lot of development support for Tezos
-- [ ] [ligo IDE extension](https://ligolang.org/docs/intro/editor-support/) : for highlighting, completion, etc ..
-- [ ] [tezos-client (method 1)](https://assets.tqtezos.com/docs/setup/1-tezos-client/#install) or [tezos-client (method 2)](https://tezos.gitlab.io/introduction/howtoget.html) : the Tezos CLI
-- [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet as browser plugin 
-- [ ] https://github.com/ecadlabs/taqueria + https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode
-
-Alternative dev environment using GitPod (if all above does not work on your machine) : https://gitpod.io/#https://gitlab.com/ligolang/template-ligo (setup may take several minutes the first time)
+- [ ] [taqueria](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
+- [ ] [taqueria VS Code extension](https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode) : visualize your project and execute tasks
+- [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
+- [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser
 
 # :scroll: Smart contract
 
@@ -52,7 +50,7 @@ Alternative dev environment using GitPod (if all above does not work on your mac
 taq init training1
 cd training1
 taq install @taqueria/plugin-ligo
-touch ./contracts/pokeGame.jsligo
+taq create contract pokeGame.jsligo
 ```
 
 ## Step 2 : Edit pokeGame.jsligo
@@ -136,19 +134,19 @@ The LIGO command-line interpreter provides sub-commands to directly test your LI
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
 ```bash
-taq compile contracts/pokeGame.jsligo
+taq compile pokeGame.jsligo
 ```
 
 Compile an initial storage (to pass later during deployment too)
 
 ```bash
-ligo compile storage ./contracts/pokeGame.jsligo 'Set.empty as set<address>' --output-file ./artifacts/pokeGameStorage.tz --protocol jakarta
+taq compile storage pokeGame.jsligo 'Set.empty as set<address>' -e "development"
 ```
 
 Dry run (i.e test an execution locally without deploying), pass the contract parameter `Poke()` and the initial on-chain storage with an empty set : 
 
 ```bash
-ligo run dry-run ./contracts/pokeGame.jsligo 'Poke()' 'Set.empty as set<address>' 
+taq dry-run pokeGame.jsligo 'Poke()' 'Set.empty as set<address>' 
 ```
 
 Output should give : 
@@ -162,74 +160,79 @@ You can notice that the instruction will store the address of the caller into th
 
 ## Step 5 : Configure your wallet to get free Tez
 
+
+
+### Local testnet wallet
+
+Flextesa local testnet includes already some accounts with XTZ (alice,bob,...)
+
+### Jakarta testnet wallet
+
+> Note as a simple user, you would need only a web faucet like [Marigold faucet here](https://faucet.marigold.dev/). However, Taqueria will require the faucet JSON file
+
+Go to the [Tezos faucet](https://teztnets.xyz/jakartanet-faucet) and get the faucet file for Jakarta
+
+On taqueria .taq/config.json file, add a new Jakarta testnet on network field as follow 
+
+```json
+   "network": {
+        "jakartanet": {
+            "label": "Jakartanet Testnet",
+            "rpcUrl": "https://jakartanet.tezos.marigold.dev",
+            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
+            "faucet": {
+                "pkh": "tz1LsNuEoc8vZPJpvjYcjERVD8RYdZCKyume",
+                "mnemonic": [
+                    "bunker",
+                    "maple",
+                    "refuse",
+                    "awful",
+                    "vote",
+                    "series",
+                    "urban",
+                    "hill",
+                    "toddler",
+                    "rural",
+                    "love",
+                    "just",
+                    "toward",
+                    "swear",
+                    "avocado"
+                ],
+                "email": "yvlgzqzr.uypforim@teztnets.xyz",
+                "password": "vlnDLyoUPF",
+                "amount": "16034654271",
+                "activation_code": "ec0978849eb4034d92a69d8b6b193f919715cbc0"
+            }
+        }
+        
+    },
+```
+
+Then on "environment" field, you can add a new environment pointing to this network
+```json
+"testing": {
+            "networks": [
+                "jakartanet"
+            ]
+        }
+```
+
+```bash
+taq list accounts -n "jakartanet"
+```
+
+Your account should appear on the list now with its balance
+
 ### Temple
 
-Open your Temple browser extension or on your mobile phone. Do the initial setup to create an implicit account then go to the page [https://faucet.marigold.dev/](https://faucet.marigold.dev/)
+Open your Temple browser extension or on your mobile phone. Do the initial setup to create an implicit account then import an account from the previous JSON faucet file
 
-Select the Jakarta network and click on the Connect button
+:rocket: You are ready to go :sunglasses:
 
-![](doc/connect.png)
+## Step 6 : (Optional) deploy locally with flextesa
 
-Select Temple wallet provider, and then your account
-
-![](doc/temple.png)
-
-Click on the button to get 10 free Tez
-
-![](doc/10tez.png)
-
-Wait a bit for the confirmation popup and you are done
-
-You can check on temple extension that your account has been increased by 10 Tez
-
-### Local wallet
-
-Locally, your tezos-client CLI has also a local wallet. We will import the configuration from Temple
-
-Choose a testnet to deploy
-
-For jakartanet :
-```bash
-tezos-client --endpoint https://jakartanet.tezos.marigold.dev config update
-```
-
-Export the mnemonic from Temple wallet settings from your browser extension
-
-![](doc/reveal.png)
-
-Example of 12 words : 
-`nurse pear excuse foam success aim steel gesture same neutral popular switch`
-
-Import it to your local wallet, we named it here `seed` : 
-
-```bash
-tezos-client import keys from mnemonic seed
-
-Enter your mnemonic: <ENTER YOUR MNEMONIC HERE>
-Enter your passphrase: <OPTIONAL, TO SECURE YOUR WALLET>
-```
-
-List all local accounts to chekc it worked :
-
-```bash
-tezos-client list known addresses
-```
-
-Your account should appear on the list now
-
-Check your balance
-
-```bash
-tezos-client get balance for <ACCOUNT_KEY_NAME>
-```
-
-:rocket: You are ready to go :sunglasses: 
-
-ps : for information your local keys are saved here : ~/.tezos-client/secret_keys 
-
-
-## Step 6 : deploy locally with flextesa
-
+You can deploy locally Tezos on your local machine, but we require to use laer an indexer (this service exists already on Jakartanet). For your knowledge, below the step to deplpoy locally.
 
 ```
 taq install @taqueria/plugin-flextesa
@@ -244,9 +247,29 @@ taq list accounts local
 
 Deploy the contract
 
-edit the init storage on file ./.taq/config.json , where the field "environment"
+Edit the init storage on file ./.taq/config.json , where the field "environment"
 like this
+```json
+"environment": {
+        "default": "development",
+        "development": {
+            "networks": [],
+            "sandboxes": [
+                "local"
+            ]
+        }
+    },
 ```
+
+Add the inital storage
+
+```bash
+taq compile storage pokeGame.jsligo 'Set.empty as set<address>' -e "development"
+```
+
+you should have now
+
+```json
 "environment": {
         "default": "development",
         "development": {
@@ -255,57 +278,57 @@ like this
                 "local"
             ],
             "storage": {
-                "pokeGame.tz" : []
+                "pokeGame.tz": []
             }
         }
     },
 ```
 
-and then
+and then, to deploy it, install plugin first and originate the contract
 
-```
+```bash
 taq install @taqueria/plugin-taquito
 
-taq deploy pokeGame.tz
+taq deploy pokeGame.tz -e "development"
 ```
 
-## Step 6 : Deploy to testnet
+## Step 6 : Deploy to Jakarta testnet
 
-Use the tezos-client to deploy the contract
+Add testing environment
+
+Edit the init storage on file ./.taq/config.json , where the field "environment"
+like this
+
+```json
+"environment": {
+        "default": "testing",
+        "testing": {
+            "networks": [
+                "jakartanet"
+            ]
+        }
+    },
+```
+
+Add initial storage to testing env
 
 ```bash
-tezos-client originate contract mycontract transferring 0 from <ACCOUNT_KEY_NAME> running pokeGame.tz --init "$(cat pokeGameStorage.tz)" --burn-cap 1
+
+taq compile storage pokeGame.jsligo 'Set.empty as set<address>' -e "testing"
+
+taq deploy pokeGame.tz -e "testing"
 ```
 
-Verify the output. a successful output display the address of the new created smart contract on the testnet
-
-```bash
-New contract KT1En4q3FEMHLjajQN2CwnMWTVYT16BMmzzq originated.
-```
-
-Interact now with it, poke it ! :laughing:
-
-```bash
-tezos-client transfer 0 from <ACCOUNT_KEY_NAME> to mycontract --burn-cap 0.01 
-```
-
-Check that your address is registered on the storage
-
-```bash
-tezos-client get contract storage for mycontract 
-```
-
-HOORAY :confetti_ball: your smart contract is ready !
-
+HOORAY :confetti_ball: your smart contract is ready on the Jakarta !
 
 # :construction_worker:  Dapp 
 
 ## Step 1 : Create react app
 
 ```bash
-yarn create react-app dapp --template typescript
+yarn create react-app app --template typescript
 
-cd dapp
+cd app
 ```
 
 Add taquito, tzkt indexer lib
@@ -314,6 +337,8 @@ Add taquito, tzkt indexer lib
 yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk
 yarn add @dipdup/tzkt-api
 ```
+
+
 
 > :warning: If you are using last version 5.x of react-script, follow these steps to rewire webpack for all encountered missing libraries : https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues
 
@@ -332,6 +357,16 @@ yarn add @dipdup/tzkt-api
 > "path": require.resolve("path-browserify")    :warning:
 
 
+Get typescript classes from taqueria plugin, get back to root folder
+```bash
+cd ..
+
+taq install @taqueria/plugin-contract-types
+
+taq generate types ./app/src
+
+cd ./app
+```
 
 Start the dev server
 
@@ -555,7 +590,16 @@ Add the library
 
 ```bash
 yarn add @dipdup/tzkt-api
+yarn add dotenv
 ```
+
+
+[Install jq](https://github.com/stedolan/jq)
+On package.json, change the start script line, prefixing with jq command to create an new env var pointing to your last smart contract address on testing env :
+```
+    "start": "jq -r '\"REACT_APP_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && react-app-rewired start",
+```
+You are pointing now to the last contract deployed on Jakarta by taqueria
 
 We will add a button to fetch all similar contracts to the one you deployed, then we display the list
 
@@ -573,7 +617,7 @@ Before the return , add this section for the fetch
 
   const fetchContracts = () => {
     (async () => {
-     setContracts((await contractsService.getSimilar({address:"KT1En4q3FEMHLjajQN2CwnMWTVYT16BMmzzq" , includeStorage:true, sort:{desc:"id"}})));
+     setContracts((await contractsService.getSimilar({address: process.env["CONTRACT_ADDRESS"]!, includeStorage:true, sort:{desc:"id"}})));
     })();
   }
 ```
@@ -605,8 +649,8 @@ import { TezosToolkit, WalletContract } from '@taquito/taquito';
 Add this new function inside the App function, it will call the entrypoint to poke
 
 ```typescript
-  const poke = async (contract : Contract) => {   
-    let c : WalletContract = await Tezos.wallet.at(""+contract.address);
+ const poke = async (contract : Contract) => {   
+    let c : PokeGameContractType = await Tezos.wallet.at(""+contract.address);
     try {
       const op = await c.methods.default().send();
       await op.confirmation();
@@ -653,7 +697,7 @@ Contracts are displaying its people now
 
 # :palm_tree: Conclusion :sun_with_face:
 
-Now, you are able to create any Smart Contract using Ligo and build a Dapp via Taquito to interact with it
+Now, you are able to create any Smart Contract using Ligo and create a complete Dapp via Taqueria/Taquito.
 
 On next training, you will learn how to call a Smart contract inside a Smart Contract and use the callback, write unit test, etc ...
 

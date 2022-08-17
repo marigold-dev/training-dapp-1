@@ -1,0 +1,17 @@
+{
+    "operations": {},
+    "tasks": {
+        "@taqueria/plugin-taquito.deploy.1660745951474": {
+            "task": "deploy",
+            "plugin": "@taqueria/plugin-taquito",
+            "time": 1660745951474,
+            "output": [
+                {
+                    "contract": "pokeGame.tz",
+                    "address": "KT1HwyifemZVHjieGiTPqPnZvheTdtrFk2EN",
+                    "destination": "jakartanet"
+                }
+            ]
+        }
+    }
+}

@@ -1,26 +1,26 @@
 {
     "operations": {},
     "tasks": {
-        "@taqueria/plugin-taquito.deploy.1660146651659": {
+        "@taqueria/plugin-taquito.deploy.1660750773242": {
             "task": "deploy",
             "plugin": "@taqueria/plugin-taquito",
-            "time": 1660146651659,
+            "time": 1660750773242,
             "output": [
                 {
                     "contract": "pokeGame.tz",
-                    "address": "KT1Uj6B3qaW4LWJT3chD7ngPwmcCaLzrPo8V",
+                    "address": "KT1PLuV4MAFMMw77nuPMeUojsxu95YdSFgpM",
                     "destination": "local"
                 }
             ]
         },
-        "@taqueria/plugin-taquito.deploy.1660146716217": {
+        "@taqueria/plugin-taquito.deploy.1660750818673": {
             "task": "deploy",
             "plugin": "@taqueria/plugin-taquito",
-            "time": 1660146716217,
+            "time": 1660750818673,
             "output": [
                 {
                     "contract": "pokeGame.tz",
-                    "address": "KT1WKfTcxjDn123r3K1t3xmvTtKeqhfBpr3s",
+                    "address": "KT1EY2MWgbfH29e9MUJHZxtY89ZkhmDmdodY",
                     "destination": "local"
                 }
             ]
