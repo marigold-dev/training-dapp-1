@@ -42,9 +42,13 @@ Please install this software first on your machine or use online alternative :
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser
 
+> About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... be careful to run Docker on your machine
+
 # :scroll: Smart contract
 
 ## Step 1 : Create folder & file
+
+> Note : We will use CLI here but you can also use GUI from the IDE or Taqueria plugin 
 
 ```bash
 taq init training1
@@ -55,7 +59,7 @@ taq create contract pokeGame.jsligo
 
 ## Step 2 : Edit pokeGame.jsligo
 
-Add a main function
+Remove the default code and paste this code instead
 
 ```javascript
 type storage = unit;
@@ -108,11 +112,15 @@ type parameter =
 
 We want to store every caller address poking the contract. Let's redefine storage, and then add the caller to the set of poke guys
 
-```javascript
+At line 1 :
+
+```typescript
 type storage = set<address>;
+```
 
-...
+Before main function : 
 
+```typescript
 const poke = (store : storage) : return_ => {
     return [  list([]) as list<operation>, Set.add(Tezos.get_source(), store)]; 
 };
@@ -137,90 +145,117 @@ Compile contract (to check any error, and prepare the michelson outputfile to de
 taq compile pokeGame.jsligo
 ```
 
-Compile an initial storage (to pass later during deployment too)
+Taqueria is creating the Michelson file output on `artifacts` folder
+
+Compile an initial storage with taqueria. Your file should have this pattern `<MY_SOURCE_CODE>.storages.*ligo`
 
 ```bash
-taq compile storage pokeGame.jsligo 'Set.empty as set<address>' -e "development"
+taq create contract pokeGame.storages.jsligo
+
+taq compile pokeGame.jsligo
 ```
+
+It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
 
 Dry run (i.e test an execution locally without deploying), pass the contract parameter `Poke()` and the initial on-chain storage with an empty set : 
 
-```bash
-taq dry-run pokeGame.jsligo 'Poke()' 'Set.empty as set<address>' 
-```
 
-Output should give : 
-
-```ocaml
-( LIST_EMPTY() ,
-  SET_ADD(@"tz1QL8xpMA9JwtUYXXwB6qnJTk8pkEakHpT4" , SET_EMPTY()) )
-```
-
-You can notice that the instruction will store the address of the caller into the traces storage
+> Note for next Taqueria version, you will able to run ligo dry-run command 
+> ```bash
+> taq dry-run pokeGame.jsligo 'Poke()' 'Set.empty as set<address>' 
+> ```
+> 
+> Output should give : 
+> 
+> ```ocaml
+> ( LIST_EMPTY() ,
+>   SET_ADD(@"tz1QL8xpMA9JwtUYXXwB6qnJTk8pkEakHpT4" , SET_EMPTY()) )
+> ```
+> 
+> You can notice that the instruction will store the address of the caller into the traces storage
 
 ## Step 5 : Configure your wallet to get free Tez
 
-
-
 ### Local testnet wallet
 
-Flextesa local testnet includes already some accounts with XTZ (alice,bob,...)
+Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), so you don't really need to
 
-### Jakarta testnet wallet
+### Ghostnet testnet wallet
 
-> Note as a simple user, you would need only a web faucet like [Marigold faucet here](https://faucet.marigold.dev/). However, Taqueria will require the faucet JSON file
+> Note as a simple user, you would need only a web faucet like [Marigold faucet here](https://faucet.marigold.dev/). However, Taqueria will require the faucet JSON file to execute commands
 
-Go to the [Tezos faucet](https://teztnets.xyz/jakartanet-faucet) and get the faucet file for Jakarta
+Go to the [Tezos faucet](https://teztnets.xyz/ghostnet-about) and get the faucet file for Ghostnet
 
-On taqueria .taq/config.json file, add a new Jakarta testnet on network field as follow 
+On taqueria .taq/config.json file, add the Ghostnet testnet on network field as follow : 
 
 ```json
+{
+...
+
+
    "network": {
-        "jakartanet": {
-            "label": "Jakartanet Testnet",
-            "rpcUrl": "https://jakartanet.tezos.marigold.dev",
+        "ghostnet": {
+            "label": "ghostnet",
+            "rpcUrl": "https://ghostnet.tezos.marigold.dev",
             "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
             "faucet": {
-                "pkh": "tz1LsNuEoc8vZPJpvjYcjERVD8RYdZCKyume",
+                "pkh": "tz1Qjvu8xaRgTjQmHBBDHaM1HGomCTYBgLZJ",
                 "mnemonic": [
-                    "bunker",
-                    "maple",
-                    "refuse",
-                    "awful",
-                    "vote",
-                    "series",
-                    "urban",
-                    "hill",
-                    "toddler",
-                    "rural",
-                    "love",
-                    "just",
-                    "toward",
-                    "swear",
-                    "avocado"
+                    "away",
+                    "virus",
+                    "stand",
+                    "kingdom",
+                    "sorry",
+                    "absurd",
+                    "close",
+                    "found",
+                    "warrior",
+                    "icon",
+                    "nominee",
+                    "theme",
+                    "enough",
+                    "kiss",
+                    "double"
                 ],
-                "email": "yvlgzqzr.uypforim@teztnets.xyz",
-                "password": "vlnDLyoUPF",
-                "amount": "16034654271",
-                "activation_code": "ec0978849eb4034d92a69d8b6b193f919715cbc0"
+                "email": "mpyuqqza.jqszvrsy@teztnets.xyz",
+                "password": "9OvRmgifTP",
+                "amount": "17415095578",
+                "activation_code": "8e54d45a59d21089fc60c6d4e94ecf4ecc44c417"
             }
         }
-        
     },
+
+
+...
+}    
 ```
 
 Then on "environment" field, you can add a new environment pointing to this network
+
 ```json
-"testing": {
+...
+
+
+"environment": {
+...
+
+
+        "testing": {
             "networks": [
-                "jakartanet"
-            ]
+                "ghostnet"
+            ],
+            "sandboxes": [],
+            "storage": {},
+            "aliases": {}
         }
+
+...
 ```
 
-```bash
-taq list accounts -n "jakartanet"
-```
+> Note : on Taqueria, you will be able soon to see accounts from other network than flextesa
+> ```bash
+> taq list accounts -n "ghostnet"
+> ```
 
 Your account should appear on the list now with its balance
 
@@ -232,7 +267,7 @@ Open your Temple browser extension or on your mobile phone. Do the initial setup
 
 ## Step 6 : (Optional) deploy locally with flextesa
 
-You can deploy locally Tezos on your local machine, but we require to use laer an indexer (this service exists already on Jakartanet). For your knowledge, below the step to deplpoy locally.
+You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Jakartanet). For your knowledge, below the step to deplpoy locally.
 
 ```
 taq install @taqueria/plugin-flextesa
@@ -245,78 +280,23 @@ taq list accounts local
 
 ```
 
-Deploy the contract
+Deploy the contract on `development` environment
 
-Edit the init storage on file ./.taq/config.json , where the field "environment"
-like this
-```json
-"environment": {
-        "default": "development",
-        "development": {
-            "networks": [],
-            "sandboxes": [
-                "local"
-            ]
-        }
-    },
-```
-
-Add the inital storage
-
-```bash
-taq compile storage pokeGame.jsligo 'Set.empty as set<address>' -e "development"
-```
-
-you should have now
-
-```json
-"environment": {
-        "default": "development",
-        "development": {
-            "networks": [],
-            "sandboxes": [
-                "local"
-            ],
-            "storage": {
-                "pokeGame.tz": []
-            }
-        }
-    },
-```
-
-and then, to deploy it, install plugin first and originate the contract
+You need to install taquito plugin first to originate the contract
 
 ```bash
 taq install @taqueria/plugin-taquito
 
-taq deploy pokeGame.tz -e "development"
+taq deploy pokeGame -e "development" --storage pokeGame.default_storage.tz
 ```
 
 ## Step 6 : Deploy to Jakarta testnet
 
-Add testing environment
 
-Edit the init storage on file ./.taq/config.json , where the field "environment"
-like this
-
-```json
-"environment": {
-        "default": "testing",
-        "testing": {
-            "networks": [
-                "jakartanet"
-            ]
-        }
-    },
-```
-
-Add initial storage to testing env
+Deploy to testing env
 
 ```bash
-
-taq compile storage pokeGame.jsligo 'Set.empty as set<address>' -e "testing"
-
-taq deploy pokeGame.tz -e "testing"
+taq deploy pokeGame -e "testing" --storage pokeGame.default_storage.tz
 ```
 
 HOORAY :confetti_ball: your smart contract is ready on the Jakarta !
@@ -334,7 +314,8 @@ cd app
 Add taquito, tzkt indexer lib
 
 ```bash
-yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk
+yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk 
+yarn add -D @airgap/beacon-types
 yarn add @dipdup/tzkt-api
 ```
 
@@ -354,7 +335,9 @@ yarn add @dipdup/tzkt-api
 > "https": require.resolve("https-browserify"),
 > "os": require.resolve("os-browserify"),
 > "url": require.resolve("url"),
-> "path": require.resolve("path-browserify")    :warning:
+> "path": require.resolve("path-browserify")   
+>
+> :warning:
 
 
 Get typescript classes from taqueria plugin, get back to root folder
@@ -392,7 +375,7 @@ import DisconnectButton from './DisconnectWallet';
 
 function App() {
 
-  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://jakartanet.tezos.marigold.dev"));
+  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://ghostnet.tezos.marigold.dev"));
   const [wallet, setWallet] = useState<any>(null);
   const [userAddress, setUserAddress] = useState<string>("");
   const [userBalance, setUserBalance] = useState<number>(0);
@@ -478,8 +461,8 @@ const ConnectButton = ({
       if(!wallet) await createWallet();
       await wallet.requestPermissions({
         network: {
-          type: NetworkType.JAKARTANET,
-          rpcUrl: "https://jakartanet.tezos.marigold.dev"
+          type: NetworkType.GHOSTNET,
+          rpcUrl: "https://ghostnet.tezos.marigold.dev"
         }
       });
       // gets user's address
@@ -495,7 +478,7 @@ const ConnectButton = ({
     if(!wallet){
       wallet = new BeaconWallet({
       name: "training",
-      preferredNetwork: NetworkType.JAKARTANET
+      preferredNetwork: NetworkType.GHOSTNET
     });}
     Tezos.setWalletProvider(wallet);
     setWallet(wallet);
@@ -573,7 +556,7 @@ Save both file, the dev server should refresh the page
 
 As Temple is configured well, Click on Connect button
 
-On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "jakartanet" testnet
+On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "ghostnet" testnet
 
 ![](doc/logged.png)
 
@@ -589,17 +572,16 @@ Instead of querying heavily the rpc node to search where is located your contrac
 Add the library
 
 ```bash
-yarn add @dipdup/tzkt-api
-yarn add dotenv
+yarn add @dipdup/tzkt-api dotenv
 ```
 
 
 [Install jq](https://github.com/stedolan/jq)
-On package.json, change the start script line, prefixing with jq command to create an new env var pointing to your last smart contract address on testing env :
+On `package.json`, change the start script line, prefixing with `jq` command to create an new env var pointing to your last smart contract address on testing env :
 ```
     "start": "jq -r '\"REACT_APP_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && react-app-rewired start",
 ```
-You are pointing now to the last contract deployed on Jakarta by taqueria
+You are pointing now to the last contract deployed on Ghostnet by taqueria
 
 We will add a button to fetch all similar contracts to the one you deployed, then we display the list
 
@@ -612,12 +594,12 @@ import { Contract, ContractsService } from '@dipdup/tzkt-api';
 Before the return , add this section for the fetch
 
 ```typescript
-  const contractsService = new ContractsService( {baseUrl: "https://api.jakartanet.tzkt.io" , version : "", withCredentials : false});
+  const contractsService = new ContractsService( {baseUrl: "https://api.ghostnet.tzkt.io" , version : "", withCredentials : false});
   const [contracts, setContracts] = useState<Array<Contract>>([]);
 
   const fetchContracts = () => {
     (async () => {
-     setContracts((await contractsService.getSimilar({address: process.env["CONTRACT_ADDRESS"]!, includeStorage:true, sort:{desc:"id"}})));
+     setContracts((await contractsService.getSimilar({address: process.env["REACT_APP_CONTRACT_ADDRESS"]!, includeStorage:true, sort:{desc:"id"}})));
     })();
   }
 ```
@@ -643,14 +625,19 @@ Save your file and go to the browser. click on Fetch button
 Add some import at the top
 
 ```typescript
-import { TezosToolkit, WalletContract } from '@taquito/taquito';
+import { TezosToolkit } from '@taquito/taquito';
 ```
 
 Add this new function inside the App function, it will call the entrypoint to poke
 
 ```typescript
- const poke = async (contract : Contract) => {   
-    let c : PokeGameContractType = await Tezos.wallet.at(""+contract.address);
+import { PokeGameWalletType } from './pokeGame.types';
+
+...
+
+
+  const poke = async (contract : Contract) => {   
+    let c : PokeGameWalletType = await Tezos.wallet.at<PokeGameWalletType>(""+contract.address);
     try {
       const op = await c.methods.default().send();
       await op.confirmation();
@@ -661,13 +648,25 @@ Add this new function inside the App function, it will call the entrypoint to po
   };
 ```
 
-> :warning: Normally we should call `c.methods.poke()` function , but there is a bug while compiling ligo variant with one unique choice, then the `default` is generated instead of having the name of the function. Also be careful because all entrypoints naming are converting to lowercase whatever variant variable name you can have on source file. 
+> :warning: Normally we should call `c.methods.poke()` function , but there is a bug while compiling ligo variant with one unique  choice, then the `default` is generated instead of having the name of the function. Also be careful because all entrypoints naming are converting to lowercase whatever variant variable name you can have on source file.
 
 Then replace the line displaying the contract address `{contracts.map((contract) => <div>{contract.address}</div>)}` by this one that will add a Poke button
 
 ```html
     {contracts.map((contract) => <div>{contract.address} <button onClick={() =>poke(contract)}>Poke</button></div>)}
 ```
+
+> Taqueria bug on unique entrypoint: https://github.com/ecadlabs/taqueria/issues/1128
+> go to ./app/src/pokeGame.types.ts and rewrite these lines
+> ```typescript 
+> type Methods = {
+>     default : () => Promise<void>;
+> };
+> 
+> type MethodsObject = {
+>     default : () => Promise<void>;
+> };
+> ```
 
 Save and see the page refreshed, then click on Poke button
 

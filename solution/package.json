@@ -1,0 +1,18 @@
+{
+  "name": "training1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@taqueria/plugin-contract-types": "^0.18.0",
+    "@taqueria/plugin-flextesa": "^0.18.0",
+    "@taqueria/plugin-ligo": "^0.18.0",
+    "@taqueria/plugin-taquito": "^0.18.0"
+  }
+}
