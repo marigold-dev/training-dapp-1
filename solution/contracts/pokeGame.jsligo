@@ -5,7 +5,6 @@ type parameter =
 
 type return_ = [list<operation>, storage];
 
-
 const poke = (store : storage) : return_ => {
     return [  list([]) as list<operation>, Set.add(Tezos.get_source(), store)]; 
 };

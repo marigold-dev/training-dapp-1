@@ -42,7 +42,7 @@ Please install this software first on your machine or use online alternative :
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser
 
-> About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... be careful to run Docker on your machine
+> :warning: About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... be careful to run Docker on your machine
 
 # :scroll: Smart contract
 
@@ -61,7 +61,7 @@ taq create contract pokeGame.jsligo
 
 Remove the default code and paste this code instead
 
-```javascript
+```typescript 
 type storage = unit;
 
 type parameter =
@@ -77,18 +77,13 @@ const main = ([action, store] : [parameter, storage]) : return_ => {
 };
 ```
 
-Every contract requires :
+Every contract requires to respect this convention :
 - an entrypoint, **main** by default, with a mandatory signature taking 2 parameters and a return : 
     - **parameter** : the contract `parameter`
     - **storage** : the on-chain storage (can be any type, here `unit` by default)
     - **return_** : a list of `operation` and a storage
 
 > Doc :  https://ligolang.org/docs/advanced/entrypoints-contracts
-
->:warning: You will notice that jsligo is a javascript-like language, multiple parameter declaration is a bit different.
-Instead of this declaration : `(action : parameter, store : storage)`
-You have to separate variable name to its type declaration this way : `([action, store] : [parameter, storage])`
-
 
 Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use `match` to evaluate the parameter and call the appropriated `poke` function
 > Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching
@@ -99,7 +94,7 @@ match (action, {
     } 
 ```
 
-`Poke` is a `parameter` from `variant` type. It is the equivalent of Enum type in javascript
+`Poke` is a `parameter` from `variant` type. It is a bit equivalent of Enum type in javascript
 
 ```javascript
 type parameter =
@@ -112,13 +107,13 @@ type parameter =
 
 We want to store every caller address poking the contract. Let's redefine storage, and then add the caller to the set of poke guys
 
-At line 1 :
+At line 1, replace :
 
 ```typescript
 type storage = set<address>;
 ```
 
-Before main function : 
+Before main function, add : 
 
 ```typescript
 const poke = (store : storage) : return_ => {
@@ -151,16 +146,25 @@ Compile an initial storage with taqueria. Your file should have this pattern `<M
 
 ```bash
 taq create contract pokeGame.storages.jsligo
+```
 
+Replace current code by 
+
+```typescript
+#include "pokeGame.jsligo"
+const default_storage = Set.empty as set<address>;
+```
+
+Compile all now
+
+```bash
 taq compile pokeGame.jsligo
 ```
 
 It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
 
-Dry run (i.e test an execution locally without deploying), pass the contract parameter `Poke()` and the initial on-chain storage with an empty set : 
-
-
 > Note for next Taqueria version, you will able to run ligo dry-run command 
+> Dry run (i.e test an execution locally without deploying), pass the contract parameter `Poke()` and the initial on-chain storage with an empty set :
 > ```bash
 > taq dry-run pokeGame.jsligo 'Poke()' 'Set.empty as set<address>' 
 > ```
@@ -197,7 +201,7 @@ On taqueria .taq/config.json file, add the Ghostnet testnet on network field as 
         "ghostnet": {
             "label": "ghostnet",
             "rpcUrl": "https://ghostnet.tezos.marigold.dev",
-            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
+            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg",
             "faucet": {
                 "pkh": "tz1Qjvu8xaRgTjQmHBBDHaM1HGomCTYBgLZJ",
                 "mnemonic": [
@@ -239,7 +243,7 @@ Then on "environment" field, you can add a new environment pointing to this netw
 "environment": {
 ...
 
-
+        ,
         "testing": {
             "networks": [
                 "ghostnet"
@@ -339,8 +343,10 @@ yarn add @dipdup/tzkt-api
 >
 > :warning:
 
+### Generate Typescript classes from Michelson code
 
 Get typescript classes from taqueria plugin, get back to root folder
+
 ```bash
 cd ..
 
@@ -577,10 +583,13 @@ yarn add @dipdup/tzkt-api dotenv
 
 
 [Install jq](https://github.com/stedolan/jq)
-On `package.json`, change the start script line, prefixing with `jq` command to create an new env var pointing to your last smart contract address on testing env :
-```
+
+On `package.json`, change the `start script` line, prefixing with `jq` command to create an new env var pointing to your last smart contract address on testing env :
+
+```bash
     "start": "jq -r '\"REACT_APP_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && react-app-rewired start",
 ```
+
 You are pointing now to the last contract deployed on Ghostnet by taqueria
 
 We will add a button to fetch all similar contracts to the one you deployed, then we display the list
@@ -591,7 +600,7 @@ Now, edit App.tsx to add 1 import on top of the file
 import { Contract, ContractsService } from '@dipdup/tzkt-api';
 ```
 
-Before the return , add this section for the fetch
+Before the `return` , add this section for the fetch
 
 ```typescript
   const contractsService = new ContractsService( {baseUrl: "https://api.ghostnet.tzkt.io" , version : "", withCredentials : false});
@@ -613,20 +622,20 @@ On the return 'html templating' section, add this after the display of the user 
     {contracts.map((contract) => <div>{contract.address}</div>)}
 </div>
 ```
-Save your file and go to the browser. click on Fetch button
+
+Save your file, and re-run your server , it will generate the .env file containing the last deployed contracts :)
+
+```bash
+yarn run start
+```
+
+Go to the browser. click on `Fetch contracts` button
 
 ![](doc/deployedcontracts.png)
 
 :confetti_ball:  Congrats ! you are able to list all similar deployed contracts
 
-
 ## Step 4 : Poke your contract
-
-Add some import at the top
-
-```typescript
-import { TezosToolkit } from '@taquito/taquito';
-```
 
 Add this new function inside the App function, it will call the entrypoint to poke
 
@@ -648,7 +657,7 @@ import { PokeGameWalletType } from './pokeGame.types';
   };
 ```
 
-> :warning: Normally we should call `c.methods.poke()` function , but there is a bug while compiling ligo variant with one unique  choice, then the `default` is generated instead of having the name of the function. Also be careful because all entrypoints naming are converting to lowercase whatever variant variable name you can have on source file.
+> :warning: Normally we should call `c.methods.poke()` function , but with a unique entrypoint, Michelson is required a unique `default` name instead of having the name of the function. Also be careful because all entrypoints naming are converting to lowercase whatever variant variable name you can have on source file.
 
 Then replace the line displaying the contract address `{contracts.map((contract) => <div>{contract.address}</div>)}` by this one that will add a Poke button
 
@@ -656,8 +665,9 @@ Then replace the line displaying the contract address `{contracts.map((contract)
     {contracts.map((contract) => <div>{contract.address} <button onClick={() =>poke(contract)}>Poke</button></div>)}
 ```
 
-> Taqueria bug on unique entrypoint: https://github.com/ecadlabs/taqueria/issues/1128
-> go to ./app/src/pokeGame.types.ts and rewrite these lines
+> There is a Taqueria bug on unique entrypoint: https://github.com/ecadlabs/taqueria/issues/1128
+> Go to ./app/src/pokeGame.types.ts and rewrite these lines
+>
 > ```typescript 
 > type Methods = {
 >     default : () => Promise<void>;
@@ -686,13 +696,13 @@ Replace again the html contracts line by this one
     </tbody></table>
 ```
 
-Contracts are displaying its people now 
+Contracts are displaying its people now
 
 ![](doc/table.png)
 
-> :information_source: Wait around few second for blockchain confirmation and click on "fetch contracts" to refresh the list
+> :information_source: Wait around few second for blockchain confirmation and click on `fetch contracts` to refresh the list
  
-:confetti_ball: Congratulation, you have completed this first dapp training 
+:confetti_ball: Congratulation, you have completed this first dapp training
 
 # :palm_tree: Conclusion :sun_with_face:
 

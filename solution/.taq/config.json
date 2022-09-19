@@ -34,7 +34,7 @@
         "ghostnet": {
             "label": "ghostnet",
             "rpcUrl": "https://ghostnet.tezos.marigold.dev",
-            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
+            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg",
             "faucet": {
                 "pkh": "tz1Qjvu8xaRgTjQmHBBDHaM1HGomCTYBgLZJ",
                 "mnemonic": [
@@ -106,7 +106,7 @@
             "storage": {},
             "aliases": {
                 "pokeGame": {
-                    "address": "KT1A3K9beFGtqYuH5uj683uFnyy32VZ3SzPT"
+                    "address": "KT1B2wy44bqZvDDqA1NPNvYU69S8e44aeVYY"
                 }
             }
         },
@@ -118,7 +118,7 @@
             "storage": {},
             "aliases": {
                 "pokeGame": {
-                    "address": "KT1DLQg3zCNzwsvT69iHvs9BQ2HVPHwaYHLc"
+                    "address": "KT1PtDjmiJ1LeLd9UdcTQyswLjELPHjU41vG"
                 }
             }
         }
