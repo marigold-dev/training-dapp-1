@@ -108,6 +108,19 @@
                     "destination": "local"
                 }
             ]
+        },
+        "@taqueria/plugin-taquito.deploy.1663837102754": {
+            "task": "deploy",
+            "plugin": "@taqueria/plugin-taquito",
+            "time": 1663837102754,
+            "output": [
+                {
+                    "contract": "pokeGame.tz",
+                    "address": "KT1C6srAptm7Wi8qCadPnVvAYoVEZdiBLKYe",
+                    "alias": "pokeGame",
+                    "destination": "local"
+                }
+            ]
         }
     }
 }

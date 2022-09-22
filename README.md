@@ -291,7 +291,7 @@ You need to install taquito plugin first to originate the contract
 ```bash
 taq install @taqueria/plugin-taquito
 
-taq deploy pokeGame -e "development" --storage pokeGame.default_storage.tz
+taq deploy pokeGame.tz -e "development" 
 ```
 
 ## Step 6 : Deploy to Jakarta testnet
@@ -300,7 +300,7 @@ taq deploy pokeGame -e "development" --storage pokeGame.default_storage.tz
 Deploy to testing env
 
 ```bash
-taq deploy pokeGame -e "testing" --storage pokeGame.default_storage.tz
+taq deploy pokeGame.tz -e "testing" 
 ```
 
 HOORAY :confetti_ball: your smart contract is ready on the Jakarta !

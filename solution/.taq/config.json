@@ -1,23 +1,5 @@
 {
     "language": "en",
-    "plugins": [
-        {
-            "name": "@taqueria/plugin-ligo",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-flextesa",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-taquito",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-contract-types",
-            "type": "npm"
-        }
-    ],
     "contractsDir": "contracts",
     "artifactsDir": "artifacts",
     "contracts": {
@@ -106,7 +88,7 @@
             "storage": {},
             "aliases": {
                 "pokeGame": {
-                    "address": "KT1B2wy44bqZvDDqA1NPNvYU69S8e44aeVYY"
+                    "address": "KT1C6srAptm7Wi8qCadPnVvAYoVEZdiBLKYe"
                 }
             }
         },
@@ -129,5 +111,26 @@
         "john": "3_000_000_000",
         "jane": "3_000_000_000",
         "joe": "3_000_000_000"
-    }
+    },
+    "plugins": [
+        {
+            "name": "@taqueria/plugin-ligo",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-flextesa",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-taquito",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-contract-types",
+            "type": "npm"
+        }
+    ],
+    "projectDir": "/home/zamrokk/training-dapp-1/solution",
+    "configFile": "/home/zamrokk/training-dapp-1/solution/.taq/config.json",
+    "hash": "1843ecba5ff1456a8bd2f2b66c7ff5b47eb4550f6634aea993a44c85c27706cd"
 }
