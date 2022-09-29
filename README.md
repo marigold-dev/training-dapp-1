@@ -271,7 +271,7 @@ Open your Temple browser extension or on your mobile phone. Do the initial setup
 
 ## Step 6 : (Optional) deploy locally with flextesa
 
-You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Jakartanet). For your knowledge, below the step to deplpoy locally.
+You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Jakartanet). For your knowledge, below the step to deploy locally. Also you can change some parameter to point to another protocol version
 
 ```
 taq install @taqueria/plugin-flextesa
@@ -294,7 +294,7 @@ taq install @taqueria/plugin-taquito
 taq deploy pokeGame.tz -e "development" 
 ```
 
-## Step 6 : Deploy to Jakarta testnet
+## Step 6 : Deploy to Ghostnet testnet
 
 
 Deploy to testing env
@@ -303,7 +303,7 @@ Deploy to testing env
 taq deploy pokeGame.tz -e "testing" 
 ```
 
-HOORAY :confetti_ball: your smart contract is ready on the Jakarta !
+HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
 
 # :construction_worker:  Dapp 
 
