@@ -256,11 +256,6 @@ Then on "environment" field, you can add a new environment pointing to this netw
 ...
 ```
 
-> Note : on Taqueria, you will be able soon to see accounts from other network than flextesa
-> ```bash
-> taq list accounts -n "ghostnet"
-> ```
-
 Your account should appear on the list now with its balance
 
 ### Temple
@@ -300,6 +295,8 @@ taq deploy pokeGame.tz -e "development"
 Deploy to testing env
 
 ```bash
+taq install @taqueria/plugin-taquito
+
 taq deploy pokeGame.tz -e "testing" 
 ```
 
