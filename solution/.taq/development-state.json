@@ -1,39 +1,6 @@
 {
     "operations": {},
     "tasks": {
-        "@taqueria/plugin-ligo.compile.1663574628039": {
-            "task": "compile",
-            "plugin": "@taqueria/plugin-ligo",
-            "time": 1663574628039,
-            "output": [
-                {
-                    "contract": "pokeGame.storages.jsligo",
-                    "artifact": ""
-                }
-            ]
-        },
-        "@taqueria/plugin-ligo.compile.1663574654554": {
-            "task": "compile",
-            "plugin": "@taqueria/plugin-ligo",
-            "time": 1663574654554,
-            "output": [
-                {
-                    "contract": "pokeGame.storages.jsligo",
-                    "artifact": ""
-                }
-            ]
-        },
-        "@taqueria/plugin-ligo.compile.1663574667154": {
-            "task": "compile",
-            "plugin": "@taqueria/plugin-ligo",
-            "time": 1663574667154,
-            "output": [
-                {
-                    "contract": "pokeGame.storages.jsligo",
-                    "artifact": ""
-                }
-            ]
-        },
         "@taqueria/plugin-ligo.compile.1663574731974": {
             "task": "compile",
             "plugin": "@taqueria/plugin-ligo",
@@ -119,6 +86,77 @@
                     "address": "KT1C6srAptm7Wi8qCadPnVvAYoVEZdiBLKYe",
                     "alias": "pokeGame",
                     "destination": "local"
+                }
+            ]
+        },
+        "@taqueria/plugin-ligo.compile.1664871289201": {
+            "task": "compile",
+            "plugin": "@taqueria/plugin-ligo",
+            "time": 1664871289201,
+            "output": [
+                {
+                    "contract": "pokeGame.jsligo",
+                    "artifact": "artifacts/pokeGame.tz"
+                },
+                {
+                    "contract": "pokeGame.storages.jsligo",
+                    "artifact": "artifacts/pokeGame.default_storage.tz\n"
+                }
+            ]
+        },
+        "@taqueria/plugin-ligo.compile.1664950888904": {
+            "task": "compile",
+            "plugin": "@taqueria/plugin-ligo",
+            "time": 1664950888904,
+            "output": [
+                {
+                    "contract": "pokeGame.jsligo",
+                    "artifact": "artifacts/pokeGame.tz"
+                },
+                {
+                    "contract": "pokeGame.storages.jsligo",
+                    "artifact": "artifacts/pokeGame.default_storage.tz\n"
+                }
+            ]
+        },
+        "@taqueria/plugin-ligo.compile.1664950915872": {
+            "task": "compile",
+            "plugin": "@taqueria/plugin-ligo",
+            "time": 1664950915872,
+            "output": [
+                {
+                    "contract": "pokeGame.jsligo",
+                    "artifact": "artifacts/pokeGame.tz"
+                },
+                {
+                    "contract": "pokeGame.storages.jsligo",
+                    "artifact": "artifacts/pokeGame.default_storage.tz\n"
+                },
+                {
+                    "contract": "pokeGame.parameters.jsligo",
+                    "artifact": "artifacts/pokeGame.parameter.default_parameter.tz\n"
+                }
+            ]
+        },
+        "@taqueria/plugin-tezos-client.simulate.1664951328721": {
+            "task": "simulate",
+            "plugin": "@taqueria/plugin-tezos-client",
+            "time": 1664951328721,
+            "output": [
+                {
+                    "contract": "pokeGame.tz",
+                    "result": "N/A"
+                }
+            ]
+        },
+        "@taqueria/plugin-tezos-client.simulate.1664951369173": {
+            "task": "simulate",
+            "plugin": "@taqueria/plugin-tezos-client",
+            "time": 1664951369173,
+            "output": [
+                {
+                    "contract": "pokeGame.tz",
+                    "result": "storage\n  { \"KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi\" }\nemitted operations\n  \nbig_map diff\n  \n\n"
                 }
             ]
         }

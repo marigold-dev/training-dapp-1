@@ -163,20 +163,45 @@ taq compile pokeGame.jsligo
 
 It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
 
-> Note for next Taqueria version, you will able to run ligo dry-run command 
-> Dry run (i.e test an execution locally without deploying), pass the contract parameter `Poke()` and the initial on-chain storage with an empty set :
-> ```bash
-> taq dry-run pokeGame.jsligo 'Poke()' 'Set.empty as set<address>' 
-> ```
-> 
-> Output should give : 
-> 
-> ```ocaml
-> ( LIST_EMPTY() ,
->   SET_ADD(@"tz1QL8xpMA9JwtUYXXwB6qnJTk8pkEakHpT4" , SET_EMPTY()) )
-> ```
-> 
-> You can notice that the instruction will store the address of the caller into the traces storage
+Let's simulate the Poke call using `taq simulate`  
+We will pass the contract parameter `Poke()` and the initial on-chain storage with an empty set 
+
+```bash
+taq install @taqueria/plugin-tezos-client
+taq create contract pokeGame.parameters.jsligo
+```
+
+Edit the file
+
+```typescript
+#include "pokeGame.jsligo"
+const default_parameter = Poke();
+```
+
+Run simulation now
+
+```bash
+taq compile pokeGame.jsligo
+taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz  
+```
+
+Output should give :
+
+```logs
+┌─────────────┬──────────────────────────────────────────────┐
+│ Contract    │ Result                                       │
+├─────────────┼──────────────────────────────────────────────┤
+│ pokeGame.tz │ storage                                      │
+│             │   { "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi" } │
+│             │ emitted operations                           │
+│             │                                              │
+│             │ big_map diff                                 │
+│             │                                              │
+│             │                                              │
+└─────────────┴──────────────────────────────────────────────┘
+```
+
+You can notice that the instruction will store the address of the caller into the traces storage
 
 ## Step 5 : Configure your wallet to get free Tez
 

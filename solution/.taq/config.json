@@ -1,5 +1,27 @@
 {
     "language": "en",
+    "plugins": [
+        {
+            "name": "@taqueria/plugin-ligo",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-flextesa",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-taquito",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-contract-types",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-tezos-client",
+            "type": "npm"
+        }
+    ],
     "contractsDir": "contracts",
     "artifactsDir": "artifacts",
     "contracts": {
@@ -10,6 +32,10 @@
         "pokeGame.storages.jsligo": {
             "sourceFile": "pokeGame.storages.jsligo",
             "hash": "5737454d4dd7c3947452a5d2003c30353b62f19a6d73f98ad830a187574b3751"
+        },
+        "pokeGame.default_parameters.jsligo": {
+            "sourceFile": "pokeGame.default_parameters.jsligo",
+            "hash": "5737454d4dd7c3947452a5d2003c30353b62f19a6d73f98ad830a187574b3751"
         }
     },
     "network": {
@@ -18,7 +44,6 @@
             "rpcUrl": "https://ghostnet.tezos.marigold.dev",
             "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg",
             "faucet": {
-                "pkh": "tz1Qjvu8xaRgTjQmHBBDHaM1HGomCTYBgLZJ",
                 "mnemonic": [
                     "away",
                     "virus",
@@ -39,7 +64,8 @@
                 "email": "mpyuqqza.jqszvrsy@teztnets.xyz",
                 "password": "9OvRmgifTP",
                 "amount": "17415095578",
-                "activation_code": "8e54d45a59d21089fc60c6d4e94ecf4ecc44c417"
+                "activation_code": "8e54d45a59d21089fc60c6d4e94ecf4ecc44c417",
+                "pkh": "tz1Qjvu8xaRgTjQmHBBDHaM1HGomCTYBgLZJ"
             }
         }
     },
@@ -100,7 +126,7 @@
             "storage": {},
             "aliases": {
                 "pokeGame": {
-                    "address": "KT1PtDjmiJ1LeLd9UdcTQyswLjELPHjU41vG"
+                    "address": "KT1XmGEpmjL4XPKSJoaSeLVku3p1mJtXndmo"
                 }
             }
         }
@@ -111,26 +137,5 @@
         "john": "3_000_000_000",
         "jane": "3_000_000_000",
         "joe": "3_000_000_000"
-    },
-    "plugins": [
-        {
-            "name": "@taqueria/plugin-ligo",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-flextesa",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-taquito",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-contract-types",
-            "type": "npm"
-        }
-    ],
-    "projectDir": "/home/zamrokk/training-dapp-1/solution",
-    "configFile": "/home/zamrokk/training-dapp-1/solution/.taq/config.json",
-    "hash": "1843ecba5ff1456a8bd2f2b66c7ff5b47eb4550f6634aea993a44c85c27706cd"
+    }
 }
