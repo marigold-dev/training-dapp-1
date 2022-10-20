@@ -11,7 +11,7 @@ Training dapp n°1
 
 > dapp : A decentralized application (dApp) is a type of distributed open source software application that runs on a peer-to-peer (P2P) blockchain network rather than on a single computer. DApps are visibly similar to other software applications that are supported on a website or mobile device but are P2P supported
 
-Goal of this training is to develop a poke game with smart contract. You will learn : 
+We are creating a poke game on smart contract. You will learn :
 - create a Tezos project with taqueria
 - create a smart contract in jsligo
 - deploy the smart contract to a local testnet and a real testnet
@@ -20,7 +20,7 @@ Goal of this training is to develop a poke game with smart contract. You will le
 
 > :warning: This is not an HTML or REACT training, I will avoid as much of possible any complexity relative to these technologies 
 
-The game consists on poking the owner of a smart contract.  The smartcontract keeps a track of user interactions on its own storage 
+The game consists on poking the owner of a smart contract. The smartcontract keeps a track of user interactions and stores this trace.
 
 Poke sequence diagram
 ```mermaid
@@ -36,13 +36,13 @@ Please install this software first on your machine or use online alternative :
 
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
-- [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another
+- [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another package manager (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)
 - [ ] [taqueria](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
 - [ ] [taqueria VS Code extension](https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode) : visualize your project and execute tasks
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser
 
-> :warning: About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... be careful to run Docker on your machine
+> :warning: About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... Docker should be running on your machine
 
 # :scroll: Smart contract
 
@@ -85,7 +85,7 @@ Every contract requires to respect this convention :
 
 > Doc :  https://ligolang.org/docs/advanced/entrypoints-contracts
 
-Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use `match` to evaluate the parameter and call the appropriated `poke` function
+Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use `match` to evaluate the parameter and call the appropriate `poke` function
 > Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching
 
 ```javascript
@@ -164,7 +164,7 @@ taq compile pokeGame.jsligo
 It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
 
 Let's simulate the Poke call using `taq simulate`  
-We will pass the contract parameter `Poke()` and the initial on-chain storage with an empty set 
+We will pass the contract parameter `Poke()` and the initial on-chain storage with an empty set
 
 ```bash
 taq install @taqueria/plugin-tezos-client
@@ -433,7 +433,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
         
         <ConnectButton
           Tezos={Tezos}
@@ -453,8 +452,6 @@ function App() {
         <div>
         I am {userAddress} with {userBalance} mutez
         </div>
-
-        </p>
 
       </header>
     </div>
