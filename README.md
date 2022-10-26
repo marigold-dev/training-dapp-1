@@ -354,7 +354,7 @@ This was painful :/, but it was the worst so far
 
 ### Generate Typescript classes from Michelson code
 
-Taqueria is able to generate Typescript classes for our React application. IT will take the definition of your smart contract and geenrates the contract entrypoint functions, type definition, etc ...
+Taqueria is able to generate Typescript classes for our React application. It will take the definition of your smart contract and generate the contract entrypoint functions, type definitions, etc ...
 
 To get typescript classes from taqueria plugin, get back to root folder running :
 
