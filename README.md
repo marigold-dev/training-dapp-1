@@ -42,7 +42,7 @@ Please install this software first on your machine or use online alternative :
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser
 
-> :warning: About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... Docker should be running on your machine
+> :warning: :whale: About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... Docker should be running on your machine :whale2:
 
 # :scroll: Smart contract
 
