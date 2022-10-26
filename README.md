@@ -211,85 +211,58 @@ Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), 
 
 ### Ghostnet testnet wallet
 
-> Note as a simple user, you would need only a web faucet like [Marigold faucet here](https://faucet.marigold.dev/). However, Taqueria will require the faucet JSON file to execute commands
+:warning:  Taqueria will require an account (mainly to deploy your contract), the first time you will try to deploy a contract it will generate a new implicit account you will have to fill with XTZ
 
-Go to the [Tezos faucet](https://teztnets.xyz/ghostnet-about) and get the faucet file for Ghostnet
-
-On taqueria .taq/config.json file, add the Ghostnet testnet on network field as follow : 
-
-```json
-{
-...
-
-
-   "network": {
-        "ghostnet": {
-            "label": "ghostnet",
-            "rpcUrl": "https://ghostnet.tezos.marigold.dev",
-            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg",
-            "faucet": {
-                "pkh": "tz1Qjvu8xaRgTjQmHBBDHaM1HGomCTYBgLZJ",
-                "mnemonic": [
-                    "away",
-                    "virus",
-                    "stand",
-                    "kingdom",
-                    "sorry",
-                    "absurd",
-                    "close",
-                    "found",
-                    "warrior",
-                    "icon",
-                    "nominee",
-                    "theme",
-                    "enough",
-                    "kiss",
-                    "double"
-                ],
-                "email": "mpyuqqza.jqszvrsy@teztnets.xyz",
-                "password": "9OvRmgifTP",
-                "amount": "17415095578",
-                "activation_code": "8e54d45a59d21089fc60c6d4e94ecf4ecc44c417"
-            }
-        }
-    },
-
-
-...
-}    
+Force Taqueria to generate this account
+```bash
+taq install @taqueria/plugin-taquito
+taq deploy pokeGame.tz -e "testing" 
 ```
 
-Then on "environment" field, you can add a new environment pointing to this network
+You should get this kind of log 
 
-```json
-...
-
-
-"environment": {
-...
-
-        ,
-        "testing": {
-            "networks": [
-                "ghostnet"
-            ],
-            "sandboxes": [],
-            "storage": {},
-            "aliases": {}
-        }
-
-...
+```log
+Warning: the faucet field in network configs has been deprecated and will be ignored
+A keypair with public key hash tz3fcNNiZoPXDpyCoaZ5Tm7RUzBGbFVQzAQ2 was generated for you.
+To fund this account:
+1. Go to https://teztnets.xyz and click "Faucet" of the target testnet
+2. Copy and paste the above key into the 'wallet address field
+3. Request some Tez (Note that you might need to wait for a few seconds for the network to register the funds)
 ```
 
-Your account should appear on the list now with its balance
+#### Configure Temple
 
-### Temple
+Open your Temple browser extension or on your mobile phone. Do the initial setup.
+Once you are done, go to Settings (click on the avatar icon, or display Temple in full page) and click on `Import  account` > `Private key` tab
 
-Open your Temple browser extension or on your mobile phone. Do the initial setup to create an implicit account then import an account from the previous JSON faucet file
+Copy the private key from the .taq/config.json file at this path `network/ghostnet/accounts/taqRootAccount/privateKey` to Temple text input  
 
-:rocket: You are ready to go :sunglasses:
+#### Send free XTZ to your account
 
-## Step 6 : (Optional) deploy locally with flextesa
+Go to a web faucet like [Marigold faucet here](https://faucet.marigold.dev/).
+Connect with your wallet on `Ghostnet` and ask for free `XTZ`
+
+Now you have :moneybag: !!!
+
+## Step 6 : Deploy to Ghostnet testnet
+
+Retry to deploy to testing env
+
+```bash
+taq deploy pokeGame.tz -e "testing" 
+```
+
+HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
+
+```logs
+┌─────────────┬──────────────────────────────────────┬──────────┬─────────────┐
+│ Contract    │ Address                              │ Alias    │ Destination │
+├─────────────┼──────────────────────────────────────┼──────────┼─────────────┤
+│ pokeGame.tz │ KT1JxtDY4vRjnjqRN46k29VgRB7fe1xctGzp │ pokeGame │ ghostnet    │
+└─────────────┴──────────────────────────────────────┴──────────┴─────────────┘
+```
+
+## Step 7 : (Optional) deploy locally with flextesa
 
 You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Jakartanet). For your knowledge, below the step to deploy locally. Also you can change some parameter to point to another protocol version
 
@@ -314,19 +287,6 @@ taq install @taqueria/plugin-taquito
 taq deploy pokeGame.tz -e "development" 
 ```
 
-## Step 6 : Deploy to Ghostnet testnet
-
-
-Deploy to testing env
-
-```bash
-taq install @taqueria/plugin-taquito
-
-taq deploy pokeGame.tz -e "testing" 
-```
-
-HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
-
 # :construction_worker:  Dapp 
 
 ## Step 1 : Create react app
@@ -345,14 +305,14 @@ yarn add -D @airgap/beacon-types
 yarn add @dipdup/tzkt-api
 ```
 
-> :warning: If you are using last version 5.x of react-script, follow these steps to rewire webpack for all encountered missing libraries : https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues
+> :warning: :warning: :warning: Last React version uses `react-script 5.x` , follow these steps to rewire webpack for all encountered missing libraries : https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues
 
-> For example, in my case, I install this :
+> For example, in my case, I installed this :
 > ```bash
 > yarn add --dev react-app-rewired process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
 > ```
-> and my override file is : 
-> ```json
+> and my `config-overrides.js` file was : 
+> ```js
 > const webpack = require('webpack');
 >
 >module.exports = function override(config) {
@@ -379,17 +339,24 @@ yarn add @dipdup/tzkt-api
 >}   
 > ```
 > then I change the script in package.json by
+> ```
+> ...
 > "scripts": {
 >    "start": "react-app-rewired start",
 >    "build": "react-app-rewired build",
 >    "test": "react-app-rewired test",
 >    "eject": "react-scripts eject"
 >},
+> ```
 > :warning:
+
+This was painful :/, but it was the worst so far
 
 ### Generate Typescript classes from Michelson code
 
-Get typescript classes from taqueria plugin, get back to root folder
+Taqueria is able to generate Typescript classes for our React application. IT will take the definition of your smart contract and geenrates the contract entrypoint functions, type definition, etc ...
+
+To get typescript classes from taqueria plugin, get back to root folder running :
 
 ```bash
 cd ..
@@ -461,7 +428,7 @@ function App() {
 export default App;
 ```
 
-Let's create the 2 missing src component files and put code in it. On **src** folder, create these files.
+Let's create the 2 missing src component files and put code in it. On `src` folder, create these files.
 
 ```bash
 touch ConnectWallet.tsx
@@ -664,7 +631,7 @@ On the return 'html templating' section, add this after the display of the user 
 </div>
 ```
 
-Save your file, and re-run your server , it will generate the .env file containing the last deployed contracts :)
+Save your file, and **re-run** your server , it will generate the .env file containing the last deployed contracts :)
 
 ```bash
 yarn run start

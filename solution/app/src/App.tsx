@@ -4,7 +4,6 @@ import { useState } from "react";
 import "./App.css";
 import ConnectButton from "./ConnectWallet";
 import DisconnectButton from "./DisconnectWallet";
-
 import { PokeGameWalletType } from "./pokeGame.types";
 
 function App() {
@@ -72,7 +71,6 @@ function App() {
         <br />
         <div>
           <button onClick={fetchContracts}>Fetch contracts</button>
-
           <table>
             <thead>
               <tr>

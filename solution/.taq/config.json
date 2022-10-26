@@ -6,7 +6,7 @@
             "type": "npm"
         },
         {
-            "name": "@taqueria/plugin-flextesa",
+            "name": "@taqueria/plugin-tezos-client",
             "type": "npm"
         },
         {
@@ -15,10 +15,6 @@
         },
         {
             "name": "@taqueria/plugin-contract-types",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-tezos-client",
             "type": "npm"
         }
     ],
@@ -33,8 +29,8 @@
             "sourceFile": "pokeGame.storages.jsligo",
             "hash": "5737454d4dd7c3947452a5d2003c30353b62f19a6d73f98ad830a187574b3751"
         },
-        "pokeGame.default_parameters.jsligo": {
-            "sourceFile": "pokeGame.default_parameters.jsligo",
+        "pokeGame.parameters.jsligo": {
+            "sourceFile": "pokeGame.parameters.jsligo",
             "hash": "5737454d4dd7c3947452a5d2003c30353b62f19a6d73f98ad830a187574b3751"
         }
     },
@@ -43,29 +39,12 @@
             "label": "ghostnet",
             "rpcUrl": "https://ghostnet.tezos.marigold.dev",
             "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg",
-            "faucet": {
-                "mnemonic": [
-                    "away",
-                    "virus",
-                    "stand",
-                    "kingdom",
-                    "sorry",
-                    "absurd",
-                    "close",
-                    "found",
-                    "warrior",
-                    "icon",
-                    "nominee",
-                    "theme",
-                    "enough",
-                    "kiss",
-                    "double"
-                ],
-                "email": "mpyuqqza.jqszvrsy@teztnets.xyz",
-                "password": "9OvRmgifTP",
-                "amount": "17415095578",
-                "activation_code": "8e54d45a59d21089fc60c6d4e94ecf4ecc44c417",
-                "pkh": "tz1Qjvu8xaRgTjQmHBBDHaM1HGomCTYBgLZJ"
+            "accounts": {
+                "taqRootAccount": {
+                    "publicKey": "p2pk64avNy7UBRygrN8EptouD4EdFHgJruferj9WUbR7Ub6uUXjqZJu",
+                    "publicKeyHash": "tz3fcNNiZoPXDpyCoaZ5Tm7RUzBGbFVQzAQ2",
+                    "privateKey": "p2sk2utuKVeBGprzqAaUJZfv2XHWBeKMNEtsnb1ppKmJhaqAhCeGLh"
+                }
             }
         }
     },
@@ -73,35 +52,7 @@
         "local": {
             "label": "Local Tezos Sandbox",
             "rpcUrl": "http://localhost:20000",
-            "protocol": "Psithaca2MLRFYargivpo7YvUr7wUDqyxrdhC5CQq78mRvimz6A",
-            "accounts": {
-                "default": "bob",
-                "bob": {
-                    "encryptedKey": "edpkurPsQ8eUApnLUJ9ZPDvu98E8VNj4KtJa1aZr16Cr5ow5VHKnz4",
-                    "publicKeyHash": "tz1aSkwEot3L2kmUvcoxzjMomb9mvBNuzFK6",
-                    "secretKey": "unencrypted:edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt"
-                },
-                "alice": {
-                    "encryptedKey": "edpkvGfYw3LyB1UcCahKQk4rF2tvbMUk8GFiTuMjL75uGXrpvKXhjn",
-                    "publicKeyHash": "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb",
-                    "secretKey": "unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq"
-                },
-                "john": {
-                    "encryptedKey": "edpktt6t2ENhxiQqun6bXPPWC6tFVvNPTDRh1gEPGX4BgDgbDnmGzP",
-                    "publicKeyHash": "tz1Zwoh1QCVAvJ4sVTojMp9pLYp6Ji4NoZy6",
-                    "secretKey": "unencrypted:edsk3Un2KRUUoWZufi914HQem96ejVFnkyD8GXRPUSkgqy5etsYXEN"
-                },
-                "jane": {
-                    "encryptedKey": "edpkvS6TDSWcqqj3EJi3NRrCMyN7oNw1B3Hp37R19tMThqM8YNhAuS",
-                    "publicKeyHash": "tz1aHUAC4oviwJuZF1EvVSvFz7cu9KMNYBph",
-                    "secretKey": "unencrypted:edsk3UkdS1UBfTBkMAoFxmfdmUHmCdNhTzDJ1cSJuZhU1b6k6fZZoQ"
-                },
-                "joe": {
-                    "encryptedKey": "edpkuT1QYPYbLLQz9dXhQS33ncsixxeGHbNGmntPTR4VBbWmskHPrV",
-                    "publicKeyHash": "tz1MVGjgD1YtAPwohsSfk8i3ZiT1yEGM2YXB",
-                    "secretKey": "unencrypted:edsk3Un2FU9Zeb4KEoATWdpAqcX5JArMUj2ew8S4SuzhPRDmGoqNx2"
-                }
-            }
+            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg"
         }
     },
     "environment": {
@@ -110,23 +61,16 @@
             "networks": [],
             "sandboxes": [
                 "local"
-            ],
-            "storage": {},
-            "aliases": {
-                "pokeGame": {
-                    "address": "KT1C6srAptm7Wi8qCadPnVvAYoVEZdiBLKYe"
-                }
-            }
+            ]
         },
         "testing": {
             "networks": [
                 "ghostnet"
             ],
             "sandboxes": [],
-            "storage": {},
             "aliases": {
                 "pokeGame": {
-                    "address": "KT1XmGEpmjL4XPKSJoaSeLVku3p1mJtXndmo"
+                    "address": "KT1JxtDY4vRjnjqRN46k29VgRB7fe1xctGzp"
                 }
             }
         }
