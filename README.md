@@ -207,7 +207,7 @@ You can notice that the instruction will store the address of the caller into th
 
 ### Local testnet wallet
 
-Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), so you don't really need to
+Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), so you don't really need to configure something
 
 ### Ghostnet testnet wallet
 
