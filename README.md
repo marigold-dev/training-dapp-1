@@ -384,7 +384,9 @@ We will declare 2 React Button components and a display of address and balance w
 Edit src/App.tsx file
 
 ```typescript
-import { useState } from 'react';
+import { NetworkType } from "@airgap/beacon-types";
+import { useEffect, useState } from "react";
+import { BeaconWallet } from "@taquito/beacon-wallet";
 import './App.css';
 import ConnectButton from './ConnectWallet';
 import { TezosToolkit } from '@taquito/taquito';
@@ -393,7 +395,17 @@ import DisconnectButton from './DisconnectWallet';
 function App() {
 
   const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://ghostnet.tezos.marigold.dev"));
-  const [wallet, setWallet] = useState<any>(null);
+    const [wallet, setWallet] = useState<BeaconWallet>(
+    new BeaconWallet({
+      name: "Training",
+      preferredNetwork: NetworkType.GHOSTNET,
+    })
+  );
+
+  useEffect(() => {
+    Tezos.setWalletProvider(wallet);
+  }, [wallet]);
+
   const [userAddress, setUserAddress] = useState<string>("");
   const [userBalance, setUserBalance] = useState<number>(0);
 
@@ -403,7 +415,6 @@ function App() {
         
         <ConnectButton
           Tezos={Tezos}
-          setWallet={setWallet}
           setUserAddress={setUserAddress}
           setUserBalance={setUserBalance}
           wallet={wallet}
@@ -413,7 +424,6 @@ function App() {
           wallet={wallet}
           setUserAddress={setUserAddress}
           setUserBalance={setUserBalance}
-          setWallet={setWallet}
         />
 
         <div>
@@ -440,16 +450,13 @@ ConnectWallet button will create an instance wallet, get user permissions via a 
 Edit ConnectWallet.tsx
 
 ```typescript
-import { Dispatch, SetStateAction, useState, useEffect } from "react";
-import { TezosToolkit } from "@taquito/taquito";
+import { NetworkType } from "@airgap/beacon-sdk";
 import { BeaconWallet } from "@taquito/beacon-wallet";
-import {
-  NetworkType
-} from "@airgap/beacon-sdk";
+import { TezosToolkit } from "@taquito/taquito";
+import { Dispatch, SetStateAction } from "react";
 
 type ButtonProps = {
   Tezos: TezosToolkit;
-  setWallet: Dispatch<SetStateAction<any>>;
   setUserAddress: Dispatch<SetStateAction<string>>;
   setUserBalance: Dispatch<SetStateAction<number>>;
   wallet: BeaconWallet;
@@ -457,56 +464,27 @@ type ButtonProps = {
 
 const ConnectButton = ({
   Tezos,
-  setWallet,
   setUserAddress,
   setUserBalance,
-  wallet
+  wallet,
 }: ButtonProps): JSX.Element => {
-
-  const setup = async (userAddress: string): Promise<void> => {
-    setUserAddress(userAddress);
-    // updates balance
-    const balance = await Tezos.tz.getBalance(userAddress);
-    setUserBalance(balance.toNumber());
-  };
-
   const connectWallet = async (): Promise<void> => {
     try {
-      if(!wallet) await createWallet();
       await wallet.requestPermissions({
         network: {
           type: NetworkType.GHOSTNET,
-          rpcUrl: "https://ghostnet.tezos.marigold.dev"
-        }
+          rpcUrl: "https://ghostnet.tezos.marigold.dev",
+        },
       });
       // gets user's address
       const userAddress = await wallet.getPKH();
-      await setup(userAddress);
+      const balance = await Tezos.tz.getBalance(userAddress);
+      setUserBalance(balance.toNumber());
+      setUserAddress(userAddress);
     } catch (error) {
       console.log(error);
     }
   };
-
-  const createWallet = async() => {
-    // creates a wallet instance if not exists
-    if(!wallet){
-      wallet = new BeaconWallet({
-      name: "training",
-      preferredNetwork: NetworkType.GHOSTNET
-    });}
-    Tezos.setWalletProvider(wallet);
-    setWallet(wallet);
-    // checks if wallet was connected before
-    const activeAccount = await wallet.client.getActiveAccount();
-    if (activeAccount) {
-      const userAddress = await wallet.getPKH();
-      await setup(userAddress);
-    }
-  }
-
-  useEffect(() => {
-    (async () => createWallet())();
-  }, []);
 
   return (
     <div className="buttons">
@@ -525,32 +503,25 @@ export default ConnectButton;
 DisconnectWallet button will clean wallet instance and all linked objects
 
 ```typescript
-import { Dispatch, SetStateAction } from "react";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import { Dispatch, SetStateAction } from "react";
 
 interface ButtonProps {
-  wallet: BeaconWallet | null;
+  wallet: BeaconWallet;
   setUserAddress: Dispatch<SetStateAction<string>>;
   setUserBalance: Dispatch<SetStateAction<number>>;
-  setWallet: Dispatch<SetStateAction<any>>;
 }
 
 const DisconnectButton = ({
   wallet,
   setUserAddress,
   setUserBalance,
-  setWallet,
 }: ButtonProps): JSX.Element => {
   const disconnectWallet = async (): Promise<void> => {
     setUserAddress("");
     setUserBalance(0);
-    setWallet(null);
     console.log("disconnecting wallet");
-    if (wallet) {
-      await wallet.client.removeAllAccounts();
-      await wallet.client.removeAllPeers();
-      await wallet.client.destroy();
-    }
+    await wallet.clearActiveAccount();
   };
 
   return (
@@ -563,7 +534,6 @@ const DisconnectButton = ({
 };
 
 export default DisconnectButton;
-
 ```
 
 Save both file, the dev server should refresh the page
@@ -676,7 +646,7 @@ Then replace the line displaying the contract address `{contracts.map((contract)
 > There is a Taqueria bug on unique entrypoint: https://github.com/ecadlabs/taqueria/issues/1128
 > Go to ./app/src/pokeGame.types.ts and rewrite these lines
 >
-> ```typescript 
+> ```typescript
 > type Methods = {
 >     default : () => Promise<void>;
 > };

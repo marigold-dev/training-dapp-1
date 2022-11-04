@@ -1,6 +1,8 @@
+import { NetworkType } from "@airgap/beacon-types";
 import { Contract, ContractsService } from "@dipdup/tzkt-api";
+import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TezosToolkit } from "@taquito/taquito";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import ConnectButton from "./ConnectWallet";
 import DisconnectButton from "./DisconnectWallet";
@@ -10,7 +12,17 @@ function App() {
   const [Tezos, setTezos] = useState<TezosToolkit>(
     new TezosToolkit("https://ghostnet.tezos.marigold.dev")
   );
-  const [wallet, setWallet] = useState<any>(null);
+  const [wallet, setWallet] = useState<BeaconWallet>(
+    new BeaconWallet({
+      name: "Training",
+      preferredNetwork: NetworkType.GHOSTNET,
+    })
+  );
+
+  useEffect(() => {
+    Tezos.setWalletProvider(wallet);
+  }, [wallet]);
+
   const [userAddress, setUserAddress] = useState<string>("");
   const [userBalance, setUserBalance] = useState<number>(0);
 
@@ -51,7 +63,6 @@ function App() {
       <header className="App-header">
         <ConnectButton
           Tezos={Tezos}
-          setWallet={setWallet}
           setUserAddress={setUserAddress}
           setUserBalance={setUserBalance}
           wallet={wallet}
@@ -61,7 +72,6 @@ function App() {
           wallet={wallet}
           setUserAddress={setUserAddress}
           setUserBalance={setUserBalance}
-          setWallet={setWallet}
         />
 
         <div>
