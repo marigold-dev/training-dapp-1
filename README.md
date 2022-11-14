@@ -4,35 +4,36 @@ tags: Training
 description: Training n°1 for decentralized application
 ---
 
-Training dapp n°1
-===
+# Training dapp n°1
 
-# :point_up:  Poke game
+# :point_up: Poke game
 
 > dapp : A decentralized application (dApp) is a type of distributed open source software application that runs on a peer-to-peer (P2P) blockchain network rather than on a single computer. DApps are visibly similar to other software applications that are supported on a website or mobile device but are P2P supported
 
 We are creating a poke game on smart contract. You will learn :
+
 - create a Tezos project with taqueria
 - create a smart contract in jsligo
 - deploy the smart contract to a local testnet and a real testnet
 - create a dapp using taquito library and interact with a Tezos browser wallet
 - use an indexer
 
-> :warning: This is not an HTML or REACT training, I will avoid as much of possible any complexity relative to these technologies 
+> :warning: This is not an HTML or REACT training, I will avoid as much of possible any complexity relative to these technologies
 
 The game consists on poking the owner of a smart contract. The smartcontract keeps a track of user interactions and stores this trace.
 
 Poke sequence diagram
+
 ```mermaid
 sequenceDiagram
   Note left of User: Prepare poke
   User->>SM: poke owner
-  Note right of SM: store poke trace 
+  Note right of SM: store poke trace
 ```
 
 # :memo: Prerequisites
 
-Please install this software first on your machine or use online alternative : 
+Please install this software first on your machine or use online alternative :
 
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
@@ -48,7 +49,7 @@ Please install this software first on your machine or use online alternative :
 
 ## Step 1 : Create folder & file
 
-> Note : We will use CLI here but you can also use GUI from the IDE or Taqueria plugin 
+> Note : We will use CLI here but you can also use GUI from the IDE or Taqueria plugin
 
 ```bash
 taq init training1
@@ -61,44 +62,43 @@ taq create contract pokeGame.jsligo
 
 Remove the default code and paste this code instead
 
-```typescript 
+```typescript
 type storage = unit;
 
-type parameter =
-| ["Poke"];
+type parameter = ["Poke"];
 
 type return_ = [list<operation>, storage];
 
-const main = ([action, store] : [parameter, storage]) : return_ => {
-    return match (action, {
-        Poke: () => poke(store)
-    } 
-    )
+const main = ([action, store]: [parameter, storage]): return_ => {
+  return match(action, {
+    Poke: () => poke(store),
+  });
 };
 ```
 
 Every contract requires to respect this convention :
-- an entrypoint, **main** by default, with a mandatory signature taking 2 parameters and a return : 
-    - **parameter** : the contract `parameter`
-    - **storage** : the on-chain storage (can be any type, here `unit` by default)
-    - **return_** : a list of `operation` and a storage
 
-> Doc :  https://ligolang.org/docs/advanced/entrypoints-contracts
+- an entrypoint, **main** by default, with a mandatory signature taking 2 parameters and a return :
+  - **parameter** : the contract `parameter`
+  - **storage** : the on-chain storage (can be any type, here `unit` by default)
+  - **return\_** : a list of `operation` and a storage
+
+> Doc : https://ligolang.org/docs/advanced/entrypoints-contracts
 
 Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use `match` to evaluate the parameter and call the appropriate `poke` function
+
 > Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching
 
 ```javascript
 match (action, {
         Poke: () => poke(store)
-    } 
+    }
 ```
 
 `Poke` is a `parameter` from `variant` type. It is a bit equivalent of Enum type in javascript
 
 ```javascript
-type parameter =
-| ["Poke"];
+type parameter = ["Poke"];
 ```
 
 > Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types
@@ -113,19 +113,20 @@ At line 1, replace :
 type storage = set<address>;
 ```
 
-Before main function, add : 
+Before main function, add :
 
 ```typescript
-const poke = (store : storage) : return_ => {
-    return [  list([]) as list<operation>, Set.add(Tezos.get_source(), store)]; 
+const poke = (store: storage): return_ => {
+  return [list([]) as list<operation>, Set.add(Tezos.get_source(), store)];
 };
 ```
 
 Set library has specific usage :
+
 > Doc https://ligolang.org/docs/language-basics/sets-lists-tuples#sets
 
-
 Here, we get the caller address using `Tezos.get_source()`. Tezos library provides useful function for manipulating blockchain objects
+
 > Doc https://ligolang.org/docs/reference/current-reference
 
 ## Step 4 : Try to poke
@@ -148,7 +149,7 @@ Compile an initial storage with taqueria. Your file should have this pattern `<M
 taq create contract pokeGame.storages.jsligo
 ```
 
-Replace current code by 
+Replace current code by
 
 ```typescript
 #include "pokeGame.jsligo"
@@ -182,7 +183,7 @@ Run simulation now
 
 ```bash
 taq compile pokeGame.jsligo
-taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz  
+taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
 
 Output should give :
@@ -211,15 +212,16 @@ Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), 
 
 ### Ghostnet testnet wallet
 
-:warning:  Taqueria will require an account (mainly to deploy your contract), the first time you will try to deploy a contract it will generate a new implicit account you will have to fill with XTZ
+:warning: Taqueria will require an account (mainly to deploy your contract), the first time you will try to deploy a contract it will generate a new implicit account you will have to fill with XTZ
 
 Force Taqueria to generate this account
+
 ```bash
 taq install @taqueria/plugin-taquito
-taq deploy pokeGame.tz -e "testing" 
+taq deploy pokeGame.tz -e "testing"
 ```
 
-You should get this kind of log 
+You should get this kind of log
 
 ```log
 Warning: the faucet field in network configs has been deprecated and will be ignored
@@ -233,9 +235,9 @@ To fund this account:
 #### Configure Temple
 
 Open your Temple browser extension or on your mobile phone. Do the initial setup.
-Once you are done, go to Settings (click on the avatar icon, or display Temple in full page) and click on `Import  account` > `Private key` tab
+Once you are done, go to Settings (click on the avatar icon, or display Temple in full page) and click on `Import account` > `Private key` tab
 
-Copy the private key from the .taq/config.json file at this path `network/ghostnet/accounts/taqRootAccount/privateKey` to Temple text input  
+Copy the private key from the .taq/config.json file at this path `network/ghostnet/accounts/taqRootAccount/privateKey` to Temple text input
 
 #### Send free XTZ to your account
 
@@ -249,7 +251,7 @@ Now you have :moneybag: !!!
 Retry to deploy to testing env
 
 ```bash
-taq deploy pokeGame.tz -e "testing" 
+taq deploy pokeGame.tz -e "testing"
 ```
 
 HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
@@ -284,10 +286,10 @@ You need to install taquito plugin first to originate the contract
 ```bash
 taq install @taqueria/plugin-taquito
 
-taq deploy pokeGame.tz -e "development" 
+taq deploy pokeGame.tz -e "development"
 ```
 
-# :construction_worker:  Dapp 
+# :construction_worker: Dapp
 
 ## Step 1 : Create react app
 
@@ -300,7 +302,7 @@ cd app
 Add taquito, tzkt indexer lib
 
 ```bash
-yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk 
+yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk
 yarn add -D @airgap/beacon-types
 yarn add @dipdup/tzkt-api
 ```
@@ -308,46 +310,52 @@ yarn add @dipdup/tzkt-api
 > :warning: :warning: :warning: Last React version uses `react-script 5.x` , follow these steps to rewire webpack for all encountered missing libraries : https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues
 
 > For example, in my case, I installed this :
+>
 > ```bash
 > yarn add --dev react-app-rewired process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
 > ```
-> and my `config-overrides.js` file was : 
-> ```js
-> const webpack = require('webpack');
 >
->module.exports = function override(config) {
->    const fallback = config.resolve.fallback || {};
->    Object.assign(fallback, {
->        "crypto": require.resolve("crypto-browserify"),
->        "stream": require.resolve("stream-browserify"),
->        "assert": require.resolve("assert"),
->        "http": require.resolve("stream-http"),
->        "https": require.resolve("https-browserify"),
->        "os": require.resolve("os-browserify"),
->        "url": require.resolve("url"),
->        "path": require.resolve("path-browserify") 
->    })
->    config.ignoreWarnings = [/Failed to parse source map/];
->    config.resolve.fallback = fallback;
->    config.plugins = (config.plugins || []).concat([
->        new webpack.ProvidePlugin({
->            process: 'process/browser',
->            Buffer: ['buffer', 'Buffer']
->        })
->    ])
->    return config;
->}   
+> and my `config-overrides.js` file was :
+>
+> ```js
+> const webpack = require("webpack");
+>
+> module.exports = function override(config) {
+>   const fallback = config.resolve.fallback || {};
+>   Object.assign(fallback, {
+>     crypto: require.resolve("crypto-browserify"),
+>     stream: require.resolve("stream-browserify"),
+>     assert: require.resolve("assert"),
+>     http: require.resolve("stream-http"),
+>     https: require.resolve("https-browserify"),
+>     os: require.resolve("os-browserify"),
+>     url: require.resolve("url"),
+>     path: require.resolve("path-browserify"),
+>   });
+>   config.ignoreWarnings = [/Failed to parse source map/];
+>   config.resolve.fallback = fallback;
+>   config.plugins = (config.plugins || []).concat([
+>     new webpack.ProvidePlugin({
+>       process: "process/browser",
+>       Buffer: ["buffer", "Buffer"],
+>     }),
+>   ]);
+>   return config;
+> };
 > ```
+>
 > then I change the script in package.json by
+>
 > ```
 > ...
 > "scripts": {
 >    "start": "react-app-rewired start",
 >    "build": "react-app-rewired build",
 >    "test": "react-app-rewired test",
->    "eject": "react-scripts eject"
->},
+>    "eject": "react-app-rewired eject"
+> },
 > ```
+>
 > :warning:
 
 This was painful :/, but it was the worst so far
@@ -387,15 +395,16 @@ Edit src/App.tsx file
 import { NetworkType } from "@airgap/beacon-types";
 import { useEffect, useState } from "react";
 import { BeaconWallet } from "@taquito/beacon-wallet";
-import './App.css';
-import ConnectButton from './ConnectWallet';
-import { TezosToolkit } from '@taquito/taquito';
-import DisconnectButton from './DisconnectWallet';
+import "./App.css";
+import ConnectButton from "./ConnectWallet";
+import { TezosToolkit } from "@taquito/taquito";
+import DisconnectButton from "./DisconnectWallet";
 
 function App() {
-
-  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit("https://ghostnet.tezos.marigold.dev"));
-    const [wallet, setWallet] = useState<BeaconWallet>(
+  const [Tezos, setTezos] = useState<TezosToolkit>(
+    new TezosToolkit("https://ghostnet.tezos.marigold.dev")
+  );
+  const [wallet, setWallet] = useState<BeaconWallet>(
     new BeaconWallet({
       name: "Training",
       preferredNetwork: NetworkType.GHOSTNET,
@@ -412,14 +421,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        
         <ConnectButton
           Tezos={Tezos}
           setUserAddress={setUserAddress}
           setUserBalance={setUserBalance}
           wallet={wallet}
         />
-        
+
         <DisconnectButton
           wallet={wallet}
           setUserAddress={setUserAddress}
@@ -427,9 +435,8 @@ function App() {
         />
 
         <div>
-        I am {userAddress} with {userBalance} mutez
+          I am {userAddress} with {userBalance} mutez
         </div>
-
       </header>
     </div>
   );
@@ -544,7 +551,7 @@ On the popup, select your Temple wallet, then your account and connect. :warning
 
 ![](doc/logged.png)
 
-:confetti_ball: your are *"logged"*
+:confetti_ball: your are _"logged"_
 
 Click on the Disconnect button to logout to test it
 
@@ -558,7 +565,6 @@ Add the library
 ```bash
 yarn add @dipdup/tzkt-api dotenv
 ```
-
 
 [Install jq](https://github.com/stedolan/jq)
 
@@ -575,29 +581,41 @@ We will add a button to fetch all similar contracts to the one you deployed, the
 Now, edit App.tsx to add 1 import on top of the file
 
 ```typescript
-import { Contract, ContractsService } from '@dipdup/tzkt-api';
+import { Contract, ContractsService } from "@dipdup/tzkt-api";
 ```
 
 Before the `return` , add this section for the fetch
 
 ```typescript
-  const contractsService = new ContractsService( {baseUrl: "https://api.ghostnet.tzkt.io" , version : "", withCredentials : false});
-  const [contracts, setContracts] = useState<Array<Contract>>([]);
+const contractsService = new ContractsService({
+  baseUrl: "https://api.ghostnet.tzkt.io",
+  version: "",
+  withCredentials: false,
+});
+const [contracts, setContracts] = useState<Array<Contract>>([]);
 
-  const fetchContracts = () => {
-    (async () => {
-     setContracts((await contractsService.getSimilar({address: process.env["REACT_APP_CONTRACT_ADDRESS"]!, includeStorage:true, sort:{desc:"id"}})));
-    })();
-  }
+const fetchContracts = () => {
+  (async () => {
+    setContracts(
+      await contractsService.getSimilar({
+        address: process.env["REACT_APP_CONTRACT_ADDRESS"]!,
+        includeStorage: true,
+        sort: { desc: "id" },
+      })
+    );
+  })();
+};
 ```
 
-On the return 'html templating' section, add this after the display of the user balance div `I am {userAddress} with {userBalance} mutez`, add this : 
+On the return 'html templating' section, add this after the display of the user balance div `I am {userAddress} with {userBalance} mutez`, add this :
 
 ```html
 <br />
 <div>
-    <button onClick={fetchContracts}>Fetch contracts</button>
-    {contracts.map((contract) => <div>{contract.address}</div>)}
+  <button onClick="{fetchContracts}">Fetch contracts</button>
+  {contracts.map((contract) =>
+  <div>{contract.address}</div>
+  )}
 </div>
 ```
 
@@ -611,7 +629,7 @@ Go to the browser. click on `Fetch contracts` button
 
 ![](doc/deployedcontracts.png)
 
-:confetti_ball:  Congrats ! you are able to list all similar deployed contracts
+:confetti_ball: Congrats ! you are able to list all similar deployed contracts
 
 ## Step 4 : Poke your contract
 
@@ -623,7 +641,7 @@ import { PokeGameWalletType } from './pokeGame.types';
 ...
 
 
-  const poke = async (contract : Contract) => {   
+  const poke = async (contract : Contract) => {
     let c : PokeGameWalletType = await Tezos.wallet.at<PokeGameWalletType>(""+contract.address);
     try {
       const op = await c.methods.default().send();
@@ -648,11 +666,11 @@ Then replace the line displaying the contract address `{contracts.map((contract)
 >
 > ```typescript
 > type Methods = {
->     default : () => Promise<void>;
+>   default: () => Promise<void>;
 > };
-> 
+>
 > type MethodsObject = {
->     default : () => Promise<void>;
+>   default: () => Promise<void>;
 > };
 > ```
 
@@ -660,7 +678,7 @@ Save and see the page refreshed, then click on Poke button
 
 ![](doc/pokecontracts.png)
 
-:confetti_ball:  If you have enough Tz on your wallet for the gas, then it should have successfully call the contract and added you to the list of poke guyz
+:confetti_ball: If you have enough Tz on your wallet for the gas, then it should have successfully call the contract and added you to the list of poke guyz
 
 ## Step 5 : Display poke guys
 
@@ -679,7 +697,7 @@ Contracts are displaying its people now
 ![](doc/table.png)
 
 > :information_source: Wait around few second for blockchain confirmation and click on `fetch contracts` to refresh the list
- 
+
 :confetti_ball: Congratulation, you have completed this first dapp training
 
 # :palm_tree: Conclusion :sun_with_face:
