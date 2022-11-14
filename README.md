@@ -551,7 +551,7 @@ On the popup, select your Temple wallet, then your account and connect. :warning
 
 ![](doc/logged.png)
 
-:confetti_ball: your are _"logged"_
+:confetti*ball: your are *"logged"\_
 
 Click on the Disconnect button to logout to test it
 
