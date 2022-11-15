@@ -65,7 +65,7 @@ Remove the default code and paste this code instead
 ```typescript
 type storage = unit;
 
-type parameter = ["Poke"];
+type parameter = |["Poke"];
 
 type return_ = [list<operation>, storage];
 
