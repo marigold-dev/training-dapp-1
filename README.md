@@ -62,7 +62,7 @@ taq create contract pokeGame.jsligo
 
 Remove the default code and paste this code instead
 
-```typescript
+```jsligo
 type storage = unit;
 
 type parameter = |["Poke"];
@@ -609,10 +609,10 @@ const fetchContracts = () => {
 
 On the return 'html templating' section, add this after the display of the user balance div `I am {userAddress} with {userBalance} mutez`, add this :
 
-```html
+```typescript
 <br />
 <div>
-  <button onClick="{fetchContracts}">Fetch contracts</button>
+  <button onClick={fetchContracts}>Fetch contracts</button>
   {contracts.map((contract) =>
   <div>{contract.address}</div>
   )}
