@@ -5,8 +5,8 @@
   "dependencies": {
     "@airgap/beacon-sdk": "^3.3.0",
     "@dipdup/tzkt-api": "^0.0.1",
-    "@taquito/beacon-wallet": "^14.0.0",
-    "@taquito/taquito": "^14.0.0",
+    "@taquito/beacon-wallet": "^14.1.0",
+    "@taquito/taquito": "^14.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",

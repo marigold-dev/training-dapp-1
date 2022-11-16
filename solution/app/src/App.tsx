@@ -21,6 +21,14 @@ function App() {
 
   useEffect(() => {
     Tezos.setWalletProvider(wallet);
+    (async () => {
+      const activeAccount = await wallet.client.getActiveAccount();
+      if (activeAccount) {
+        setUserAddress(activeAccount.address);
+        const balance = await Tezos.tz.getBalance(activeAccount.address);
+        setUserBalance(balance.toNumber());
+      }
+    })();
   }, [wallet]);
 
   const [userAddress, setUserAddress] = useState<string>("");

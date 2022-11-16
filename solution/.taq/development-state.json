@@ -1,59 +1,17 @@
 {
     "operations": {},
     "tasks": {
-        "@taqueria/plugin-ligo.compile.1666800243820": {
-            "task": "compile",
-            "plugin": "@taqueria/plugin-ligo",
-            "time": 1666800243820,
-            "output": [
-                {
-                    "contract": "pokeGame.jsligo",
-                    "artifact": "artifacts/pokeGame.tz"
-                }
-            ]
-        },
-        "@taqueria/plugin-ligo.compile.1666800494047": {
-            "task": "compile",
-            "plugin": "@taqueria/plugin-ligo",
-            "time": 1666800494047,
-            "output": [
-                {
-                    "contract": "pokeGame.jsligo",
-                    "artifact": "artifacts/pokeGame.tz"
-                },
-                {
-                    "contract": "pokeGame.storages.jsligo",
-                    "artifact": "artifacts/pokeGame.default_storage.tz\n"
-                }
-            ]
-        },
-        "@taqueria/plugin-ligo.compile.1666800526423": {
-            "task": "compile",
-            "plugin": "@taqueria/plugin-ligo",
-            "time": 1666800526423,
-            "output": [
-                {
-                    "contract": "pokeGame.jsligo",
-                    "artifact": "artifacts/pokeGame.tz"
-                },
-                {
-                    "contract": "pokeGame.storages.jsligo",
-                    "artifact": "artifacts/pokeGame.default_storage.tz\n"
-                },
-                {
-                    "contract": "pokeGame.parameters.jsligo",
-                    "artifact": "artifacts/pokeGame.parameter.default_parameter.tz\n"
-                }
-            ]
-        },
-        "@taqueria/plugin-tezos-client.simulate.1666801113300": {
-            "task": "simulate",
-            "plugin": "@taqueria/plugin-tezos-client",
-            "time": 1666801113300,
+        "@taqueria/plugin-taquito.deploy.1668589119045": {
+            "task": "deploy",
+            "plugin": "@taqueria/plugin-taquito",
+            "time": 1668589119045,
             "output": [
                 {
                     "contract": "pokeGame.tz",
-                    "result": "storage\n  { \"KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi\" }\nemitted operations\n  \nbig_map diff\n  \n\n"
+                    "address": "KT1Hd83xLy1tRJLtNjPW69gVCP5sYvKkPF9Q",
+                    "alias": "pokeGame",
+                    "balanceInMutez": "0",
+                    "destination": "http://localhost:20000"
                 }
             ]
         }

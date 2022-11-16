@@ -38,10 +38,11 @@ Please install this software first on your machine or use online alternative :
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another package manager (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)
-- [ ] [taqueria](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
+- [ ] [taqueria v0.24.1](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling (version )
 - [ ] [taqueria VS Code extension](https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode) : visualize your project and execute tasks
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser
+- [ ] [Docker](https://docs.docker.com/engine/install/) you cannot do anything without containers today ...
 
 > :warning: :whale: About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... Docker should be running on your machine :whale2:
 
@@ -109,13 +110,13 @@ We want to store every caller address poking the contract. Let's redefine storag
 
 At line 1, replace :
 
-```typescript
+```jsligo
 type storage = set<address>;
 ```
 
 Before main function, add :
 
-```typescript
+```jsligo
 const poke = (store: storage): return_ => {
   return [list([]) as list<operation>, Set.add(Tezos.get_source(), store)];
 };
@@ -151,7 +152,7 @@ taq create contract pokeGame.storages.jsligo
 
 Replace current code by
 
-```typescript
+```jsligo
 #include "pokeGame.jsligo"
 const default_storage = Set.empty as set<address>;
 ```
@@ -174,7 +175,7 @@ taq create contract pokeGame.parameters.jsligo
 
 Edit the file
 
-```typescript
+```jsligo
 #include "pokeGame.jsligo"
 const default_parameter = Poke();
 ```
@@ -225,7 +226,7 @@ You should get this kind of log
 
 ```log
 Warning: the faucet field in network configs has been deprecated and will be ignored
-A keypair with public key hash tz3fcNNiZoPXDpyCoaZ5Tm7RUzBGbFVQzAQ2 was generated for you.
+A keypair with public key hash tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb was generated for you.
 To fund this account:
 1. Go to https://teztnets.xyz and click "Faucet" of the target testnet
 2. Copy and paste the above key into the 'wallet address field
@@ -257,18 +258,18 @@ taq deploy pokeGame.tz -e "testing"
 HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
 
 ```logs
-┌─────────────┬──────────────────────────────────────┬──────────┬─────────────┐
-│ Contract    │ Address                              │ Alias    │ Destination │
-├─────────────┼──────────────────────────────────────┼──────────┼─────────────┤
-│ pokeGame.tz │ KT1JxtDY4vRjnjqRN46k29VgRB7fe1xctGzp │ pokeGame │ ghostnet    │
-└─────────────┴──────────────────────────────────────┴──────────┴─────────────┘
+┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬─────────────────────────────────────┐
+│ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination                         │
+├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼─────────────────────────────────────┤
+│ pokeGame.tz │ KT19jEAyrvsMzY6DQ42UsR6KF3duKHJMJyPZ │ pokeGame │ 0                │ https://ghostnet.tezos.marigold.dev │
+└─────────────┴──────────────────────────────────────┴──────────┴──────────────────┴─────────────────────────────────────┘
 ```
 
 ## Step 7 : (Optional) deploy locally with flextesa
 
-You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Jakartanet). For your knowledge, below the step to deploy locally. Also you can change some parameter to point to another protocol version
+You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Ghostnet for free, not necessary to install one locally on testnets). For your knowledge, below the step to deploy locally. Also you can change some parameter to point to another protocol version
 
-```
+```bash
 taq install @taqueria/plugin-flextesa
 
 # it takes some minutes the first time
@@ -289,6 +290,14 @@ taq install @taqueria/plugin-taquito
 taq deploy pokeGame.tz -e "development"
 ```
 
+```logs
+┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬────────────────────────┐
+│ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination            │
+├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼────────────────────────┤
+│ pokeGame.tz │ KT1Hd83xLy1tRJLtNjPW69gVCP5sYvKkPF9Q │ pokeGame │ 0                │ http://localhost:20000 │
+└─────────────┴──────────────────────────────────────┴──────────┴──────────────────┴────────────────────────┘
+```
+
 # :construction_worker: Dapp
 
 ## Step 1 : Create react app
@@ -302,9 +311,8 @@ cd app
 Add taquito, tzkt indexer lib
 
 ```bash
-yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk
+yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk  @dipdup/tzkt-api
 yarn add -D @airgap/beacon-types
-yarn add @dipdup/tzkt-api
 ```
 
 > :warning: :warning: :warning: Last React version uses `react-script 5.x` , follow these steps to rewire webpack for all encountered missing libraries : https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues
@@ -354,6 +362,7 @@ yarn add @dipdup/tzkt-api
 >    "test": "react-app-rewired test",
 >    "eject": "react-app-rewired eject"
 > },
+> ...
 > ```
 >
 > :warning:
@@ -393,11 +402,11 @@ Edit src/App.tsx file
 
 ```typescript
 import { NetworkType } from "@airgap/beacon-types";
-import { useEffect, useState } from "react";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import { TezosToolkit } from "@taquito/taquito";
+import { useEffect, useState } from "react";
 import "./App.css";
 import ConnectButton from "./ConnectWallet";
-import { TezosToolkit } from "@taquito/taquito";
 import DisconnectButton from "./DisconnectWallet";
 
 function App() {
@@ -413,6 +422,14 @@ function App() {
 
   useEffect(() => {
     Tezos.setWalletProvider(wallet);
+    (async () => {
+      const activeAccount = await wallet.client.getActiveAccount();
+      if (activeAccount) {
+        setUserAddress(activeAccount.address);
+        const balance = await Tezos.tz.getBalance(activeAccount.address);
+        setUserBalance(balance.toNumber());
+      }
+    })();
   }, [wallet]);
 
   const [userAddress, setUserAddress] = useState<string>("");
@@ -448,8 +465,8 @@ export default App;
 Let's create the 2 missing src component files and put code in it. On `src` folder, create these files.
 
 ```bash
-touch ConnectWallet.tsx
-touch DisconnectWallet.tsx
+touch app/src/ConnectWallet.tsx
+touch app/src/DisconnectWallet.tsx
 ```
 
 ConnectWallet button will create an instance wallet, get user permissions via a popup and then retrieve account information
@@ -551,7 +568,7 @@ On the popup, select your Temple wallet, then your account and connect. :warning
 
 ![](doc/logged.png)
 
-:confetti*ball: your are *"logged"\_
+:confetti_ball: your are "logged"
 
 Click on the Disconnect button to logout to test it
 
@@ -559,12 +576,6 @@ Click on the Disconnect button to logout to test it
 
 Remember that you deployed your contract previously.
 Instead of querying heavily the rpc node to search where is located your contract and get back some information about it, we can use an indexer. We can consider it as an enriched cache API on top of rpc node. In this example, we will use the tzkt indexer
-
-Add the library
-
-```bash
-yarn add @dipdup/tzkt-api dotenv
-```
 
 [Install jq](https://github.com/stedolan/jq)
 
