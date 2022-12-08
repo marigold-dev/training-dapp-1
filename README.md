@@ -144,11 +144,7 @@ taq compile pokeGame.jsligo
 
 Taqueria is creating the Michelson file output on `artifacts` folder
 
-Compile an initial storage with taqueria. Your file should have this pattern `<MY_SOURCE_CODE>.storages.*ligo`
-
-```bash
-taq create contract pokeGame.storages.jsligo
-```
+To compile an initial storage with taqueria, edit the new file `pokeGame.storageList.jsligo`
 
 Replace current code by
 
@@ -168,21 +164,17 @@ It compiles both source code and storage now. (You can also pass an argument -e 
 Let's simulate the Poke call using `taq simulate`  
 We will pass the contract parameter `Poke()` and the initial on-chain storage with an empty set
 
-```bash
-taq install @taqueria/plugin-tezos-client
-taq create contract pokeGame.parameters.jsligo
-```
-
-Edit the file
+Edit the new file `pokeGame.parameterList.jsligo`
 
 ```jsligo
 #include "pokeGame.jsligo"
 const default_parameter = Poke();
 ```
 
-Run simulation now
+Run simulation now (you will need tezos client plugin for simulation)
 
 ```bash
+taq install @taqueria/plugin-tezos-client
 taq compile pokeGame.jsligo
 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
