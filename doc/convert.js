@@ -2,7 +2,7 @@ const MarkdownIt = require("markdown-it");
 const markdownItAttrs = require("markdown-it-attrs");
 const markdownHSections = require("markdown-it-header-sections");
 const emoji = require("markdown-it-emoji");
-const hljs = require("highlight.js"); // https://highlightjs.org
+const hljs = require("./highlight.js"); // https://highlightjs.org
 
 const fs = require("fs");
 const MD = new MarkdownIt({
