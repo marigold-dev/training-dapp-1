@@ -90,7 +90,7 @@ Pattern matching is an important feature in Ligo. We need a switch on the entryp
 
 > [Click here to see Ligo pattern matching documentation](https://ligolang.org/docs/language-basics/unit-option-pattern-matching)
 
-```javascript
+```ligolang
 match (action, {
         Poke: () => poke(store)
     }
@@ -98,8 +98,8 @@ match (action, {
 
 `Poke` is a `parameter` from `variant` type. It is a bit equivalent of Enum type in javascript
 
-```javascript
-type parameter = ["Poke"];
+```ligolang
+type parameter = |["Poke"];
 ```
 
 > [Click here to see the variant types](https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types)
@@ -110,13 +110,13 @@ We want to store every caller address poking the contract. Let's redefine storag
 
 At line 1, replace :
 
-```jsligo
+```ligolang
 type storage = set<address>;
 ```
 
 Before main function, add :
 
-```jsligo
+```ligolang
 const poke = (store: storage): return_ => {
   return [list([]) as list<operation>, Set.add(Tezos.get_source(), store)];
 };
@@ -148,7 +148,7 @@ To compile an initial storage with taqueria, edit the new file `pokeGame.storage
 
 Replace current code by
 
-```jsligo
+```ligolang
 #include "pokeGame.jsligo"
 const default_storage = Set.empty as set<address>;
 ```
@@ -166,7 +166,7 @@ We will pass the contract parameter `Poke()` and the initial on-chain storage wi
 
 Edit the new file `pokeGame.parameterList.jsligo`
 
-```jsligo
+```ligolang
 #include "pokeGame.jsligo"
 const default_parameter = Poke();
 ```
