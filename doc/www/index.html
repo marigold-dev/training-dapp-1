@@ -85,7 +85,7 @@ description: Training n°1 for decentralized application</h2>
 </blockquote>
 <p>The game consists on poking the owner of a smart contract. The smartcontract keeps a track of user interactions and stores this trace.</p>
 <p>Poke sequence diagram</p>
-<pre class="hljs language-mermaid"><code>sequenceDiagram
+<pre class="hljs"><code>sequenceDiagram
   Note left of User: Prepare poke
   User-&gt;&gt;SM: poke owner
   Note right of SM: store poke trace
@@ -116,7 +116,7 @@ description: Training n°1 for decentralized application</h2>
 <p>Note : We will use CLI here but you can also use GUI from the IDE or Taqueria plugin</p>
 </blockquote>
 <pre class="hljs language-bash"><code>taq init training1
-cd training1
+<span class="hljs-built_in">cd</span> training1
 taq install @taqueria/plugin-ligo
 taq create contract pokeGame.jsligo
 </code></pre>
@@ -124,7 +124,7 @@ taq create contract pokeGame.jsligo
 <section>
 <h2>Step 2 : Edit pokeGame.jsligo</h2>
 <p>Remove the default code and paste this code instead</p>
-<pre class="hljs language-jsligo"><code>type storage = unit;
+<pre class="hljs"><code>type storage = unit;
 
 type parameter = |[&quot;Poke&quot;];
 
@@ -154,11 +154,11 @@ const main = ([action, store]: [parameter, storage]): return_ =&gt; {
 <p>Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching</p>
 </blockquote>
 <pre class="hljs language-javascript"><code>match (action, {
-        Poke: () =&gt; poke(store)
+        <span class="hljs-title class_">Poke</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">poke</span>(store)
     }
 </code></pre>
 <p><code>Poke</code> is a <code>parameter</code> from <code>variant</code> type. It is a bit equivalent of Enum type in javascript</p>
-<pre class="hljs language-javascript"><code>type parameter = [&quot;Poke&quot;];
+<pre class="hljs language-javascript"><code>type parameter = [<span class="hljs-string">&quot;Poke&quot;</span>];
 </code></pre>
 <blockquote>
 <p>Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types</p>
@@ -168,10 +168,10 @@ const main = ([action, store]: [parameter, storage]): return_ =&gt; {
 <h2>Step 3 : Write the poke function</h2>
 <p>We want to store every caller address poking the contract. Let's redefine storage, and then add the caller to the set of poke guys</p>
 <p>At line 1, replace :</p>
-<pre class="hljs language-jsligo"><code>type storage = set&lt;address&gt;;
+<pre class="hljs"><code>type storage = set&lt;address&gt;;
 </code></pre>
 <p>Before main function, add :</p>
-<pre class="hljs language-jsligo"><code>const poke = (store: storage): return_ =&gt; {
+<pre class="hljs"><code>const poke = (store: storage): return_ =&gt; {
   return [list([]) as list&lt;operation&gt;, Set.add(Tezos.get_source(), store)];
 };
 </code></pre>
@@ -196,7 +196,7 @@ const main = ([action, store]: [parameter, storage]): return_ =&gt; {
 <p>Taqueria is creating the Michelson file output on <code>artifacts</code> folder</p>
 <p>To compile an initial storage with taqueria, edit the new file <code>pokeGame.storageList.jsligo</code></p>
 <p>Replace current code by</p>
-<pre class="hljs language-jsligo"><code>#include &quot;pokeGame.jsligo&quot;
+<pre class="hljs"><code>#include &quot;pokeGame.jsligo&quot;
 const default_storage = Set.empty as set&lt;address&gt;;
 </code></pre>
 <p>Compile all now</p>
@@ -206,7 +206,7 @@ const default_storage = Set.empty as set&lt;address&gt;;
 <p>Let's simulate the Poke call using <code>taq simulate</code><br>
 We will pass the contract parameter <code>Poke()</code> and the initial on-chain storage with an empty set</p>
 <p>Edit the new file <code>pokeGame.parameterList.jsligo</code></p>
-<pre class="hljs language-jsligo"><code>#include &quot;pokeGame.jsligo&quot;
+<pre class="hljs"><code>#include &quot;pokeGame.jsligo&quot;
 const default_parameter = Poke();
 </code></pre>
 <p>Run simulation now (you will need tezos client plugin for simulation)</p>
@@ -215,7 +215,7 @@ taq compile pokeGame.jsligo
 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 </code></pre>
 <p>Output should give :</p>
-<pre class="hljs language-logs"><code>┌─────────────┬──────────────────────────────────────────────┐
+<pre class="hljs"><code>┌─────────────┬──────────────────────────────────────────────┐
 │ Contract    │ Result                                       │
 ├─────────────┼──────────────────────────────────────────────┤
 │ pokeGame.tz │ storage                                      │
@@ -240,14 +240,14 @@ taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 <p>⚠️ Taqueria will require an account (mainly to deploy your contract), the first time you will try to deploy a contract it will generate a new implicit account you will have to fill with XTZ</p>
 <p>Force Taqueria to generate this account</p>
 <pre class="hljs language-bash"><code>taq install @taqueria/plugin-taquito
-taq deploy pokeGame.tz -e &quot;testing&quot;
+taq deploy pokeGame.tz -e <span class="hljs-string">&quot;testing&quot;</span>
 </code></pre>
 <p>You should get this kind of log</p>
-<pre class="hljs language-log"><code>Warning: the faucet field in network configs has been deprecated and will be ignored
+<pre class="hljs"><code>Warning: the faucet field in network configs has been deprecated and will be ignored
 A keypair with public key hash tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb was generated for you.
 To fund this account:
 1. Go to https://teztnets.xyz and click &quot;Faucet&quot; of the target testnet
-2. Copy and paste the above key into the &#x27;wallet address field
+2. Copy and paste the above key into the 'wallet address field
 3. Request some Tez (Note that you might need to wait for a few seconds for the network to register the funds)
 </code></pre>
 <section>
@@ -267,10 +267,10 @@ Connect with your wallet on <code>Ghostnet</code> and ask for free <code>XTZ</co
 <section>
 <h2>Step 6 : Deploy to Ghostnet testnet</h2>
 <p>Retry to deploy to testing env</p>
-<pre class="hljs language-bash"><code>taq deploy pokeGame.tz -e &quot;testing&quot;
+<pre class="hljs language-bash"><code>taq deploy pokeGame.tz -e <span class="hljs-string">&quot;testing&quot;</span>
 </code></pre>
 <p>HOORAY 🎊 your smart contract is ready on the Ghostnet !</p>
-<pre class="hljs language-logs"><code>┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬─────────────────────────────────────┐
+<pre class="hljs"><code>┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬─────────────────────────────────────┐
 │ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination                         │
 ├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼─────────────────────────────────────┤
 │ pokeGame.tz │ KT19jEAyrvsMzY6DQ42UsR6KF3duKHJMJyPZ │ pokeGame │ 0                │ https://ghostnet.tezos.marigold.dev │
@@ -282,20 +282,20 @@ Connect with your wallet on <code>Ghostnet</code> and ask for free <code>XTZ</co
 <p>You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Ghostnet for free, not necessary to install one locally on testnets). For your knowledge, below the step to deploy locally. Also you can change some parameter to point to another protocol version</p>
 <pre class="hljs language-bash"><code>taq install @taqueria/plugin-flextesa
 
-# it takes some minutes the first time
-taq start sandbox local
+<span class="hljs-comment"># it takes some minutes the first time</span>
+taq start sandbox <span class="hljs-built_in">local</span>
 
-#list users
-taq list accounts local
+<span class="hljs-comment">#list users</span>
+taq list accounts <span class="hljs-built_in">local</span>
 
 </code></pre>
 <p>Deploy the contract on <code>development</code> environment</p>
 <p>You need to install taquito plugin first to originate the contract</p>
 <pre class="hljs language-bash"><code>taq install @taqueria/plugin-taquito
 
-taq deploy pokeGame.tz -e &quot;development&quot;
+taq deploy pokeGame.tz -e <span class="hljs-string">&quot;development&quot;</span>
 </code></pre>
-<pre class="hljs language-logs"><code>┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬────────────────────────┐
+<pre class="hljs"><code>┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬────────────────────────┐
 │ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination            │
 ├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼────────────────────────┤
 │ pokeGame.tz │ KT1Hd83xLy1tRJLtNjPW69gVCP5sYvKkPF9Q │ pokeGame │ 0                │ http://localhost:20000 │
@@ -309,7 +309,7 @@ taq deploy pokeGame.tz -e &quot;development&quot;
 <h2>Step 1 : Create react app</h2>
 <pre class="hljs language-bash"><code>yarn create react-app app --template typescript
 
-cd app
+<span class="hljs-built_in">cd</span> app
 </code></pre>
 <p>Add taquito, tzkt indexer lib</p>
 <pre class="hljs language-bash"><code>yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk  @dipdup/tzkt-api
@@ -323,29 +323,29 @@ yarn add -D @airgap/beacon-types
 <pre class="hljs language-bash"><code>yarn add --dev react-app-rewired process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
 </code></pre>
 <p>and my <code>config-overrides.js</code> file was :</p>
-<pre class="hljs language-js"><code>const webpack = require(&quot;webpack&quot;);
+<pre class="hljs language-js"><code><span class="hljs-keyword">const</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;webpack&quot;</span>);
 
-module.exports = function override(config) {
-  const fallback = config.resolve.fallback || {};
-  Object.assign(fallback, {
-    crypto: require.resolve(&quot;crypto-browserify&quot;),
-    stream: require.resolve(&quot;stream-browserify&quot;),
-    assert: require.resolve(&quot;assert&quot;),
-    http: require.resolve(&quot;stream-http&quot;),
-    https: require.resolve(&quot;https-browserify&quot;),
-    os: require.resolve(&quot;os-browserify&quot;),
-    url: require.resolve(&quot;url&quot;),
-    path: require.resolve(&quot;path-browserify&quot;),
+<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">override</span>(<span class="hljs-params">config</span>) {
+  <span class="hljs-keyword">const</span> fallback = config.<span class="hljs-property">resolve</span>.<span class="hljs-property">fallback</span> || {};
+  <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(fallback, {
+    <span class="hljs-attr">crypto</span>: <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;crypto-browserify&quot;</span>),
+    <span class="hljs-attr">stream</span>: <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;stream-browserify&quot;</span>),
+    <span class="hljs-attr">assert</span>: <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;assert&quot;</span>),
+    <span class="hljs-attr">http</span>: <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;stream-http&quot;</span>),
+    <span class="hljs-attr">https</span>: <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;https-browserify&quot;</span>),
+    <span class="hljs-attr">os</span>: <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;os-browserify&quot;</span>),
+    <span class="hljs-attr">url</span>: <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;url&quot;</span>),
+    <span class="hljs-attr">path</span>: <span class="hljs-built_in">require</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;path-browserify&quot;</span>),
   });
-  config.ignoreWarnings = [/Failed to parse source map/];
-  config.resolve.fallback = fallback;
-  config.plugins = (config.plugins || []).concat([
-    new webpack.ProvidePlugin({
-      process: &quot;process/browser&quot;,
-      Buffer: [&quot;buffer&quot;, &quot;Buffer&quot;],
+  config.<span class="hljs-property">ignoreWarnings</span> = [<span class="hljs-regexp">/Failed to parse source map/</span>];
+  config.<span class="hljs-property">resolve</span>.<span class="hljs-property">fallback</span> = fallback;
+  config.<span class="hljs-property">plugins</span> = (config.<span class="hljs-property">plugins</span> || []).<span class="hljs-title function_">concat</span>([
+    <span class="hljs-keyword">new</span> webpack.<span class="hljs-title class_">ProvidePlugin</span>({
+      <span class="hljs-attr">process</span>: <span class="hljs-string">&quot;process/browser&quot;</span>,
+      <span class="hljs-title class_">Buffer</span>: [<span class="hljs-string">&quot;buffer&quot;</span>, <span class="hljs-string">&quot;Buffer&quot;</span>],
     }),
   ]);
-  return config;
+  <span class="hljs-keyword">return</span> config;
 };
 </code></pre>
 <p>then I change the script in package.json by</p>
@@ -365,13 +365,13 @@ module.exports = function override(config) {
 <h3>Generate Typescript classes from Michelson code</h3>
 <p>Taqueria is able to generate Typescript classes for our React application. It will take the definition of your smart contract and generate the contract entrypoint functions, type definitions, etc ...</p>
 <p>To get typescript classes from taqueria plugin, get back to root folder running :</p>
-<pre class="hljs language-bash"><code>cd ..
+<pre class="hljs language-bash"><code><span class="hljs-built_in">cd</span> ..
 
 taq install @taqueria/plugin-contract-types
 
 taq generate types ./app/src
 
-cd ./app
+<span class="hljs-built_in">cd</span> ./app
 </code></pre>
 <p>Start the dev server</p>
 <pre class="hljs language-bash"><code>yarn run start
@@ -384,153 +384,153 @@ Your app should be running</p>
 <h2>Step 2 : Connect / disconnect the wallet</h2>
 <p>We will declare 2 React Button components and a display of address and balance while connected</p>
 <p>Edit src/App.tsx file</p>
-<pre class="hljs language-typescript"><code>import { NetworkType } from &quot;@airgap/beacon-types&quot;;
-import { BeaconWallet } from &quot;@taquito/beacon-wallet&quot;;
-import { TezosToolkit } from &quot;@taquito/taquito&quot;;
-import { useEffect, useState } from &quot;react&quot;;
-import &quot;./App.css&quot;;
-import ConnectButton from &quot;./ConnectWallet&quot;;
-import DisconnectButton from &quot;./DisconnectWallet&quot;;
+<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NetworkType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@airgap/beacon-types&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">BeaconWallet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/beacon-wallet&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">TezosToolkit</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/taquito&quot;</span>;
+<span class="hljs-keyword">import</span> { useEffect, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;./App.css&quot;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">ConnectButton</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./ConnectWallet&quot;</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">DisconnectButton</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./DisconnectWallet&quot;</span>;
 
-function App() {
-  const [Tezos, setTezos] = useState&lt;TezosToolkit&gt;(
-    new TezosToolkit(&quot;https://ghostnet.tezos.marigold.dev&quot;)
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> [<span class="hljs-title class_">Tezos</span>, setTezos] = useState&lt;<span class="hljs-title class_">TezosToolkit</span>&gt;(
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">TezosToolkit</span>(<span class="hljs-string">&quot;https://ghostnet.tezos.marigold.dev&quot;</span>)
   );
-  const [wallet, setWallet] = useState&lt;BeaconWallet&gt;(
-    new BeaconWallet({
-      name: &quot;Training&quot;,
-      preferredNetwork: NetworkType.GHOSTNET,
+  <span class="hljs-keyword">const</span> [wallet, setWallet] = useState&lt;<span class="hljs-title class_">BeaconWallet</span>&gt;(
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">BeaconWallet</span>({
+      <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Training&quot;</span>,
+      <span class="hljs-attr">preferredNetwork</span>: <span class="hljs-title class_">NetworkType</span>.<span class="hljs-property">GHOSTNET</span>,
     })
   );
 
-  useEffect(() =&gt; {
-    Tezos.setWalletProvider(wallet);
-    (async () =&gt; {
-      const activeAccount = await wallet.client.getActiveAccount();
-      if (activeAccount) {
-        setUserAddress(activeAccount.address);
-        const balance = await Tezos.tz.getBalance(activeAccount.address);
-        setUserBalance(balance.toNumber());
+  <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title class_">Tezos</span>.<span class="hljs-title function_">setWalletProvider</span>(wallet);
+    (<span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">const</span> activeAccount = <span class="hljs-keyword">await</span> wallet.<span class="hljs-property">client</span>.<span class="hljs-title function_">getActiveAccount</span>();
+      <span class="hljs-keyword">if</span> (activeAccount) {
+        <span class="hljs-title function_">setUserAddress</span>(activeAccount.<span class="hljs-property">address</span>);
+        <span class="hljs-keyword">const</span> balance = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Tezos</span>.<span class="hljs-property">tz</span>.<span class="hljs-title function_">getBalance</span>(activeAccount.<span class="hljs-property">address</span>);
+        <span class="hljs-title function_">setUserBalance</span>(balance.<span class="hljs-title function_">toNumber</span>());
       }
     })();
   }, [wallet]);
 
-  const [userAddress, setUserAddress] = useState&lt;string&gt;(&quot;&quot;);
-  const [userBalance, setUserBalance] = useState&lt;number&gt;(0);
+  <span class="hljs-keyword">const</span> [userAddress, setUserAddress] = useState&lt;<span class="hljs-built_in">string</span>&gt;(<span class="hljs-string">&quot;&quot;</span>);
+  <span class="hljs-keyword">const</span> [userBalance, setUserBalance] = useState&lt;<span class="hljs-built_in">number</span>&gt;(<span class="hljs-number">0</span>);
 
-  return (
-    &lt;div className=&quot;App&quot;&gt;
-      &lt;header className=&quot;App-header&quot;&gt;
-        &lt;ConnectButton
-          Tezos={Tezos}
-          setUserAddress={setUserAddress}
-          setUserBalance={setUserBalance}
-          wallet={wallet}
-        /&gt;
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;App&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">header</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;App-header&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ConnectButton</span>
+          <span class="hljs-attr">Tezos</span>=<span class="hljs-string">{Tezos}</span>
+          <span class="hljs-attr">setUserAddress</span>=<span class="hljs-string">{setUserAddress}</span>
+          <span class="hljs-attr">setUserBalance</span>=<span class="hljs-string">{setUserBalance}</span>
+          <span class="hljs-attr">wallet</span>=<span class="hljs-string">{wallet}</span>
+        /&gt;</span>
 
-        &lt;DisconnectButton
-          wallet={wallet}
-          setUserAddress={setUserAddress}
-          setUserBalance={setUserBalance}
-        /&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">DisconnectButton</span>
+          <span class="hljs-attr">wallet</span>=<span class="hljs-string">{wallet}</span>
+          <span class="hljs-attr">setUserAddress</span>=<span class="hljs-string">{setUserAddress}</span>
+          <span class="hljs-attr">setUserBalance</span>=<span class="hljs-string">{setUserBalance}</span>
+        /&gt;</span>
 
-        &lt;div&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
           I am {userAddress} with {userBalance} mutez
-        &lt;/div&gt;
-      &lt;/header&gt;
-    &lt;/div&gt;
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   );
 }
 
-export default App;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;
 </code></pre>
 <p>Let's create the 2 missing src component files and put code in it. On <code>src</code> folder, create these files.</p>
-<pre class="hljs language-bash"><code>touch app/src/ConnectWallet.tsx
-touch app/src/DisconnectWallet.tsx
+<pre class="hljs language-bash"><code><span class="hljs-built_in">touch</span> app/src/ConnectWallet.tsx
+<span class="hljs-built_in">touch</span> app/src/DisconnectWallet.tsx
 </code></pre>
 <p>ConnectWallet button will create an instance wallet, get user permissions via a popup and then retrieve account information</p>
 <p>Edit ConnectWallet.tsx</p>
-<pre class="hljs language-typescript"><code>import { NetworkType } from &quot;@airgap/beacon-sdk&quot;;
-import { BeaconWallet } from &quot;@taquito/beacon-wallet&quot;;
-import { TezosToolkit } from &quot;@taquito/taquito&quot;;
-import { Dispatch, SetStateAction } from &quot;react&quot;;
+<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NetworkType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@airgap/beacon-sdk&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">BeaconWallet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/beacon-wallet&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">TezosToolkit</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/taquito&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Dispatch</span>, <span class="hljs-title class_">SetStateAction</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;
 
-type ButtonProps = {
-  Tezos: TezosToolkit;
-  setUserAddress: Dispatch&lt;SetStateAction&lt;string&gt;&gt;;
-  setUserBalance: Dispatch&lt;SetStateAction&lt;number&gt;&gt;;
-  wallet: BeaconWallet;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">ButtonProps</span> = {
+  <span class="hljs-title class_">Tezos</span>: <span class="hljs-title class_">TezosToolkit</span>;
+  <span class="hljs-attr">setUserAddress</span>: <span class="hljs-title class_">Dispatch</span>&lt;<span class="hljs-title class_">SetStateAction</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;;
+  <span class="hljs-attr">setUserBalance</span>: <span class="hljs-title class_">Dispatch</span>&lt;<span class="hljs-title class_">SetStateAction</span>&lt;<span class="hljs-built_in">number</span>&gt;&gt;;
+  <span class="hljs-attr">wallet</span>: <span class="hljs-title class_">BeaconWallet</span>;
 };
 
-const ConnectButton = ({
-  Tezos,
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">ConnectButton</span> = ({
+  <span class="hljs-title class_">Tezos</span>,
   setUserAddress,
   setUserBalance,
   wallet,
-}: ButtonProps): JSX.Element =&gt; {
-  const connectWallet = async (): Promise&lt;void&gt; =&gt; {
-    try {
-      await wallet.requestPermissions({
-        network: {
-          type: NetworkType.GHOSTNET,
-          rpcUrl: &quot;https://ghostnet.tezos.marigold.dev&quot;,
+}: <span class="hljs-title class_">ButtonProps</span>): <span class="hljs-variable constant_">JSX</span>.<span class="hljs-property">Element</span> =&gt; {
+  <span class="hljs-keyword">const</span> connectWallet = <span class="hljs-keyword">async</span> (): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">await</span> wallet.<span class="hljs-title function_">requestPermissions</span>({
+        <span class="hljs-attr">network</span>: {
+          <span class="hljs-attr">type</span>: <span class="hljs-title class_">NetworkType</span>.<span class="hljs-property">GHOSTNET</span>,
+          <span class="hljs-attr">rpcUrl</span>: <span class="hljs-string">&quot;https://ghostnet.tezos.marigold.dev&quot;</span>,
         },
       });
-      // gets user&#x27;s address
-      const userAddress = await wallet.getPKH();
-      const balance = await Tezos.tz.getBalance(userAddress);
-      setUserBalance(balance.toNumber());
-      setUserAddress(userAddress);
-    } catch (error) {
-      console.log(error);
+      <span class="hljs-comment">// gets user&#x27;s address</span>
+      <span class="hljs-keyword">const</span> userAddress = <span class="hljs-keyword">await</span> wallet.<span class="hljs-title function_">getPKH</span>();
+      <span class="hljs-keyword">const</span> balance = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Tezos</span>.<span class="hljs-property">tz</span>.<span class="hljs-title function_">getBalance</span>(userAddress);
+      <span class="hljs-title function_">setUserBalance</span>(balance.<span class="hljs-title function_">toNumber</span>());
+      <span class="hljs-title function_">setUserAddress</span>(userAddress);
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(error);
     }
   };
 
-  return (
-    &lt;div className=&quot;buttons&quot;&gt;
-      &lt;button className=&quot;button&quot; onClick={connectWallet}&gt;
-        &lt;span&gt;
-          &lt;i className=&quot;fas fa-wallet&quot;&gt;&lt;/i&gt;&amp;nbsp; Connect with wallet
-        &lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;buttons&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{connectWallet}</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;fas fa-wallet&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-symbol">&amp;nbsp;</span> Connect with wallet
+        <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   );
 };
 
-export default ConnectButton;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">ConnectButton</span>;
 </code></pre>
 <p>DisconnectWallet button will clean wallet instance and all linked objects</p>
-<pre class="hljs language-typescript"><code>import { BeaconWallet } from &quot;@taquito/beacon-wallet&quot;;
-import { Dispatch, SetStateAction } from &quot;react&quot;;
+<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">BeaconWallet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/beacon-wallet&quot;</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Dispatch</span>, <span class="hljs-title class_">SetStateAction</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;
 
-interface ButtonProps {
-  wallet: BeaconWallet;
-  setUserAddress: Dispatch&lt;SetStateAction&lt;string&gt;&gt;;
-  setUserBalance: Dispatch&lt;SetStateAction&lt;number&gt;&gt;;
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">ButtonProps</span> {
+  <span class="hljs-attr">wallet</span>: <span class="hljs-title class_">BeaconWallet</span>;
+  <span class="hljs-attr">setUserAddress</span>: <span class="hljs-title class_">Dispatch</span>&lt;<span class="hljs-title class_">SetStateAction</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;;
+  <span class="hljs-attr">setUserBalance</span>: <span class="hljs-title class_">Dispatch</span>&lt;<span class="hljs-title class_">SetStateAction</span>&lt;<span class="hljs-built_in">number</span>&gt;&gt;;
 }
 
-const DisconnectButton = ({
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">DisconnectButton</span> = ({
   wallet,
   setUserAddress,
   setUserBalance,
-}: ButtonProps): JSX.Element =&gt; {
-  const disconnectWallet = async (): Promise&lt;void&gt; =&gt; {
-    setUserAddress(&quot;&quot;);
-    setUserBalance(0);
-    console.log(&quot;disconnecting wallet&quot;);
-    await wallet.clearActiveAccount();
+}: <span class="hljs-title class_">ButtonProps</span>): <span class="hljs-variable constant_">JSX</span>.<span class="hljs-property">Element</span> =&gt; {
+  <span class="hljs-keyword">const</span> disconnectWallet = <span class="hljs-keyword">async</span> (): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; =&gt; {
+    <span class="hljs-title function_">setUserAddress</span>(<span class="hljs-string">&quot;&quot;</span>);
+    <span class="hljs-title function_">setUserBalance</span>(<span class="hljs-number">0</span>);
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;disconnecting wallet&quot;</span>);
+    <span class="hljs-keyword">await</span> wallet.<span class="hljs-title function_">clearActiveAccount</span>();
   };
 
-  return (
-    &lt;div className=&quot;buttons&quot;&gt;
-      &lt;button className=&quot;button&quot; onClick={disconnectWallet}&gt;
-        &lt;i className=&quot;fas fa-times&quot;&gt;&lt;/i&gt;&amp;nbsp; Disconnect wallet
-      &lt;/button&gt;
-    &lt;/div&gt;
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;buttons&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{disconnectWallet}</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;fas fa-times&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-symbol">&amp;nbsp;</span> Disconnect wallet
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   );
 };
 
-export default DisconnectButton;
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">DisconnectButton</span>;
 </code></pre>
 <p>Save both file, the dev server should refresh the page</p>
 <p>As Temple is configured well, Click on Connect button</p>
@@ -545,28 +545,28 @@ export default DisconnectButton;
 Instead of querying heavily the rpc node to search where is located your contract and get back some information about it, we can use an indexer. We can consider it as an enriched cache API on top of rpc node. In this example, we will use the tzkt indexer</p>
 <p><a href="https://github.com/stedolan/jq">Install jq</a></p>
 <p>On <code>package.json</code>, change the <code>start script</code> line, prefixing with <code>jq</code> command to create an new env var pointing to your last smart contract address on testing env :</p>
-<pre class="hljs language-bash"><code>    &quot;start&quot;: &quot;jq -r &#x27;\&quot;REACT_APP_CONTRACT_ADDRESS=\&quot; + last(.tasks[]).output[0].address&#x27; ../.taq/testing-state.json &gt; .env &amp;&amp; react-app-rewired start&quot;,
+<pre class="hljs language-bash"><code>    <span class="hljs-string">&quot;start&quot;</span>: <span class="hljs-string">&quot;jq -r &#x27;\&quot;REACT_APP_CONTRACT_ADDRESS=\&quot; + last(.tasks[]).output[0].address&#x27; ../.taq/testing-state.json &gt; .env &amp;&amp; react-app-rewired start&quot;</span>,
 </code></pre>
 <p>You are pointing now to the last contract deployed on Ghostnet by taqueria</p>
 <p>We will add a button to fetch all similar contracts to the one you deployed, then we display the list</p>
 <p>Now, edit App.tsx to add 1 import on top of the file</p>
-<pre class="hljs language-typescript"><code>import { Contract, ContractsService } from &quot;@dipdup/tzkt-api&quot;;
+<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Contract</span>, <span class="hljs-title class_">ContractsService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@dipdup/tzkt-api&quot;</span>;
 </code></pre>
 <p>Before the <code>return</code> , add this section for the fetch</p>
-<pre class="hljs language-typescript"><code>const contractsService = new ContractsService({
-  baseUrl: &quot;https://api.ghostnet.tzkt.io&quot;,
-  version: &quot;&quot;,
-  withCredentials: false,
+<pre class="hljs language-typescript"><code><span class="hljs-keyword">const</span> contractsService = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ContractsService</span>({
+  <span class="hljs-attr">baseUrl</span>: <span class="hljs-string">&quot;https://api.ghostnet.tzkt.io&quot;</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-attr">withCredentials</span>: <span class="hljs-literal">false</span>,
 });
-const [contracts, setContracts] = useState&lt;Array&lt;Contract&gt;&gt;([]);
+<span class="hljs-keyword">const</span> [contracts, setContracts] = useState&lt;<span class="hljs-title class_">Array</span>&lt;<span class="hljs-title class_">Contract</span>&gt;&gt;([]);
 
-const fetchContracts = () =&gt; {
-  (async () =&gt; {
-    setContracts(
-      await contractsService.getSimilar({
-        address: process.env[&quot;REACT_APP_CONTRACT_ADDRESS&quot;]!,
-        includeStorage: true,
-        sort: { desc: &quot;id&quot; },
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">fetchContracts</span> = (<span class="hljs-params"></span>) =&gt; {
+  (<span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-title function_">setContracts</span>(
+      <span class="hljs-keyword">await</span> contractsService.<span class="hljs-title function_">getSimilar</span>({
+        <span class="hljs-attr">address</span>: process.<span class="hljs-property">env</span>[<span class="hljs-string">&quot;REACT_APP_CONTRACT_ADDRESS&quot;</span>]!,
+        <span class="hljs-attr">includeStorage</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">sort</span>: { <span class="hljs-attr">desc</span>: <span class="hljs-string">&quot;id&quot;</span> },
       })
     );
   })();
@@ -574,12 +574,12 @@ const fetchContracts = () =&gt; {
 </code></pre>
 <p>On the return 'html templating' section, add this after the display of the user balance div <code>I am {userAddress} with {userBalance} mutez</code>, add this :</p>
 <pre class="hljs language-typescript"><code>&lt;br /&gt;
-&lt;div&gt;
-  &lt;button onClick={fetchContracts}&gt;Fetch contracts&lt;/button&gt;
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{fetchContracts}</span>&gt;</span>Fetch contracts<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
   {contracts.map((contract) =&gt;
-  &lt;div&gt;{contract.address}&lt;/div&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{contract.address}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
   )}
-&lt;/div&gt;
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
 </code></pre>
 <p>Save your file, and <strong>re-run</strong> your server , it will generate the .env file containing the last deployed contracts 😃</p>
 <pre class="hljs language-bash"><code>yarn run start
@@ -591,19 +591,19 @@ const fetchContracts = () =&gt; {
 <section>
 <h2>Step 4 : Poke your contract</h2>
 <p>Add this new function inside the App function, it will call the entrypoint to poke</p>
-<pre class="hljs language-typescript"><code>import { PokeGameWalletType } from &#x27;./pokeGame.types&#x27;;
+<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">PokeGameWalletType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./pokeGame.types&#x27;</span>;
 
 ...
 
 
-  const poke = async (contract : Contract) =&gt; {
-    let c : PokeGameWalletType = await Tezos.wallet.at&lt;PokeGameWalletType&gt;(&quot;&quot;+contract.address);
-    try {
-      const op = await c.methods.default().send();
-      await op.confirmation();
-      alert(&quot;Tx done&quot;);
-    } catch (error : any) {
-      console.table(`Error: ${JSON.stringify(error, null, 2)}`);
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">poke</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params">contract : Contract</span>) =&gt; {
+    <span class="hljs-keyword">let</span> c : <span class="hljs-title class_">PokeGameWalletType</span> = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Tezos</span>.<span class="hljs-property">wallet</span>.<span class="hljs-property">at</span>&lt;<span class="hljs-title class_">PokeGameWalletType</span>&gt;(<span class="hljs-string">&quot;&quot;</span>+contract.<span class="hljs-property">address</span>);
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> op = <span class="hljs-keyword">await</span> c.<span class="hljs-property">methods</span>.<span class="hljs-title function_">default</span>().<span class="hljs-title function_">send</span>();
+      <span class="hljs-keyword">await</span> op.<span class="hljs-title function_">confirmation</span>();
+      <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;Tx done&quot;</span>);
+    } <span class="hljs-keyword">catch</span> (error : <span class="hljs-built_in">any</span>) {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">table</span>(<span class="hljs-string">`Error: <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(error, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>)}</span>`</span>);
     }
   };
 </code></pre>
@@ -611,17 +611,17 @@ const fetchContracts = () =&gt; {
 <p>⚠️ Normally we should call <code>c.methods.poke()</code> function , but with a unique entrypoint, Michelson is required a unique <code>default</code> name instead of having the name of the function. Also be careful because all entrypoints naming are converting to lowercase whatever variant variable name you can have on source file.</p>
 </blockquote>
 <p>Then replace the line displaying the contract address <code>{contracts.map((contract) =&gt; &lt;div&gt;{contract.address}&lt;/div&gt;)}</code> by this one that will add a Poke button</p>
-<pre class="hljs language-html"><code>    {contracts.map((contract) =&gt; &lt;div&gt;{contract.address} &lt;button onClick={() =&gt;poke(contract)}&gt;Poke&lt;/button&gt;&lt;/div&gt;)}
+<pre class="hljs language-html"><code>    {contracts.map((contract) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{contract.address} <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span>poke(contract)}&gt;Poke<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>)}
 </code></pre>
 <blockquote>
 <p>There is a Taqueria bug on unique entrypoint: https://github.com/ecadlabs/taqueria/issues/1128
 Go to ./app/src/pokeGame.types.ts and rewrite these lines</p>
-<pre class="hljs language-typescript"><code>type Methods = {
-  default: () =&gt; Promise&lt;void&gt;;
+<pre class="hljs language-typescript"><code><span class="hljs-keyword">type</span> <span class="hljs-title class_">Methods</span> = {
+  <span class="hljs-attr">default</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;;
 };
 
-type MethodsObject = {
-  default: () =&gt; Promise&lt;void&gt;;
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">MethodsObject</span> = {
+  <span class="hljs-attr">default</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;;
 };
 </code></pre>
 </blockquote>
@@ -633,9 +633,9 @@ type MethodsObject = {
 <h2>Step 5 : Display poke guys</h2>
 <p>To verify that on the page, we can display the list of poke guyz directly on the page</p>
 <p>Replace again the html contracts line by this one</p>
-<pre class="hljs language-html"><code>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;address&lt;/th&gt;&lt;th&gt;people&lt;/th&gt;&lt;th&gt;action&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
-    {contracts.map((contract) =&gt; &lt;tr&gt;&lt;td style={{borderStyle: &quot;dotted&quot;}}&gt;{contract.address}&lt;/td&gt;&lt;td style={{borderStyle: &quot;dotted&quot;}}&gt;{contract.storage.join(&quot;, &quot;)}&lt;/td&gt;&lt;td style={{borderStyle: &quot;dotted&quot;}}&gt;&lt;button onClick={() =&gt;poke(contract)}&gt;Poke&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;)}
-    &lt;/tbody&gt;&lt;/table&gt;
+<pre class="hljs language-html"><code><span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>address<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>people<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>action<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
+    {contracts.map((contract) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{borderStyle:</span> &quot;<span class="hljs-attr">dotted</span>&quot;}}&gt;</span>{contract.address}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{borderStyle:</span> &quot;<span class="hljs-attr">dotted</span>&quot;}}&gt;</span>{contract.storage.join(&quot;, &quot;)}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{borderStyle:</span> &quot;<span class="hljs-attr">dotted</span>&quot;}}&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span>poke(contract)}&gt;Poke<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>)}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
 </code></pre>
 <p>Contracts are displaying its people now</p>
 <p><img src="doc/table.png" alt=""></p>
