@@ -134,7 +134,7 @@ Here, we get the caller address using `Tezos.get_source()`. Tezos library provid
 
 The LIGO command-line interpreter provides sub-commands to directly test your LIGO code
 
-> [https://ligolang.org/docs/advanced/testing](https://ligolang.org/docs/advanced/testing)
+> [Click here to see testing documentation](https://ligolang.org/docs/advanced/testing)
 
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
