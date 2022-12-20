@@ -35,7 +35,7 @@ jobs:
       - name: Install Dependencies
         run: cd ./doc ; npm install
       - name: Copy images
-        run: cp ./doc/*.png ./doc/www/doc
+        run: mkdir ./doc/www/doc; cp ./doc/*.png ./doc/www/doc
       - name: Build
         run: cd ./doc ; node ./convert.js
       - name: Setup Pages
