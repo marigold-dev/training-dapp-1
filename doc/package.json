@@ -10,6 +10,7 @@
   "dependencies": {
     "markdown-it": "^13.0.1",
     "markdown-it-attrs": "^4.1.4",
+    "markdown-it-emoji": "^2.0.2",
     "markdown-it-header-sections": "^1.0.0"
   },
   "devDependencies": {
