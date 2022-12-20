@@ -84,7 +84,7 @@ Every contract requires to respect this convention :
   - **storage** : the on-chain storage (can be any type, here `unit` by default)
   - **return\_** : a list of `operation` and a storage
 
-> [Click here to see the entrypoints contracts documentation](https://ligolang.org/docs/advanced/entrypoints-contracts)>
+> [Click here to see the Entrypoints contracts documentation](https://ligolang.org/docs/advanced/entrypoints-contracts)>
 
 Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use `match` to evaluate the parameter and call the appropriate `poke` function
 
@@ -134,7 +134,7 @@ Here, we get the caller address using `Tezos.get_source()`. Tezos library provid
 
 The LIGO command-line interpreter provides sub-commands to directly test your LIGO code
 
-> [Click here to see testing documentation](https://ligolang.org/docs/advanced/testing)
+> [Click here to see Testing documentation](https://ligolang.org/docs/advanced/testing)
 
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
