@@ -9,13 +9,24 @@ const MD = new MarkdownIt({
   html: true,
   langPrefix: "language-",
   highlight: function (str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
+    console.log("HELLO", lang);
+    if (lang) {
       try {
-        return hljs.highlight(str, { language: lang }).value;
-      } catch (__) {}
+        return (
+          '<pre class="hljs language-' +
+          lang +
+          '"><code>' +
+          hljs.highlightAuto(str).value +
+          "</code></pre>"
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
 
-    return ""; // use external default escaping
+    return (
+      '<pre class="hljs"><code>' + MD.utils.escapeHtml(str) + "</code></pre>"
+    );
   },
 });
 MD.use(markdownItAttrs).use(markdownHSections).use(emoji);
