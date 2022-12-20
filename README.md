@@ -63,7 +63,7 @@ taq create contract pokeGame.jsligo
 
 Remove the default code and paste this code instead
 
-```jsligo
+```ligolang
 type storage = unit;
 
 type parameter = |["Poke"];
