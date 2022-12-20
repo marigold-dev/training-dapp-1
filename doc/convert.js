@@ -2,10 +2,11 @@ const MarkdownIt = require("markdown-it");
 const markdownItAttrs = require("markdown-it-attrs");
 const markdownHSections = require("markdown-it-header-sections");
 const emoji = require("markdown-it-emoji");
+const namedCodeBlocks = require("markdown-it-named-code-blocks");
 
 const fs = require("fs");
 const MD = new MarkdownIt({ html: true });
-MD.use(markdownItAttrs).use(markdownHSections).use(emoji);
+MD.use(markdownItAttrs).use(markdownHSections).use(emoji).use(namedCodeBlocks);
 
 const md = fs.readFileSync("../README.md", { encoding: "utf8" });
 const body = MD.render(md);
