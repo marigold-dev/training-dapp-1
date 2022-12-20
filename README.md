@@ -558,7 +558,7 @@ As Temple is configured well, Click on Connect button
 
 On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "ghostnet" testnet
 
-![](doc/logged.png)
+![](./doc/logged.png)
 
 :confetti_ball: your are "logged"
 
