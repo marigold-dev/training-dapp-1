@@ -35,7 +35,7 @@ jobs:
       - name: Install Dependencies
         run: cd ./doc ; npm install
       - name: Build
-        run: node ./convert.js
+        run: cd ./doc ; node ./convert.js
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
