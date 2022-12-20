@@ -1,7 +1,7 @@
 {
-  "name": "why-is-tezos-best",
+  "name": "training",
   "version": "0.0.1",
-  "author": "Marigold <contact@maigold.dev>",
+  "author": "Marigold <contact@marigold.dev>",
   "scripts": {
     "watch": "nodemon . -e js,md,html --ignore www/",
     "serve": "python -m http.server 9000",
