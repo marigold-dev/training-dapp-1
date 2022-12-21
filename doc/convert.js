@@ -4,18 +4,6 @@ const markdownHSections = require("markdown-it-header-sections");
 const emoji = require("markdown-it-emoji");
 const hljs = require("highlight.js"); // https://highlightjs.org
 
-const toggleSwitch = document.querySelector('.toggle-button');
-
-function switchTheme(e) {
-if(e.target.checked) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-} else {
-    document.documentElement.setAttribute('data-theme', 'light');
-}
-}
-
-toggleSwitch.addEventListener('change', switchTheme, false);
-
 hljs.registerLanguage(
   "javascript",
   require("highlight.js/lib/languages/javascript")
@@ -58,4 +46,3 @@ const body = MD.render(md);
 const template = fs.readFileSync("./template.html", { encoding: "utf8" });
 const newhtml = template.replace("{body}", body);
 fs.writeFileSync("./www/index.html", newhtml);
-

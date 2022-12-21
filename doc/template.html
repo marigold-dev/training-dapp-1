@@ -11,6 +11,17 @@
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
     />
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>const toggleSwitch = document.querySelector('.toggle-button');
+
+      function switchTheme(e) {
+      if(e.target.checked) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+      }
+      }
+      
+      toggleSwitch.addEventListener('change', switchTheme, false);</script>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;1,200&display=swap"
       rel="stylesheet"
