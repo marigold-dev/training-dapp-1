@@ -103,7 +103,6 @@ h2 a:link {
 }
 .container {
 display: flex;
-height: 80vh;
 }
 
 .toggle-button {
