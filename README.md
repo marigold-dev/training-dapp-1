@@ -63,7 +63,7 @@ taq create contract pokeGame.jsligo
 
 Remove the default code and paste this code instead
 
-```jsligo
+```ligolang
 type storage = unit;
 
 type parameter = |["Poke"];
@@ -84,13 +84,13 @@ Every contract requires to respect this convention :
   - **storage** : the on-chain storage (can be any type, here `unit` by default)
   - **return\_** : a list of `operation` and a storage
 
-> [Click here to see the entrypoints contracts documentation]( https://ligolang.org/docs/advanced/entrypoints-contracts)> 
+> [Click here to see the Entrypoints contracts documentation](https://ligolang.org/docs/advanced/entrypoints-contracts)>
 
 Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use `match` to evaluate the parameter and call the appropriate `poke` function
 
 > [Click here to see Ligo pattern matching documentation](https://ligolang.org/docs/language-basics/unit-option-pattern-matching)
 
-```javascript
+```ligolang
 match (action, {
         Poke: () => poke(store)
     }
@@ -98,11 +98,11 @@ match (action, {
 
 `Poke` is a `parameter` from `variant` type. It is a bit equivalent of Enum type in javascript
 
-```javascript
-type parameter = ["Poke"];
+```ligolang
+type parameter = |["Poke"];
 ```
 
-> [Click here to see the variant types]( https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types) 
+> [Click here to see the variant types](https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types)
 
 ## Step 3 : Write the poke function
 
@@ -110,13 +110,13 @@ We want to store every caller address poking the contract. Let's redefine storag
 
 At line 1, replace :
 
-```jsligo
+```ligolang
 type storage = set<address>;
 ```
 
 Before main function, add :
 
-```jsligo
+```ligolang
 const poke = (store: storage): return_ => {
   return [list([]) as list<operation>, Set.add(Tezos.get_source(), store)];
 };
@@ -124,17 +124,17 @@ const poke = (store: storage): return_ => {
 
 Set library has specific usage :
 
-> [Click here to see set library documentation](https://ligolang.org/docs/language-basics/sets-lists-tuples#sets) 
+> [Click here to see Set library documentation](https://ligolang.org/docs/language-basics/sets-lists-tuples#sets)
 
 Here, we get the caller address using `Tezos.get_source()`. Tezos library provides useful function for manipulating blockchain objects
 
-> [Click here to see Tezos library function documentation](https://ligolang.org/docs/reference/current-reference) 
+> [Click here to see Tezos library documentation](https://ligolang.org/docs/reference/current-reference)
 
 ## Step 4 : Try to poke
 
 The LIGO command-line interpreter provides sub-commands to directly test your LIGO code
 
-> [Click here to see testing documentation](https://ligolang.org/docs/advanced/testing)
+> [Click here to see Testing documentation](https://ligolang.org/docs/advanced/testing)
 
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
@@ -148,7 +148,7 @@ To compile an initial storage with taqueria, edit the new file `pokeGame.storage
 
 Replace current code by
 
-```jsligo
+```ligolang
 #include "pokeGame.jsligo"
 const default_storage = Set.empty as set<address>;
 ```
@@ -166,7 +166,7 @@ We will pass the contract parameter `Poke()` and the initial on-chain storage wi
 
 Edit the new file `pokeGame.parameterList.jsligo`
 
-```jsligo
+```ligolang
 #include "pokeGame.jsligo"
 const default_parameter = Poke();
 ```
