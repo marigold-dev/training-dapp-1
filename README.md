@@ -8,7 +8,7 @@ description: Training n°1 for decentralized application
 
 # :point_up: Poke game
 
-> dapp : A decentralized application (dApp) is a type of distributed open source software application that runs on a peer-to-peer (P2P) blockchain network rather than on a single computer. DApps are visibly similar to other software applications that are supported on a website or mobile device but are P2P supported
+dapp : A decentralized application (dApp) is a type of distributed open source software application that runs on a peer-to-peer (P2P) blockchain network rather than on a single computer. DApps are visibly similar to other software applications that are supported on a website or mobile device but are P2P supported
 
 We are creating a poke game on smart contract. You will learn :
 
@@ -84,11 +84,11 @@ Every contract requires to respect this convention :
   - **storage** : the on-chain storage (can be any type, here `unit` by default)
   - **return\_** : a list of `operation` and a storage
 
-> Doc : https://ligolang.org/docs/advanced/entrypoints-contracts
+> [Click here to see the entrypoints contracts documentation]( https://ligolang.org/docs/advanced/entrypoints-contracts)> 
 
 Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use `match` to evaluate the parameter and call the appropriate `poke` function
 
-> Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching
+> [Click here to see Ligo pattern matching documentation](https://ligolang.org/docs/language-basics/unit-option-pattern-matching)
 
 ```javascript
 match (action, {
@@ -102,7 +102,7 @@ match (action, {
 type parameter = ["Poke"];
 ```
 
-> Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types
+> [Click here to see the variant types]( https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types) 
 
 ## Step 3 : Write the poke function
 
@@ -124,11 +124,11 @@ const poke = (store: storage): return_ => {
 
 Set library has specific usage :
 
-> Doc https://ligolang.org/docs/language-basics/sets-lists-tuples#sets
+> [Click here to see set library documentation](https://ligolang.org/docs/language-basics/sets-lists-tuples#sets) 
 
 Here, we get the caller address using `Tezos.get_source()`. Tezos library provides useful function for manipulating blockchain objects
 
-> Doc https://ligolang.org/docs/reference/current-reference
+> [Click here to see Tezos library function documentation](https://ligolang.org/docs/reference/current-reference) 
 
 ## Step 4 : Try to poke
 

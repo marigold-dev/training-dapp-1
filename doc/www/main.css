@@ -25,10 +25,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
-  padding-top: 40px;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 40px;
+  padding: 40px 10px;
   max-width: 800px;
   font-family: 'Roboto Mono', monospace;
   ;
@@ -37,7 +34,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  box-shadow: inset +1px 0px 5px -2px rgb(84, 83, 83);
 }
 section.pro {
   background: var(--content-background);
@@ -50,7 +46,6 @@ section img {
   object-fit: contain;
 }
 ul {
-  margin-top: -.5em;
   padding-left: 1em;
 }
 h1,
@@ -65,7 +60,7 @@ h1 {
   color: #EB3548;
 }
 h2 {
-  font-size: 1.5em;
+  font-size: 1em;
 }
 .pure-table {
   font-size: 16px;
