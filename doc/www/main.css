@@ -9,8 +9,7 @@ html {
   /* --content-background: #0F61FF ;
   --background: #003EE0 ; */
   --negative: black;
-  --link: #434343;
-  --visited-link: var(--link);
+  --visited-link: var( --text-color);
 }
 #logo {
   max-width: 400px;
@@ -91,7 +90,7 @@ h2 {
   align-items: center;
 }
 a:link {
-  color: var(--link);
+  color: var( --text-color);
 }
 a:visited {
   color: var(--visited-link);
@@ -102,7 +101,7 @@ h2 a:link::before {
 }
 h2 a:visited,
 h2 a:link {
-  color: var(--bg-color);
+  color: var( --text-color);
 }
 [data-theme="dark"] {
   --bg-color: #1C1D22;
