@@ -1,6 +1,7 @@
 :root {
   --bg-color: #FBFCFC;
   --text-color: #2a2a2a;
+  --itemsbg-color: #f3f3f3;
 }
 
 html {
@@ -27,17 +28,14 @@ pre {
 
 .hljs {
   padding: 10px;
+  color: var( --text-color);
+  background:var( --itemsbg-color);
 }
 
 blockquote {
-  background: #f3f3f3;
+  background:var( --itemsbg-color);
   margin-left: 0;
   padding: 10px; 
-  color: #2a2a2a;
-}
-
-blockquote a:link { 
-  color: #2a2a2a;
 }
 
 body {
@@ -109,6 +107,7 @@ h2 a:link {
 [data-theme="dark"] {
   --bg-color: #1C1D22;
   --text-color: #ffffff;
+  --itemsbg-color: #29282c;
 }
 .container {
 display: flex;
@@ -146,13 +145,3 @@ transform: translate(100%);
 background-color: #303030;
 transition: .4s;
 }
-/*
-@media (prefers-color-scheme: dark) {
-  html {
-    --color: #E6E8EE ;
-    --background: #1D2227 ;
-    --negative: white ;
-    --link: #58A6FF ;
-    --visited-link: #8E96F0 ;
-  }
-} */
