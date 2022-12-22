@@ -4,6 +4,7 @@ tags: Training
 description: Training n°1 for decentralized application
 ---
 
+## :round_pushpin:  [Click here for full training information on github]( https://github.com/marigold-dev/training-dapp-1)
 # Training dapp n°1
 
 # :point_up: Poke game

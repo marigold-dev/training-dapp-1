@@ -62,16 +62,18 @@
       <input type="checkbox" class="toggle-button">
     </div>
     {body}
-    <script>const toggleSwitch = document.querySelector('.toggle-button');
+    <script>
+    const toggleSwitch = document.querySelector('.toggle-button');
 
-      function switchTheme(e) {
-      if(e.target.checked) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
-          document.documentElement.setAttribute('data-theme', 'light');
+    function switchTheme(e) {
+    if(e.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
       }
-      }
-      
-      toggleSwitch.addEventListener('change', switchTheme, false);</script>
+    }
+    
+    toggleSwitch.addEventListener('change', switchTheme, false);
+    </script>
   </body>
 </html>

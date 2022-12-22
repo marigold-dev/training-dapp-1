@@ -13,7 +13,7 @@ html {
   --visited-link: var(--link);
 }
 #logo {
-  max-width: 80vw;
+  max-width: 400px;
   max-height: 1em;
   align-self: center;
   transform: translate(0px, .1em);
@@ -26,9 +26,16 @@ pre {
   overflow: auto;
 }
 
+.hljs {
+  padding: 10px;
+}
+
 blockquote {
   background: #f3f3f3;
   margin-left: 0;
+  padding: 10px;
+  color: #2a2a2a;
+  
 }
 
 body {
@@ -52,7 +59,7 @@ section.pro {
   border-radius: 5px;
 }
 section img {
-  width: 480px;
+  width: 80vw;
   object-fit: contain;
 }
 ul {
@@ -134,7 +141,7 @@ background-color: #bdbdbd;
 
 .toggle-button:checked:before {
 transform: translate(100%);
-background-color: #212121;
+background-color: #303030;
 transition: .4s;
 }
 /*
