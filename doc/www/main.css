@@ -33,9 +33,11 @@ blockquote {
   background: #f3f3f3;
   margin-left: 0;
   padding: 10px; 
+  color: #2a2a2a;
 }
 
-blockquote a { color: #2a2a2a;
+blockquote a:link { 
+  color: #2a2a2a;
 }
 
 body {
