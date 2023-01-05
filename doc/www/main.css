@@ -105,6 +105,13 @@ h2 a:visited,
 h2 a:link {
   color: var( --text-color);
 }
+
+td {
+  padding: 0.1em 1em;
+}
+code {
+  font-family: 'Roboto Mono', monospace;
+}
 [data-theme="dark"] {
   --bg-color: #1C1D22;
   --text-color: #ffffff;
