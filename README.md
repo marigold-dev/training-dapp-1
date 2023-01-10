@@ -705,4 +705,6 @@ Now, you are able to create any Smart Contract using Ligo and create a complete 
 
 On next training, you will learn how to call a Smart contract inside a Smart Contract and use the callback, write unit test, etc ...
 
-[:arrow_right: NEXT](https://github.com/marigold-dev/training-dapp-2)
+[:arrow_right: NEXT (HTML version)](https://marigold-dev.github.io/training-dapp-2)
+
+[:arrow_right: NEXT (Github version)](https://github.com/marigold-dev/training-dapp-2)
