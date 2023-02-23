@@ -1,122 +1,73 @@
 {
+    "version": "v2",
     "language": "en",
-    "plugins": [
-        {
-            "name": "@taqueria/plugin-ligo",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-tezos-client",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-flextesa",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-taquito",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-contract-types",
-            "type": "npm"
-        }
-    ],
-    "contractsDir": "contracts",
     "artifactsDir": "artifacts",
-    "contracts": {
-        "pokeGame.jsligo": {
-            "sourceFile": "pokeGame.jsligo",
-            "hash": "5737454d4dd7c3947452a5d2003c30353b62f19a6d73f98ad830a187574b3751"
+    "contractsDir": "contracts",
+    "accounts": {
+        "bob": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
+            }
         },
-        "pokeGame.storages.jsligo": {
-            "sourceFile": "pokeGame.storages.jsligo",
-            "hash": "5737454d4dd7c3947452a5d2003c30353b62f19a6d73f98ad830a187574b3751"
+        "alice": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
+            }
         },
-        "pokeGame.parameters.jsligo": {
-            "sourceFile": "pokeGame.parameters.jsligo",
-            "hash": "5737454d4dd7c3947452a5d2003c30353b62f19a6d73f98ad830a187574b3751"
-        }
-    },
-    "network": {
-        "ghostnet": {
-            "label": "ghostnet",
-            "rpcUrl": "https://ghostnet.tezos.marigold.dev",
-            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg",
-            "accounts": {
-                "taqOperatorAccount": {
-                    "publicKey": "edpkvGfYw3LyB1UcCahKQk4rF2tvbMUk8GFiTuMjL75uGXrpvKXhjn",
-                    "publicKeyHash": "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb",
-                    "privateKey": "edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq"
-                }
+        "john": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
+            }
+        },
+        "jane": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
+            }
+        },
+        "joe": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
             }
         }
     },
-    "sandbox": {
-        "local": {
-            "label": "Local Tezos Sandbox",
-            "rpcUrl": "http://localhost:20000",
-            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg",
-            "accounts": {
-                "default": "bob",
-                "bob": {
-                    "encryptedKey": "edpkurPsQ8eUApnLUJ9ZPDvu98E8VNj4KtJa1aZr16Cr5ow5VHKnz4",
-                    "publicKeyHash": "tz1aSkwEot3L2kmUvcoxzjMomb9mvBNuzFK6",
-                    "secretKey": "unencrypted:edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt"
-                },
-                "alice": {
-                    "encryptedKey": "edpkvGfYw3LyB1UcCahKQk4rF2tvbMUk8GFiTuMjL75uGXrpvKXhjn",
-                    "publicKeyHash": "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb",
-                    "secretKey": "unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq"
-                },
-                "john": {
-                    "encryptedKey": "edpktt6t2ENhxiQqun6bXPPWC6tFVvNPTDRh1gEPGX4BgDgbDnmGzP",
-                    "publicKeyHash": "tz1Zwoh1QCVAvJ4sVTojMp9pLYp6Ji4NoZy6",
-                    "secretKey": "unencrypted:edsk3Un2KRUUoWZufi914HQem96ejVFnkyD8GXRPUSkgqy5etsYXEN"
-                },
-                "jane": {
-                    "encryptedKey": "edpkvS6TDSWcqqj3EJi3NRrCMyN7oNw1B3Hp37R19tMThqM8YNhAuS",
-                    "publicKeyHash": "tz1aHUAC4oviwJuZF1EvVSvFz7cu9KMNYBph",
-                    "secretKey": "unencrypted:edsk3UkdS1UBfTBkMAoFxmfdmUHmCdNhTzDJ1cSJuZhU1b6k6fZZoQ"
-                },
-                "joe": {
-                    "encryptedKey": "edpkuT1QYPYbLLQz9dXhQS33ncsixxeGHbNGmntPTR4VBbWmskHPrV",
-                    "publicKeyHash": "tz1MVGjgD1YtAPwohsSfk8i3ZiT1yEGM2YXB",
-                    "secretKey": "unencrypted:edsk3Un2FU9Zeb4KEoATWdpAqcX5JArMUj2ew8S4SuzhPRDmGoqNx2"
-                }
-            }
-        }
-    },
-    "environment": {
-        "default": "development",
+    "environmentDefault": "development",
+    "environments": {
         "development": {
-            "networks": [],
-            "sandboxes": [
-                "local"
-            ],
-            "aliases": {
-                "pokeGame": {
-                    "address": "KT1Hd83xLy1tRJLtNjPW69gVCP5sYvKkPF9Q"
-                }
-            }
+            "type": "flextesa",
+            "label": "Local Tezos Sandbox"
         },
         "testing": {
-            "networks": [
-                "ghostnet"
-            ],
-            "sandboxes": [],
-            "aliases": {
-                "pokeGame": {
-                    "address": "KT19jEAyrvsMzY6DQ42UsR6KF3duKHJMJyPZ"
-                }
-            }
+            "type": "simple",
+            "label": "ghostnet",
+            "rpcUrl": "https://ghostnet.ecadinfra.com"
+        },
+        "production": {
+            "type": "simple",
+            "label": "mainnet",
+            "rpcUrl": "https://mainnet.api.tez.ie"
         }
     },
-    "accounts": {
-        "bob": "3_000_000_000",
-        "alice": "3_000_000_000",
-        "john": "3_000_000_000",
-        "jane": "3_000_000_000",
-        "joe": "3_000_000_000"
-    }
+    "plugins": [
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-ligo"
+        },
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-tezos-client"
+        },
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-taquito"
+        },
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-contract-types"
+        }
+    ]
 }

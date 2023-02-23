@@ -34,10 +34,10 @@ Please install this software first on your machine or use online alternative :
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another package manager (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)
-- [ ] [taqueria v0.24.2](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
+- [ ] [taqueria v0.28](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
 - [ ] [taqueria VS Code extension](https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode) : visualize your project and execute tasks
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
-- [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser
+- [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser (but you can take any other one that supports ghostnet)
 - [ ] [Docker](https://docs.docker.com/engine/install/) you cannot do anything without containers today ...
 
 > :warning: :whale: About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... Docker should be running on your machine :whale2:
@@ -135,7 +135,7 @@ The LIGO command-line interpreter provides sub-commands to directly test your LI
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
 ```bash
-taq compile pokeGame.jsligo
+taq compile-all
 ```
 
 Taqueria is creating the Michelson file output on `artifacts` folder
@@ -152,7 +152,7 @@ const default_storage = Set.empty as set<address>;
 Compile all now
 
 ```bash
-taq compile pokeGame.jsligo
+taq compile-all
 ```
 
 It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
@@ -171,7 +171,7 @@ Run simulation now (you will need tezos client plugin for simulation)
 
 ```bash
 taq install @taqueria/plugin-tezos-client
-taq compile pokeGame.jsligo
+taq compile-all
 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
 
@@ -182,7 +182,7 @@ Output should give :
 │ Contract    │ Result                                       │
 ├─────────────┼──────────────────────────────────────────────┤
 │ pokeGame.tz │ storage                                      │
-│             │   { "KT1BEqzn5Wx8uJrZNvuS9DVHmLvG9td3fDLi" } │
+│             │   { "tz1Ke2h7sDdakHJQh8WX4Z372du1KChsksyU" } │
 │             │ emitted operations                           │
 │             │                                              │
 │             │ big_map diff                                 │
@@ -197,7 +197,7 @@ You can notice that the instruction will store the address of the caller into th
 
 ### Local testnet wallet
 
-Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), so you don't really need to configure something
+Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), so you don't really need to configure something. Anyway, we will not use local testnet and deploy directly to the ghostnet
 
 ### Ghostnet testnet wallet
 
@@ -214,24 +214,48 @@ You should get this kind of log
 
 ```log
 Warning: the faucet field in network configs has been deprecated and will be ignored
-A keypair with public key hash tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb was generated for you.
+A keypair with public key hash tz1XXXXXXXXXXXXXXXXXXXXXX was generated for you.
 To fund this account:
 1. Go to https://teztnets.xyz and click "Faucet" of the target testnet
 2. Copy and paste the above key into the 'wallet address field
 3. Request some Tez (Note that you might need to wait for a few seconds for the network to register the funds)
+No operations performed
 ```
+
+#### Choice 1 : use alice wallet everywhere
+
+Set alice as taqueria operator
+
+Edit .taq/config.local.testing.json
+
+```json
+{
+  "networkName": "ghostnet",
+  "accounts": {
+    "taqOperatorAccount": {
+      "publicKey": "edpkvGfYw3LyB1UcCahKQk4rF2tvbMUk8GFiTuMjL75uGXrpvKXhjn",
+      "publicKeyHash": "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb",
+      "privateKey": "edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq"
+    }
+  }
+}
+```
+
+#### Choice 2 : use the Taqueria generated account instead
+
+Look at .taq/config.local.testing.json file to get the `privateKey`
 
 #### Configure Temple
 
 Open your Temple browser extension or on your mobile phone. Do the initial setup.
 Once you are done, go to Settings (click on the avatar icon, or display Temple in full page) and click on `Import account` > `Private key` tab
 
-Copy the private key from the .taq/config.json file at this path `network/ghostnet/accounts/taqRootAccount/privateKey` to Temple text input
+Copy the `privateKey` from alice (or generated taqueria account) and paste it to Temple text input
 
 #### Send free XTZ to your account
 
-Go to a web faucet like [Marigold faucet here](https://faucet.marigold.dev/).
-Connect with your wallet on `Ghostnet` and ask for free `XTZ`
+If you don't have enough XTZ to start, go to a web faucet like [Marigold faucet here](https://faucet.marigold.dev/).
+Connect your wallet on `Ghostnet` and ask for free `XTZ`
 
 Now you have :moneybag: !!!
 
@@ -246,44 +270,11 @@ taq deploy pokeGame.tz -e "testing"
 HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
 
 ```logs
-┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬─────────────────────────────────────┐
-│ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination                         │
-├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼─────────────────────────────────────┤
-│ pokeGame.tz │ KT19jEAyrvsMzY6DQ42UsR6KF3duKHJMJyPZ │ pokeGame │ 0                │ https://ghostnet.tezos.marigold.dev │
-└─────────────┴──────────────────────────────────────┴──────────┴──────────────────┴─────────────────────────────────────┘
-```
-
-## Step 7 : (Optional) deploy locally with flextesa
-
-You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Ghostnet for free, not necessary to install one locally on testnets). For your knowledge, below the step to deploy locally. Also you can change some parameter to point to another protocol version
-
-```bash
-taq install @taqueria/plugin-flextesa
-
-# it takes some minutes the first time
-taq start sandbox local
-
-#list users
-taq list accounts local
-
-```
-
-Deploy the contract on `development` environment
-
-You need to install taquito plugin first to originate the contract
-
-```bash
-taq install @taqueria/plugin-taquito
-
-taq deploy pokeGame.tz -e "development"
-```
-
-```logs
-┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬────────────────────────┐
-│ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination            │
-├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼────────────────────────┤
-│ pokeGame.tz │ KT1Hd83xLy1tRJLtNjPW69gVCP5sYvKkPF9Q │ pokeGame │ 0                │ http://localhost:20000 │
-└─────────────┴──────────────────────────────────────┴──────────┴──────────────────┴────────────────────────┘
+┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬────────────────────────────────┐
+│ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination                    │
+├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼────────────────────────────────┤
+│ pokeGame.tz │ KT18xj4CUzZJs6jAumAYUT6JF5MfnXMTPyqK │ pokeGame │ 0                │ https://ghostnet.ecadinfra.com │
+└─────────────┴──────────────────────────────────────┴──────────┴──────────────────┴────────────────────────────────┘
 ```
 
 # :construction_worker: Dapp
@@ -343,14 +334,12 @@ yarn add -D @airgap/beacon-types
 > then I change the script in package.json by
 >
 > ```
-> ...
 > "scripts": {
 >    "start": "react-app-rewired start",
 >    "build": "react-app-rewired build",
 >    "test": "react-app-rewired test",
 >    "eject": "react-app-rewired eject"
 > },
-> ...
 > ```
 >
 > :warning:
@@ -453,8 +442,8 @@ export default App;
 Let's create the 2 missing src component files and put code in it. On `src` folder, create these files.
 
 ```bash
-touch app/src/ConnectWallet.tsx
-touch app/src/DisconnectWallet.tsx
+touch src/ConnectWallet.tsx
+touch src/DisconnectWallet.tsx
 ```
 
 ConnectWallet button will create an instance wallet, get user permissions via a popup and then retrieve account information
@@ -552,13 +541,13 @@ Save both file, the dev server should refresh the page
 
 As Temple is configured well, Click on Connect button
 
-On the popup, select your Temple wallet, then your account and connect. :warning: Do not forget to stay on the "ghostnet" testnet
+On the popup, select your Temple wallet, then your account and connect.
 
 ![](./doc/logged.png)
 
 :confetti_ball: your are "logged"
 
-Click on the Disconnect button to logout to test it
+Click on the Disconnect button (if you want to test it too)
 
 ## Step 3 : List poke contracts via an indexer
 
@@ -632,24 +621,25 @@ Go to the browser. click on `Fetch contracts` button
 
 ## Step 4 : Poke your contract
 
-Add this new function inside the App function, it will call the entrypoint to poke
+Add this import and this new function inside the App function, it will call the entrypoint to poke
 
 ```typescript
-import { PokeGameWalletType } from './pokeGame.types';
+import { PokeGameWalletType } from "./pokeGame.types";
+```
 
-...
-
-
-  const poke = async (contract : Contract) => {
-    let c : PokeGameWalletType = await Tezos.wallet.at<PokeGameWalletType>(""+contract.address);
-    try {
-      const op = await c.methods.default().send();
-      await op.confirmation();
-      alert("Tx done");
-    } catch (error : any) {
-      console.table(`Error: ${JSON.stringify(error, null, 2)}`);
-    }
-  };
+```typescript
+const poke = async (contract: Contract) => {
+  let c: PokeGameWalletType = await Tezos.wallet.at<PokeGameWalletType>(
+    "" + contract.address
+  );
+  try {
+    const op = await c.methods.default().send();
+    await op.confirmation();
+    alert("Tx done");
+  } catch (error: any) {
+    console.table(`Error: ${JSON.stringify(error, null, 2)}`);
+  }
+};
 ```
 
 > :warning: Normally we should call `c.methods.poke()` function , but with a unique entrypoint, Michelson is required a unique `default` name instead of having the name of the function. Also be careful because all entrypoints naming are converting to lowercase whatever variant variable name you can have on source file.
@@ -683,7 +673,7 @@ Save and see the page refreshed, then click on Poke button
 
 To verify that on the page, we can display the list of poke guyz directly on the page
 
-Replace again the html contracts line by this one
+Replace again the html contracts line `{contracts ...}` by this one
 
 ```html
 <table><thead><tr><th>address</th><th>people</th><th>action</th></tr></thead><tbody>

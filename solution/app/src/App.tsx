@@ -41,18 +41,6 @@ function App() {
   });
   const [contracts, setContracts] = useState<Array<Contract>>([]);
 
-  const fetchContracts = () => {
-    (async () => {
-      setContracts(
-        await contractsService.getSimilar({
-          address: process.env["REACT_APP_CONTRACT_ADDRESS"]!,
-          includeStorage: true,
-          sort: { desc: "id" },
-        })
-      );
-    })();
-  };
-
   const poke = async (contract: Contract) => {
     let c: PokeGameWalletType = await Tezos.wallet.at<PokeGameWalletType>(
       "" + contract.address
@@ -64,6 +52,18 @@ function App() {
     } catch (error: any) {
       console.table(`Error: ${JSON.stringify(error, null, 2)}`);
     }
+  };
+
+  const fetchContracts = () => {
+    (async () => {
+      setContracts(
+        await contractsService.getSimilar({
+          address: process.env["REACT_APP_CONTRACT_ADDRESS"]!,
+          includeStorage: true,
+          sort: { desc: "id" },
+        })
+      );
+    })();
   };
 
   return (
@@ -89,6 +89,7 @@ function App() {
         <br />
         <div>
           <button onClick={fetchContracts}>Fetch contracts</button>
+
           <table>
             <thead>
               <tr>
