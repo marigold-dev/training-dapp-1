@@ -34,7 +34,7 @@ Please install this software first on your machine or use online alternative :
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another package manager (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)
-- [ ] [taqueria v0.28](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
+- [ ] [taqueria v0.28.4](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
 - [ ] [taqueria VS Code extension](https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode) : visualize your project and execute tasks
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser (but you can take any other one that supports ghostnet)
