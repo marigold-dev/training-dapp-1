@@ -14,6 +14,34 @@
                     "destination": "https://ghostnet.ecadinfra.com"
                 }
             ]
+        },
+        "@taqueria/plugin-taquito.deploy.1679644454844": {
+            "task": "deploy",
+            "plugin": "@taqueria/plugin-taquito",
+            "time": 1679644454845,
+            "output": [
+                {
+                    "contract": "pokeGame.tz",
+                    "address": "KT1Gp8KkQyU7jVzFV2Kx67XiA68fWpiEGAse",
+                    "alias": "pokeGame",
+                    "balanceInMutez": "0",
+                    "destination": "https://ghostnet.ecadinfra.com"
+                }
+            ]
+        },
+        "@taqueria/plugin-taquito.deploy.1679644607531": {
+            "task": "deploy",
+            "plugin": "@taqueria/plugin-taquito",
+            "time": 1679644607531,
+            "output": [
+                {
+                    "contract": "pokeGame.tz",
+                    "address": "KT1RADJZCQGaAxJKWfV8wY5Y49h4CJvB2HNS",
+                    "alias": "pokeGame",
+                    "balanceInMutez": "0",
+                    "destination": "https://ghostnet.ecadinfra.com"
+                }
+            ]
         }
     }
 }
