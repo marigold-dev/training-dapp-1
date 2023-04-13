@@ -34,7 +34,7 @@ Please install this software first on your machine or use online alternative :
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another package manager (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)
-- [ ] [taqueria v0.28.4](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
+- [ ] [taqueria v0.28.5](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
 - [ ] [taqueria VS Code extension](https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode) : visualize your project and execute tasks
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser (but you can take any other one that supports ghostnet)
@@ -51,7 +51,7 @@ Please install this software first on your machine or use online alternative :
 ```bash
 taq init training1
 cd training1
-taq install @taqueria/plugin-ligo
+taq install @taqueria/plugin-ligo@next
 taq create contract pokeGame.jsligo
 ```
 
@@ -61,44 +61,42 @@ Remove the default code and paste this code instead
 
 ```ligolang
 type storage = unit;
-
-type parameter = |["Poke"];
+type parameter = unit;
 
 type return_ = [list<operation>, storage];
 
-const main = ([action, store]: [parameter, storage]): return_ => {
-  return match(action, {
-    Poke: () => poke(store),
-  });
+//@entry
+const poke = ( _ : parameter , store: storage): return_ => {
+  return [list([]) as list<operation>, store];
 };
 ```
 
 Every contract requires to respect this convention :
 
-- an entrypoint, **main** by default, with a mandatory signature taking 2 parameters and a return :
-  - **parameter** : the contract `parameter`
+- at least one entrypoint, prefixed by **//@entry** annotation, with a mandatory signature taking (parameter, storage) and a return type :
+  - **parameter** : the entrypoint `parameter`. It can be whatever type but it has to be an unique variable as argument
   - **storage** : the on-chain storage (can be any type, here `unit` by default)
   - **return\_** : a list of `operation` and a storage
 
 > [Click here to see the Entrypoints contracts documentation](https://ligolang.org/docs/advanced/entrypoints-contracts)>
 
-Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use `match` to evaluate the parameter and call the appropriate `poke` function
+> Note : The old syntax was requiring a main function. It is still valid but very verbatim
+>
+> `Poke` will be generated from `poke` entrypoint and will generate a `variant` type under the hood. It is a bit equivalent of Enum type in javascript. For each entries, a variant case will be added to the global parameter, here is kinda what intermediate state will produce (also a default main function will be generated too, you don't have to think about it anymore) :
+>
+> ```ligolang
+> type all_parameters = |["Poke"];
+>
+> ...
+>
+> const main = ([action, store]: [all_parameters, storage]): return_ => {
+>  return match(action, {
+>    Poke: (args) => poke(args,store),
+>  });
+> };
+> ```
 
-> [Click here to see Ligo pattern matching documentation](https://ligolang.org/docs/language-basics/unit-option-pattern-matching)
-
-```ligolang
-match (action, {
-        Poke: () => poke(store)
-    }
-```
-
-`Poke` is a `parameter` from `variant` type. It is a bit equivalent of Enum type in javascript
-
-```ligolang
-type parameter = |["Poke"];
-```
-
-> [Click here to see the variant types](https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types)
+> [Click here to understand the variant type](https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types)
 
 ## Step 3 : Write the poke function
 
@@ -110,10 +108,11 @@ At line 1, replace :
 type storage = set<address>;
 ```
 
-Before main function, add :
+change poke function to :
 
 ```ligolang
-const poke = (store: storage): return_ => {
+//@entry
+const poke = ( _ : parameter , store: storage): return_ => {
   return [list([]) as list<operation>, Set.add(Tezos.get_source(), store)];
 };
 ```
@@ -135,7 +134,7 @@ The LIGO command-line interpreter provides sub-commands to directly test your LI
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
 ```bash
-taq compile-all
+TAQ_LIGO_IMAGE=ligolang/ligo:next taq compile pokeGame.jsligo
 ```
 
 Taqueria is creating the Michelson file output on `artifacts` folder
@@ -152,26 +151,26 @@ const default_storage = Set.empty as set<address>;
 Compile all now
 
 ```bash
-taq compile-all
+TAQ_LIGO_IMAGE=ligolang/ligo:next taq compile pokeGame.jsligo
 ```
 
 It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
 
 Let's simulate the Poke call using `taq simulate`  
-We will pass the contract parameter `Poke()` and the initial on-chain storage with an empty set
+We will pass the contract parameter `unit` and the initial on-chain storage with an empty set
 
 Edit the new file `pokeGame.parameterList.jsligo`
 
 ```ligolang
 #include "pokeGame.jsligo"
-const default_parameter = Poke();
+const default_parameter : parameter = unit;
 ```
 
 Run simulation now (you will need tezos client plugin for simulation)
 
 ```bash
-taq install @taqueria/plugin-tezos-client
-taq compile-all
+taq install @taqueria/plugin-tezos-client@next
+TAQ_LIGO_IMAGE=ligolang/ligo:next taq compile pokeGame.jsligo
 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
 
@@ -206,7 +205,7 @@ Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), 
 Force Taqueria to generate this account
 
 ```bash
-taq install @taqueria/plugin-taquito
+taq install @taqueria/plugin-taquito@next
 taq deploy pokeGame.tz -e "testing"
 ```
 
@@ -273,7 +272,7 @@ HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
 ┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬────────────────────────────────┐
 │ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination                    │
 ├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼────────────────────────────────┤
-│ pokeGame.tz │ KT18xj4CUzZJs6jAumAYUT6JF5MfnXMTPyqK │ pokeGame │ 0                │ https://ghostnet.ecadinfra.com │
+│ pokeGame.tz │ KT1SVwMCVR9T3nq1sRsULy2uYaBRG1nqT9rz │ pokeGame │ 0                │ https://ghostnet.ecadinfra.com │
 └─────────────┴──────────────────────────────────────┴──────────┴──────────────────┴────────────────────────────────┘
 ```
 
@@ -355,7 +354,7 @@ To get typescript classes from taqueria plugin, get back to root folder running 
 ```bash
 cd ..
 
-taq install @taqueria/plugin-contract-types
+taq install @taqueria/plugin-contract-types@next
 
 taq generate types ./app/src
 

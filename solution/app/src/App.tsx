@@ -19,27 +19,24 @@ function App() {
     })
   );
 
-  useEffect(() => {
-    Tezos.setWalletProvider(wallet);
-    (async () => {
-      const activeAccount = await wallet.client.getActiveAccount();
-      if (activeAccount) {
-        setUserAddress(activeAccount.address);
-        const balance = await Tezos.tz.getBalance(activeAccount.address);
-        setUserBalance(balance.toNumber());
-      }
-    })();
-  }, [wallet]);
-
-  const [userAddress, setUserAddress] = useState<string>("");
-  const [userBalance, setUserBalance] = useState<number>(0);
-
   const contractsService = new ContractsService({
     baseUrl: "https://api.ghostnet.tzkt.io",
     version: "",
     withCredentials: false,
   });
   const [contracts, setContracts] = useState<Array<Contract>>([]);
+
+  const fetchContracts = () => {
+    (async () => {
+      setContracts(
+        await contractsService.getSimilar({
+          address: process.env["REACT_APP_CONTRACT_ADDRESS"]!,
+          includeStorage: true,
+          sort: { desc: "id" },
+        })
+      );
+    })();
+  };
 
   const poke = async (contract: Contract) => {
     let c: PokeGameWalletType = await Tezos.wallet.at<PokeGameWalletType>(
@@ -54,17 +51,20 @@ function App() {
     }
   };
 
-  const fetchContracts = () => {
+  useEffect(() => {
+    Tezos.setWalletProvider(wallet);
     (async () => {
-      setContracts(
-        await contractsService.getSimilar({
-          address: process.env["REACT_APP_CONTRACT_ADDRESS"]!,
-          includeStorage: true,
-          sort: { desc: "id" },
-        })
-      );
+      const activeAccount = await wallet.client.getActiveAccount();
+      if (activeAccount) {
+        setUserAddress(activeAccount.address);
+        const balance = await Tezos.tz.getBalance(activeAccount.address);
+        setUserBalance(balance.toNumber());
+      }
     })();
-  };
+  }, [wallet]);
+
+  const [userAddress, setUserAddress] = useState<string>("");
+  const [userBalance, setUserBalance] = useState<number>(0);
 
   return (
     <div className="App">
@@ -85,11 +85,9 @@ function App() {
         <div>
           I am {userAddress} with {userBalance} mutez
         </div>
-
         <br />
         <div>
           <button onClick={fetchContracts}>Fetch contracts</button>
-
           <table>
             <thead>
               <tr>

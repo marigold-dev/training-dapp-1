@@ -1,2 +1,2 @@
 #include "pokeGame.jsligo"
-const default_parameter = Poke();
+const default_parameter : parameter = unit;
