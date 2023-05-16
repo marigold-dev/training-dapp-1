@@ -34,7 +34,7 @@ Please install this software first on your machine or use online alternative :
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another package manager (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)
-- [ ] [taqueria v0.28.5](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
+- [ ] [taqueria v0.28.6](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
 - [ ] [taqueria VS Code extension](https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode) : visualize your project and execute tasks
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser (but you can take any other one that supports ghostnet)
@@ -51,7 +51,7 @@ Please install this software first on your machine or use online alternative :
 ```bash
 taq init training1
 cd training1
-taq install @taqueria/plugin-ligo@next
+taq install @taqueria/plugin-ligo
 taq create contract pokeGame.jsligo
 ```
 
@@ -134,7 +134,7 @@ The LIGO command-line interpreter provides sub-commands to directly test your LI
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
 ```bash
-TAQ_LIGO_IMAGE=ligolang/ligo:next taq compile pokeGame.jsligo
+TAQ_LIGO_IMAGE=ligolang/ligo:0.65.0 taq compile pokeGame.jsligo
 ```
 
 Taqueria is creating the Michelson file output on `artifacts` folder
@@ -151,7 +151,7 @@ const default_storage = Set.empty as set<address>;
 Compile all now
 
 ```bash
-TAQ_LIGO_IMAGE=ligolang/ligo:next taq compile pokeGame.jsligo
+TAQ_LIGO_IMAGE=ligolang/ligo:0.65.0 taq compile pokeGame.jsligo
 ```
 
 It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
@@ -169,8 +169,8 @@ const default_parameter : parameter = unit;
 Run simulation now (you will need tezos client plugin for simulation)
 
 ```bash
-taq install @taqueria/plugin-tezos-client@next
-TAQ_LIGO_IMAGE=ligolang/ligo:next taq compile pokeGame.jsligo
+taq install @taqueria/plugin-tezos-client
+TAQ_LIGO_IMAGE=ligolang/ligo:0.65.0 taq compile pokeGame.jsligo
 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
 
@@ -205,7 +205,7 @@ Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), 
 Force Taqueria to generate this account
 
 ```bash
-taq install @taqueria/plugin-taquito@next
+taq install @taqueria/plugin-taquito
 taq deploy pokeGame.tz -e "testing"
 ```
 
@@ -354,7 +354,7 @@ To get typescript classes from taqueria plugin, get back to root folder running 
 ```bash
 cd ..
 
-taq install @taqueria/plugin-contract-types@next
+taq install @taqueria/plugin-contract-types
 
 taq generate types ./app/src
 
