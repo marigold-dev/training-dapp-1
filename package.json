@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@tzkt/sdk-api": "^2.2.0"
+  }
+}

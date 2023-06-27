@@ -278,13 +278,35 @@ HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
 
 # :construction_worker: Dapp
 
-## Step 1 : Create react app
+## Step 1 : Create a react app
 
 ```bash
-yarn create react-app app --template typescript
-
-cd app
+yarn create vite
 ```
+
+Then follow the prompts. Chose React and then Typescript:
+
+```shell
+? Project name: › my-dapp #Enter your project name
+
+? Select a framework: › - Use arrow-keys. Return to submit. #We select React as framework
+    Vanilla
+    Vue
+❯   React
+    Preact
+    Lit
+    Svelte
+    Others
+
+? Select a variant: › - Use arrow-keys. Return to submit. #Both TypeScript variants are fine. We select TypeScript only.
+❯   TypeScript
+    TypeScript + SWC
+    JavaScript
+    JavaScript + SWC
+
+cd my-dapp
+```
+SWC is not part of this tutorial but you can read about it here [SWC](https://swc.rs/).
 
 Add taquito, tzkt indexer lib
 
@@ -293,57 +315,57 @@ yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk  @dipdup/tzk
 yarn add -D @airgap/beacon-types
 ```
 
-> :warning: :warning: :warning: Last React version uses `react-script 5.x` , follow these steps to rewire webpack for all encountered missing libraries : https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues
+> :warning: :warning: :warning: Before we start we need to add the following dependencies in order to not get polyfill issues. The reason for this step is that certain required dependencies are Node APIs, thus not included in Browsers. But still needed for communication and interaction with Wallets and Smart Contracts.
 
 > For example, in my case, I installed this :
 >
 > ```bash
-> yarn add --dev react-app-rewired process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
+> yarn add --dev process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
 > ```
 >
-> and my `config-overrides.js` file was :
+> then create a new file `nodeSpecific.ts` in the src folder of your project and edit with this content :
 >
 > ```js
-> const webpack = require("webpack");
+>import { Buffer } from 'buffer'
 >
-> module.exports = function override(config) {
->   const fallback = config.resolve.fallback || {};
->   Object.assign(fallback, {
->     crypto: require.resolve("crypto-browserify"),
->     stream: require.resolve("stream-browserify"),
->     assert: require.resolve("assert"),
->     http: require.resolve("stream-http"),
->     https: require.resolve("https-browserify"),
->     os: require.resolve("os-browserify"),
->     url: require.resolve("url"),
->     path: require.resolve("path-browserify"),
->   });
->   config.ignoreWarnings = [/Failed to parse source map/];
->   config.resolve.fallback = fallback;
->   config.plugins = (config.plugins || []).concat([
->     new webpack.ProvidePlugin({
->       process: "process/browser",
->       Buffer: ["buffer", "Buffer"],
->     }),
->   ]);
->   return config;
-> };
+> globalThis.Buffer = Buffer
 > ```
 >
-> then I change the script in package.json by
+> then open the `index.html` file and add the following script in the body. It should look like this :
 >
-> ```
-> "scripts": {
->    "start": "react-app-rewired start",
->    "build": "react-app-rewired build",
->    "test": "react-app-rewired test",
->    "eject": "react-app-rewired eject"
-> },
+> ```js
+> <body>
+>   <div id="root"></div>
+>   <script type="module" src="/src/nodeSpecific.ts"></script> //add this line
+>   <script type="module" src="/src/main.tsx"></script>
+> </body>
 > ```
 >
-> :warning:
+> Finally open the `vite.config.ts` file and edit it with this content :
+>
+> ```js
+> import { defineConfig } from 'vite'
+> import react from '@vitejs/plugin-react-swc'
+>
+> // https://vitejs.dev/config/
+> export default defineConfig({
+>   define: {
+>     global: {},
+>   },
+>   plugins: [react()],
+>   resolve: {
+>     alias: {
+>       stream: 'stream-browserify',
+>       os: 'os-browserify/browser',
+>       util: 'util',
+>       process: 'process/browser',
+>       buffer: 'buffer',
+>     },
+>   },
+> })
+> ```
 
-This was painful :/, but it was the worst so far
+Now you can run the app.
 
 ### Generate Typescript classes from Michelson code
 

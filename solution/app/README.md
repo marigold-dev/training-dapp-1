@@ -3,7 +3,7 @@ A minimal React setup for starting developing Tezos DApps.
 ## Getting Started
 
 1. Make sure you have https://nodejs.org/ installed on your computer
-2. Create a new repository from taquito-boilerplate by clicking "Use this template".
+2. Create a new repository from training-dapp-1 by clicking "Use this template".
 3. Clone your new repository:
 
    `git clone <YOUR_REPOSITORY_URL>`
@@ -31,4 +31,3 @@ A minimal React setup for starting developing Tezos DApps.
 
 3. Open http://localhost:4173/ in your browser to see the production build. For more information read the [Vite Guide](https://vitejs.dev/guide/static-deploy.html)
 
-[logo]: https://raw.githubusercontent.com/ecadlabs/taquito-boilerplate/master/assets/built-with-taquito.png "Built with Taquito"
