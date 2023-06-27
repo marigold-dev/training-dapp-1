@@ -1,12 +1,12 @@
 import { NetworkType } from "@airgap/beacon-types";
-import { Contract, ContractsService } from "@dipdup/tzkt-api";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TezosToolkit } from "@taquito/taquito";
 import { useEffect, useState } from "react";
-import "./App.css";
 import ConnectButton from "./ConnectWallet";
 import DisconnectButton from "./DisconnectWallet";
 import { PokeGameWalletType } from "./pokeGame.types";
+import { ContractsService, Contract } from "@dipdup/tzkt-api";
+import "./App.css";
 
 function App() {
   const [Tezos, setTezos] = useState<TezosToolkit>(
