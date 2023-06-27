@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+A minimal React setup for starting developing Tezos DApps.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Getting Started
 
-## Available Scripts
+1. Make sure you have https://nodejs.org/ installed on your computer
+2. Create a new repository from taquito-boilerplate by clicking "Use this template".
+3. Clone your new repository:
 
-In the project directory, you can run:
+   `git clone <YOUR_REPOSITORY_URL>`
 
-### `yarn start`
+4. Change your current working directory to the newly cloned repository directory.
+5. Install dependencies:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+   `npm install`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+6. Start development server:
 
-### `yarn test`
+   `npm run dev`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+7. Open http://localhost:5173/ in your browser to see a sample application.
 
-### `yarn build`
+## Building the App
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Run the command:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   `npm run build`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. After you have build the app you can run it locally:
 
-### `yarn eject`
+   `npm run preview`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Open http://localhost:4173/ in your browser to see the production build. For more information read the [Vite Guide](https://vitejs.dev/guide/static-deploy.html)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[logo]: https://raw.githubusercontent.com/ecadlabs/taquito-boilerplate/master/assets/built-with-taquito.png "Built with Taquito"

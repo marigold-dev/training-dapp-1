@@ -30,7 +30,7 @@ function App() {
     (async () => {
       setContracts(
         await contractsService.getSimilar({
-          address: process.env["REACT_APP_CONTRACT_ADDRESS"]!,
+          address:  import.meta.env.VITE_CONTRACT_ADDRESS,
           includeStorage: true,
           sort: { desc: "id" },
         })
@@ -83,7 +83,7 @@ function App() {
         />
 
         <div>
-          I am {userAddress} with {userBalance} mutez
+          I am {userAddress} with {(userBalance / 1000000).toLocaleString("en-US")} ꜩ
         </div>
         <br />
         <div>
@@ -98,7 +98,7 @@ function App() {
             </thead>
             <tbody>
               {contracts.map((contract) => (
-                <tr>
+                <tr key={contract.address}>
                   <td style={{ borderStyle: "dotted" }}>{contract.address}</td>
                   <td style={{ borderStyle: "dotted" }}>
                     {contract.storage.join(", ")}
