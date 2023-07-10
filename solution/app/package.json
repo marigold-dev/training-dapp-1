@@ -14,7 +14,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@airgap/beacon-sdk": "^4.0.4",
+    "@airgap/beacon-sdk": "^4.0.5",
     "@dipdup/tzkt-api": "^0.0.1",
     "@taquito/beacon-wallet": "^17.0.0",
     "@taquito/taquito": "^17.0.0",
@@ -32,16 +32,16 @@
   "devDependencies": {
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
-    "@types/node": "^20.3.2",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "eslint": "^8.43.0",
+    "@types/node": "^20.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "eslint": "^8.44.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.1",
-    "@airgap/beacon-types": "^4.0.4",
-    "@vitejs/plugin-react-swc": "^3.2.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "@airgap/beacon-types": "^4.0.5",
+    "@vitejs/plugin-react-swc": "^3.3.2",
     "typescript": "^5.1.6",
-    "vite": "^4.3.9"
+    "vite": "^4.4.2"
   },
   "browserslist": {
     "production": [
