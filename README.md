@@ -320,7 +320,7 @@ yarn add -D @airgap/beacon-types
 > For example, in my case, I installed this :
 >
 > ```bash
-> yarn add --dev process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
+> yarn add --dev process buffer crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
 > ```
 >
 > then create a new file `nodeSpecific.ts` in the src folder of your project and edit with this content :
