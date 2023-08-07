@@ -1,18 +1,18 @@
 {
-  "name": "training1",
+  "name": "training",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "devDependencies": {
+    "@taqueria/plugin-contract-types": "^0.37.0",
+    "@taqueria/plugin-ligo": "^0.37.0",
+    "@taqueria/plugin-taquito": "^0.37.0",
+    "@taqueria/plugin-tezos-client": "^0.37.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@taqueria/plugin-contract-types": "^0.28.6",
-    "@taqueria/plugin-ligo": "^0.28.6",
-    "@taqueria/plugin-taquito": "^0.28.6",
-    "@taqueria/plugin-tezos-client": "^0.28.6"
-  }
+  "license": "ISC"
 }

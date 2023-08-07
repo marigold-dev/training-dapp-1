@@ -3,7 +3,7 @@ type parameter = unit;
 
 type return_ = [list<operation>, storage];
 
-//@entry
+@entry
 const poke = ( _ : parameter , store: storage): return_ => {
   return [list([]) as list<operation>, Set.add(Tezos.get_source(), store)];
 };

@@ -1,33 +1,27 @@
-A minimal React setup for starting developing Tezos DApps.
+# React + TypeScript + Vite
 
-## Getting Started
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-1. Make sure you have https://nodejs.org/ installed on your computer
-2. Create a new repository from training-dapp-1 by clicking "Use this template".
-3. Clone your new repository:
+Currently, two official plugins are available:
 
-   `git clone <YOUR_REPOSITORY_URL>`
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-4. Change your current working directory to the newly cloned repository directory.
-5. Install dependencies:
+## Expanding the ESLint configuration
 
-   `npm install`
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-6. Start development server:
+- Configure the top-level `parserOptions` property like this:
 
-   `npm run dev`
+```js
+   parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+   },
+```
 
-7. Open http://localhost:5173/ in your browser to see a sample application.
-
-## Building the App
-
-1. Run the command:
-
-   `npm run build`
-
-2. After you have build the app you can run it locally:
-
-   `npm run preview`
-
-3. Open http://localhost:4173/ in your browser to see the production build. For more information read the [Vite Guide](https://vitejs.dev/guide/static-deploy.html)
-
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

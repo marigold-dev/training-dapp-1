@@ -1,57 +1,43 @@
 {
   "name": "app",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "jq -r '\"VITE_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "dev": "jq -r '\"VITE_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && vite"
   },
   "dependencies": {
+    "@airgap/beacon-sdk": "^4.0.6",
+    "@taquito/beacon-wallet": "^17.1.1",
+    "@taquito/taquito": "^17.1.1",
+    "@tzkt/sdk-api": "^2.2.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@airgap/beacon-sdk": "^4.0.5",
-    "@dipdup/tzkt-api": "^0.0.1",
-    "@taquito/beacon-wallet": "^17.0.0",
-    "@taquito/taquito": "^17.0.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@airgap/beacon-types": "^4.0.6",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react-swc": "^3.3.2",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
     "https-browserify": "^1.0.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "buffer": "^6.0.3",
-    "process": "^0.11.10",
-    "assert": "^2.0.0",
-    "url": "^0.11.1"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "@types/node": "^20.4.1",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "eslint": "^8.44.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "@airgap/beacon-types": "^4.0.5",
-    "@vitejs/plugin-react-swc": "^3.3.2",
-    "typescript": "^5.1.6",
-    "vite": "^4.4.2"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "typescript": "^5.0.2",
+    "url": "^0.11.1",
+    "vite": "^4.4.5"
   }
 }
-

@@ -34,7 +34,7 @@ Please install this software first on your machine or use online alternative :
 - [ ] [VS Code](https://code.visualstudio.com/download) : as text editor
 - [ ] [npm](https://nodejs.org/en/download/) : we will use a typescript React client app
 - [ ] [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable) : because yet another package manager (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)
-- [ ] [taqueria v0.28.6](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
+- [ ] [taqueria v0.37.0](https://github.com/ecadlabs/taqueria) : Tezos Dapp project tooling
 - [ ] [taqueria VS Code extension](https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode) : visualize your project and execute tasks
 - [ ] [ligo VS Code extension](https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode) : for smart contract highlighting, completion, etc ..
 - [ ] [Temple wallet](https://templewallet.com/) : an easy to use Tezos wallet in your browser (but you can take any other one that supports ghostnet)
@@ -49,8 +49,8 @@ Please install this software first on your machine or use online alternative :
 > Note : We will use CLI here but you can also use GUI from the IDE or Taqueria plugin
 
 ```bash
-taq init training1
-cd training1
+taq init training
+cd training
 taq install @taqueria/plugin-ligo
 taq create contract pokeGame.jsligo
 ```
@@ -65,7 +65,7 @@ type parameter = unit;
 
 type return_ = [list<operation>, storage];
 
-//@entry
+@entry
 const poke = ( _ : parameter , store: storage): return_ => {
   return [list([]) as list<operation>, store];
 };
@@ -111,7 +111,7 @@ type storage = set<address>;
 change poke function to :
 
 ```ligolang
-//@entry
+@entry
 const poke = ( _ : parameter , store: storage): return_ => {
   return [list([]) as list<operation>, Set.add(Tezos.get_source(), store)];
 };
@@ -134,7 +134,7 @@ The LIGO command-line interpreter provides sub-commands to directly test your LI
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
 ```bash
-TAQ_LIGO_IMAGE=ligolang/ligo:0.65.0 taq compile pokeGame.jsligo
+TAQ_LIGO_IMAGE=ligolang/ligo:0.71.0 taq compile pokeGame.jsligo
 ```
 
 Taqueria is creating the Michelson file output on `artifacts` folder
@@ -151,7 +151,7 @@ const default_storage = Set.empty as set<address>;
 Compile all now
 
 ```bash
-TAQ_LIGO_IMAGE=ligolang/ligo:0.65.0 taq compile pokeGame.jsligo
+TAQ_LIGO_IMAGE=ligolang/ligo:0.71.0 taq compile pokeGame.jsligo
 ```
 
 It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
@@ -170,7 +170,7 @@ Run simulation now (you will need tezos client plugin for simulation)
 
 ```bash
 taq install @taqueria/plugin-tezos-client
-TAQ_LIGO_IMAGE=ligolang/ligo:0.65.0 taq compile pokeGame.jsligo
+TAQ_LIGO_IMAGE=ligolang/ligo:0.71.0 taq compile pokeGame.jsligo
 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
 
@@ -225,7 +225,7 @@ No operations performed
 
 Set alice as taqueria operator
 
-Edit .taq/config.local.testing.json
+Edit `.taq/config.local.testing.json`
 
 ```json
 {
@@ -242,7 +242,7 @@ Edit .taq/config.local.testing.json
 
 #### Choice 2 : use the Taqueria generated account instead
 
-Look at .taq/config.local.testing.json file to get the `privateKey`
+Look at `.taq/config.local.testing.json` file to get the `privateKey`
 
 #### Configure Temple
 
@@ -284,10 +284,10 @@ HOORAY :confetti_ball: your smart contract is ready on the Ghostnet !
 yarn create vite
 ```
 
-Then follow the prompts. Chose React and then Typescript:
+Then follow the prompts. Choose React and then Typescript:
 
 ```shell
-? Project name: › my-dapp #Enter your project name
+? Project name: › app #Enter your project name
 
 ? Select a framework: › - Use arrow-keys. Return to submit. #We select React as framework
     Vanilla
@@ -299,19 +299,20 @@ Then follow the prompts. Chose React and then Typescript:
     Others
 
 ? Select a variant: › - Use arrow-keys. Return to submit. #Both TypeScript variants are fine. We select TypeScript only.
-❯   TypeScript
-    TypeScript + SWC
+    TypeScript
+❯   TypeScript + SWC
     JavaScript
     JavaScript + SWC
 
-cd my-dapp
+cd app
 ```
+
 SWC is not part of this tutorial but you can read about it here [SWC](https://swc.rs/).
 
 Add taquito, tzkt indexer lib
 
 ```bash
-yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk  @dipdup/tzkt-api
+yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk  @tzkt/sdk-api
 yarn add -D @airgap/beacon-types
 ```
 
@@ -325,18 +326,22 @@ yarn add -D @airgap/beacon-types
 >
 > then create a new file `nodeSpecific.ts` in the src folder of your project and edit with this content :
 >
-> ```js
->import { Buffer } from 'buffer'
+> ```bash
+> touch src/nodeSpecific.ts
+> ```
 >
-> globalThis.Buffer = Buffer
+> ```js
+> import { Buffer } from "buffer";
+>
+> globalThis.Buffer = Buffer;
 > ```
 >
 > then open the `index.html` file and add the following script in the body. It should look like this :
 >
-> ```js
+> ```html
 > <body>
 >   <div id="root"></div>
->   <script type="module" src="/src/nodeSpecific.ts"></script> //add this line
+>   <script type="module" src="/src/nodeSpecific.ts"></script>
 >   <script type="module" src="/src/main.tsx"></script>
 > </body>
 > ```
@@ -344,8 +349,8 @@ yarn add -D @airgap/beacon-types
 > Finally open the `vite.config.ts` file and edit it with this content :
 >
 > ```js
-> import { defineConfig } from 'vite'
-> import react from '@vitejs/plugin-react-swc'
+> import { defineConfig } from "vite";
+> import react from "@vitejs/plugin-react-swc";
 >
 > // https://vitejs.dev/config/
 > export default defineConfig({
@@ -355,17 +360,15 @@ yarn add -D @airgap/beacon-types
 >   plugins: [react()],
 >   resolve: {
 >     alias: {
->       stream: 'stream-browserify',
->       os: 'os-browserify/browser',
->       util: 'util',
->       process: 'process/browser',
->       buffer: 'buffer',
+>       stream: "stream-browserify",
+>       os: "os-browserify/browser",
+>       util: "util",
+>       process: "process/browser",
+>       buffer: "buffer",
 >     },
 >   },
-> })
+> });
 > ```
-
-Now you can run the app.
 
 ### Generate Typescript classes from Michelson code
 
@@ -375,21 +378,18 @@ To get typescript classes from taqueria plugin, get back to root folder running 
 
 ```bash
 cd ..
-
 taq install @taqueria/plugin-contract-types
-
 taq generate types ./app/src
-
 cd ./app
 ```
 
-Start the dev server
+Now you can run the dev server
 
 ```bash
-yarn run start
+yarn dev
 ```
 
-Open your browser at : http://localhost:3000/
+Open your browser at : http://localhost:5173/
 Your app should be running
 
 ## Step 2 : Connect / disconnect the wallet
@@ -402,21 +402,20 @@ Edit src/App.tsx file
 import { NetworkType } from "@airgap/beacon-types";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TezosToolkit } from "@taquito/taquito";
+import * as api from "@tzkt/sdk-api";
 import { useEffect, useState } from "react";
 import "./App.css";
 import ConnectButton from "./ConnectWallet";
 import DisconnectButton from "./DisconnectWallet";
 
 function App() {
-  const [Tezos, setTezos] = useState<TezosToolkit>(
-    new TezosToolkit("https://ghostnet.tezos.marigold.dev")
-  );
-  const [wallet, setWallet] = useState<BeaconWallet>(
-    new BeaconWallet({
-      name: "Training",
-      preferredNetwork: NetworkType.GHOSTNET,
-    })
-  );
+  api.defaults.baseUrl = "https://api.ghostnet.tzkt.io";
+
+  const Tezos = new TezosToolkit("https://ghostnet.tezos.marigold.dev");
+  const wallet = new BeaconWallet({
+    name: "Training",
+    preferredNetwork: NetworkType.GHOSTNET,
+  });
 
   useEffect(() => {
     Tezos.setWalletProvider(wallet);
@@ -428,7 +427,7 @@ function App() {
         setUserBalance(balance.toNumber());
       }
     })();
-  }, [wallet]);
+  }, []);
 
   const [userAddress, setUserAddress] = useState<string>("");
   const [userBalance, setUserBalance] = useState<number>(0);
@@ -580,34 +579,22 @@ Instead of querying heavily the rpc node to search where is located your contrac
 On `package.json`, change the `start script` line, prefixing with `jq` command to create an new env var pointing to your last smart contract address on testing env :
 
 ```bash
-    "start": "jq -r '\"REACT_APP_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && react-app-rewired start",
+    "dev": "jq -r '\"VITE_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && vite"
 ```
 
 You are pointing now to the last contract deployed on Ghostnet by taqueria
 
 We will add a button to fetch all similar contracts to the one you deployed, then we display the list
 
-Now, edit App.tsx to add 1 import on top of the file
+Now, edit `App.tsx` , before the `return` , add this section for the fetch
 
 ```typescript
-import { Contract, ContractsService } from "@dipdup/tzkt-api";
-```
-
-Before the `return` , add this section for the fetch
-
-```typescript
-const contractsService = new ContractsService({
-  baseUrl: "https://api.ghostnet.tzkt.io",
-  version: "",
-  withCredentials: false,
-});
-const [contracts, setContracts] = useState<Array<Contract>>([]);
+const [contracts, setContracts] = useState<Array<api.Contract>>([]);
 
 const fetchContracts = () => {
   (async () => {
     setContracts(
-      await contractsService.getSimilar({
-        address: process.env["REACT_APP_CONTRACT_ADDRESS"]!,
+      await api.contractsGetSimilar(import.meta.env.VITE_CONTRACT_ADDRESS, {
         includeStorage: true,
         sort: { desc: "id" },
       })
@@ -631,7 +618,7 @@ On the return 'html templating' section, add this after the display of the user 
 Save your file, and **re-run** your server , it will generate the .env file containing the last deployed contracts :)
 
 ```bash
-yarn run start
+yarn dev
 ```
 
 Go to the browser. click on `Fetch contracts` button
@@ -649,7 +636,7 @@ import { PokeGameWalletType } from "./pokeGame.types";
 ```
 
 ```typescript
-const poke = async (contract: Contract) => {
+const poke = async (contract: api.Contract) => {
   let c: PokeGameWalletType = await Tezos.wallet.at<PokeGameWalletType>(
     "" + contract.address
   );
@@ -670,19 +657,6 @@ Then replace the line displaying the contract address `{contracts.map((contract)
 ```html
     {contracts.map((contract) => <div>{contract.address} <button onClick={() =>poke(contract)}>Poke</button></div>)}
 ```
-
-> There is a Taqueria bug on unique entrypoint: https://github.com/ecadlabs/taqueria/issues/1128
-> Go to ./app/src/pokeGame.types.ts and rewrite these lines
->
-> ```typescript
-> type Methods = {
->   default: () => Promise<void>;
-> };
->
-> type MethodsObject = {
->   default: () => Promise<void>;
-> };
-> ```
 
 Save and see the page refreshed, then click on Poke button
 
