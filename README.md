@@ -416,9 +416,9 @@ function App() {
     name: "Training",
     preferredNetwork: NetworkType.GHOSTNET,
   });
+  Tezos.setWalletProvider(wallet);
 
   useEffect(() => {
-    Tezos.setWalletProvider(wallet);
     (async () => {
       const activeAccount = await wallet.client.getActiveAccount();
       if (activeAccount) {

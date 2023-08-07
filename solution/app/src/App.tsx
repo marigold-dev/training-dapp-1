@@ -16,6 +16,7 @@ function App() {
     name: "Training",
     preferredNetwork: NetworkType.GHOSTNET,
   });
+  Tezos.setWalletProvider(wallet);
 
   const [contracts, setContracts] = useState<Array<api.Contract>>([]);
 
@@ -31,7 +32,6 @@ function App() {
   };
 
   useEffect(() => {
-    Tezos.setWalletProvider(wallet);
     (async () => {
       const activeAccount = await wallet.client.getActiveAccount();
       if (activeAccount) {
