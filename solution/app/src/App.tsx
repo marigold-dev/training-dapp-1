@@ -77,34 +77,34 @@ function App() {
         <div>
           I am {userAddress} with {userBalance} mutez
         </div>
-
-        <br />
-        <div>
-          <button onClick={fetchContracts}>Fetch contracts</button>
-          <table>
-            <thead>
-              <tr>
-                <th>address</th>
-                <th>people</th>
-                <th>action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {contracts.map((contract) => (
-                <tr>
-                  <td style={{ borderStyle: "dotted" }}>{contract.address}</td>
-                  <td style={{ borderStyle: "dotted" }}>
-                    {contract.storage.join(", ")}
-                  </td>
-                  <td style={{ borderStyle: "dotted" }}>
-                    <button onClick={() => poke(contract)}>Poke</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </header>
+
+      <br />
+      <div>
+        <button onClick={fetchContracts}>Fetch contracts</button>
+        <table>
+          <thead>
+            <tr>
+              <th>address</th>
+              <th>people</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contracts.map((contract) => (
+              <tr>
+                <td style={{ borderStyle: "dotted" }}>{contract.address}</td>
+                <td style={{ borderStyle: "dotted" }}>
+                  {contract.storage.join(", ")}
+                </td>
+                <td style={{ borderStyle: "dotted" }}>
+                  <button onClick={() => poke(contract)}>Poke</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

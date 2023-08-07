@@ -396,7 +396,7 @@ Your app should be running
 
 We will declare 2 React Button components and a display of address and balance while connected
 
-Edit src/App.tsx file
+Edit `src/App.tsx` file
 
 ```typescript
 import { NetworkType } from "@airgap/beacon-types";
@@ -579,7 +579,7 @@ Instead of querying heavily the rpc node to search where is located your contrac
 On `package.json`, change the `start script` line, prefixing with `jq` command to create an new env var pointing to your last smart contract address on testing env :
 
 ```bash
-    "dev": "jq -r '\"VITE_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && vite"
+    "dev": "jq -r '\"VITE_CONTRACT_ADDRESS=\" + last(.tasks[]).output[0].address' ../.taq/testing-state.json > .env && vite",
 ```
 
 You are pointing now to the last contract deployed on Ghostnet by taqueria

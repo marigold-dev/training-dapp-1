@@ -1,14 +1,14 @@
 {
     "operations": {},
     "tasks": {
-        "@taqueria/plugin-taquito.deploy.1691163932924": {
+        "@taqueria/plugin-taquito.deploy.1691394144375": {
             "task": "deploy",
             "plugin": "@taqueria/plugin-taquito",
-            "time": 1691163932924,
+            "time": 1691394144375,
             "output": [
                 {
                     "contract": "pokeGame.tz",
-                    "address": "KT1Sfk4HQpxsXLAkAQQrzJpg2vRW4fsB1hc6",
+                    "address": "KT1AzZ8SnvRn7Fn6e3jebcgPtxiMsJzeX2vp",
                     "alias": "pokeGame",
                     "balanceInMutez": "0",
                     "destination": "https://ghostnet.ecadinfra.com"

@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "devDependencies": {
-    "@taqueria/plugin-contract-types": "^0.37.0",
-    "@taqueria/plugin-ligo": "^0.37.0",
-    "@taqueria/plugin-taquito": "^0.37.0",
-    "@taqueria/plugin-tezos-client": "^0.37.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@taqueria/plugin-contract-types": "^0.37.0",
+    "@taqueria/plugin-ligo": "^0.37.0",
+    "@taqueria/plugin-taquito": "^0.37.0",
+    "@taqueria/plugin-tezos-client": "^0.37.0"
+  }
 }
