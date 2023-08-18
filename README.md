@@ -61,12 +61,10 @@ Remove the default code and paste this code instead
 
 ```ligolang
 type storage = unit;
-type parameter = unit;
-
 type return_ = [list<operation>, storage];
 
 @entry
-const poke = ( _ : parameter , store: storage): return_ => {
+const poke = ( _ : unit , store: storage): return_ => {
   return [list([]) as list<operation>, store];
 };
 ```
@@ -74,7 +72,7 @@ const poke = ( _ : parameter , store: storage): return_ => {
 Every contract requires to respect this convention :
 
 - at least one entrypoint, prefixed by **//@entry** annotation, with a mandatory signature taking (parameter, storage) and a return type :
-  - **parameter** : the entrypoint `parameter`. It can be whatever type but it has to be an unique variable as argument
+  - **parameter** : the entrypoint `parameter`. It can be whatever type (here for example of type `unit`)
   - **storage** : the on-chain storage (can be any type, here `unit` by default)
   - **return\_** : a list of `operation` and a storage
 
@@ -112,7 +110,7 @@ change poke function to :
 
 ```ligolang
 @entry
-const poke = ( _ : parameter , store: storage): return_ => {
+const poke = ( _ : unit , store: storage): return_ => {
   return [list([]) as list<operation>, Set.add(Tezos.get_source(), store)];
 };
 ```
@@ -162,16 +160,16 @@ We will pass the contract parameter `unit` and the initial on-chain storage with
 Edit the new file `pokeGame.parameterList.jsligo`
 
 ```ligolang
-#include "pokeGame.jsligo"
-const default_parameter : parameter = unit;
+#import "pokeGame.jsligo" "PokeGame"
+const default_parameter: parameter_of PokeGame = Poke();
 ```
 
 Run simulation now (you will need tezos client plugin for simulation)
 
 ```bash
 taq install @taqueria/plugin-tezos-client
-TAQ_LIGO_IMAGE=ligolang/ligo:0.71.0 taq compile pokeGame.jsligo
-taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
+TAQ_LIGO_IMAGE=ligolang/ligo:0.71.1 taq compile pokeGame.jsligo -p nairobi
+TAQ_TEZOS_CLIENT_IMAGE=tezos/tezos:v17.2 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
 
 Output should give :

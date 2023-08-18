@@ -1,2 +1,2 @@
-#include "pokeGame.jsligo"
-const default_parameter : parameter = unit;
+#import "pokeGame.jsligo" "PokeGame"
+const default_parameter: parameter_of PokeGame = Poke();
