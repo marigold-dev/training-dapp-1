@@ -132,7 +132,7 @@ The LIGO command-line interpreter provides sub-commands to directly test your LI
 Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :
 
 ```bash
-TAQ_LIGO_IMAGE=ligolang/ligo:0.71.0 taq compile pokeGame.jsligo
+TAQ_LIGO_IMAGE=ligolang/ligo:0.72.0 taq compile pokeGame.jsligo
 ```
 
 Taqueria is creating the Michelson file output on `artifacts` folder
@@ -142,14 +142,15 @@ To compile an initial storage with taqueria, edit the new file `pokeGame.storage
 Replace current code by
 
 ```ligolang
-#include "pokeGame.jsligo"
+#import "pokeGame.jsligo" "Contract"
+
 const default_storage = Set.empty as set<address>;
 ```
 
 Compile all now
 
 ```bash
-TAQ_LIGO_IMAGE=ligolang/ligo:0.71.0 taq compile pokeGame.jsligo
+TAQ_LIGO_IMAGE=ligolang/ligo:0.72.0 taq compile pokeGame.jsligo
 ```
 
 It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)
@@ -160,15 +161,15 @@ We will pass the contract parameter `unit` and the initial on-chain storage with
 Edit the new file `pokeGame.parameterList.jsligo`
 
 ```ligolang
-#import "pokeGame.jsligo" "PokeGame"
-const default_parameter: parameter_of PokeGame = Poke();
+#import "pokeGame.jsligo" "Contract"
+const default_parameter: parameter_of Contract = Poke();
 ```
 
 Run simulation now (you will need tezos client plugin for simulation)
 
 ```bash
 taq install @taqueria/plugin-tezos-client
-TAQ_LIGO_IMAGE=ligolang/ligo:0.71.1 taq compile pokeGame.jsligo -p nairobi
+TAQ_LIGO_IMAGE=ligolang/ligo:0.72.0 taq compile pokeGame.jsligo
 TAQ_TEZOS_CLIENT_IMAGE=tezos/tezos:v17.2 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
 
