@@ -169,7 +169,7 @@ Run simulation now (you will need tezos client plugin for simulation)
 
 ```bash
 taq install @taqueria/plugin-tezos-client
-TAQ_LIGO_IMAGE=ligolang/ligo:0.72.0 taq compile pokeGame.jsligo
+TAQ_LIGO_IMAGE=ligolang/ligo:0.73.0 taq compile pokeGame.jsligo
 TAQ_TEZOS_CLIENT_IMAGE=tezos/tezos:v17.2 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 ```
 

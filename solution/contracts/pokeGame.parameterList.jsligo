@@ -1,2 +1,3 @@
-#import "pokeGame.jsligo" "PokeGame"
-const default_parameter: parameter_of PokeGame = Poke();
+#import "pokeGame.jsligo" "Contract"
+
+const default_parameter: parameter_of Contract = Poke();
