@@ -59,7 +59,7 @@
         },
         {
             "type": "npm",
-            "name": "@taqueria/plugin-tezos-client"
+            "name": "@taqueria/plugin-octez-client"
         },
         {
             "type": "npm",
