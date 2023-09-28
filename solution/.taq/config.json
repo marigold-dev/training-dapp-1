@@ -55,19 +55,19 @@
     "plugins": [
         {
             "type": "npm",
-            "name": "@taqueria/plugin-octez-client"
-        },
-        {
-            "type": "npm",
-            "name": "@taqueria/plugin-contract-types"
-        },
-        {
-            "type": "npm",
             "name": "@taqueria/plugin-ligo"
         },
         {
             "type": "npm",
+            "name": "@taqueria/plugin-octez-client"
+        },
+        {
+            "type": "npm",
             "name": "@taqueria/plugin-taquito"
+        },
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-contract-types"
         }
     ]
 }
