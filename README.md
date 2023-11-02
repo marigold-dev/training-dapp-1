@@ -1,5 +1,3 @@
-## :round_pushpin: [See Github version and full code here](https://github.com/marigold-dev/training-dapp-1)
-
 # Training dapp n°1
 
 # :point_up: Poke game
