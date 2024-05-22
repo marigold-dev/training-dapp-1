@@ -58,73 +58,136 @@
     <meta name="twitter:creator" content="@Marigold_Dev" />
   </head>
   <body>
-    <hr>
-<section>
-<h2>title: Training dapp n°1
-tags: Training
-description: Training n°1 for decentralized application</h2>
-</section>
-<section>
-<h1>Training dapp n°1</h1>
-</section>
-<section>
-<h1>☝️ Poke game</h1>
-<blockquote>
-<p>dapp : A decentralized application (dApp) is a type of distributed open source software application that runs on a peer-to-peer (P2P) blockchain network rather than on a single computer. DApps are visibly similar to other software applications that are supported on a website or mobile device but are P2P supported</p>
-</blockquote>
-<p>We are creating a poke game on smart contract. You will learn :</p>
-<ul>
-<li>create a Tezos project with taqueria</li>
-<li>create a smart contract in jsligo</li>
-<li>deploy the smart contract to a local testnet and a real testnet</li>
-<li>create a dapp using taquito library and interact with a Tezos browser wallet</li>
-<li>use an indexer</li>
-</ul>
-<blockquote>
-<p>⚠️ This is not an HTML or REACT training, I will avoid as much of possible any complexity relative to these technologies</p>
-</blockquote>
-<p>The game consists on poking the owner of a smart contract. The smartcontract keeps a track of user interactions and stores this trace.</p>
-<p>Poke sequence diagram</p>
-<pre class="hljs"><code>sequenceDiagram
+    <hr />
+    <section>
+      <h2>
+        title: Training dapp n°1 tags: Training description: Training n°1 for
+        decentralized application
+      </h2>
+    </section>
+    <section>
+      <h1>Training dapp n°1</h1>
+    </section>
+    <section>
+      <h1>☝️ Poke game</h1>
+      <blockquote>
+        <p>
+          dapp : A decentralized application (dApp) is a type of distributed
+          open source software application that runs on a peer-to-peer (P2P)
+          blockchain network rather than on a single computer. DApps are visibly
+          similar to other software applications that are supported on a website
+          or mobile device but are P2P supported
+        </p>
+      </blockquote>
+      <p>We are creating a poke game on smart contract. You will learn :</p>
+      <ul>
+        <li>create a Tezos project with taqueria</li>
+        <li>create a smart contract in jsligo</li>
+        <li>deploy the smart contract to a local testnet and a real testnet</li>
+        <li>
+          create a dapp using taquito library and interact with a Tezos browser
+          wallet
+        </li>
+        <li>use an indexer</li>
+      </ul>
+      <blockquote>
+        <p>
+          ⚠️ This is not an HTML or REACT training, I will avoid as much of
+          possible any complexity relative to these technologies
+        </p>
+      </blockquote>
+      <p>
+        The game consists on poking the owner of a smart contract. The
+        smartcontract keeps a track of user interactions and stores this trace.
+      </p>
+      <p>Poke sequence diagram</p>
+      <pre class="hljs"><code>sequenceDiagram
   Note left of User: Prepare poke
   User-&gt;&gt;SM: poke owner
   Note right of SM: store poke trace
 </code></pre>
-</section>
-<section>
-<h1>📝 Prerequisites</h1>
-<p>Please install this software first on your machine or use online alternative :</p>
-<ul>
-<li>[ ] <a href="https://code.visualstudio.com/download">VS Code</a> : as text editor</li>
-<li>[ ] <a href="https://nodejs.org/en/download/">npm</a> : we will use a typescript React client app</li>
-<li>[ ] <a href="https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable">yarn</a> : because yet another package manager (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)</li>
-<li>[ ] <a href="https://github.com/ecadlabs/taqueria">taqueria v0.24.2</a> : Tezos Dapp project tooling</li>
-<li>[ ] <a href="https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode">taqueria VS Code extension</a> : visualize your project and execute tasks</li>
-<li>[ ] <a href="https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode">ligo VS Code extension</a> : for smart contract highlighting, completion, etc ..</li>
-<li>[ ] <a href="https://templewallet.com/">Temple wallet</a> : an easy to use Tezos wallet in your browser</li>
-<li>[ ] <a href="https://docs.docker.com/engine/install/">Docker</a> you cannot do anything without containers today ...</li>
-</ul>
-<blockquote>
-<p>⚠️ 🐳 About Taqueria : taqueria is using software images from Docker to run Ligo, etc ... Docker should be running on your machine 🐋</p>
-</blockquote>
-</section>
-<section>
-<h1>📜 Smart contract</h1>
-<section>
-<h2>Step 1 : Create folder &amp; file</h2>
-<blockquote>
-<p>Note : We will use CLI here but you can also use GUI from the IDE or Taqueria plugin</p>
-</blockquote>
-<pre class="hljs language-bash"><code>taq init training1
+    </section>
+    <section>
+      <h1>📝 Prerequisites</h1>
+      <p>
+        Please install this software first on your machine or use online
+        alternative :
+      </p>
+      <ul>
+        <li>
+          [ ] <a href="https://code.visualstudio.com/download">VS Code</a> : as
+          text editor
+        </li>
+        <li>
+          [ ] <a href="https://nodejs.org/en/download/">npm</a> : we will use a
+          typescript React client app
+        </li>
+        <li>
+          [ ]
+          <a
+            href="https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable"
+            >yarn</a
+          >
+          : because yet another package manager
+          (https://www.geeksforgeeks.org/difference-between-npm-and-yarn/)
+        </li>
+        <li>
+          [ ]
+          <a href="https://github.com/ecadlabs/taqueria">taqueria v0.24.2</a> :
+          Tezos Dapp project tooling
+        </li>
+        <li>
+          [ ]
+          <a
+            href="https://marketplace.visualstudio.com/items?itemName=ecadlabs.taqueria-vscode"
+            >taqueria VS Code extension</a
+          >
+          : visualize your project and execute tasks
+        </li>
+        <li>
+          [ ]
+          <a
+            href="https://marketplace.visualstudio.com/items?itemName=ligolang-publish.ligo-vscode"
+            >ligo VS Code extension</a
+          >
+          : for smart contract highlighting, completion, etc ..
+        </li>
+        <li>
+          [ ] <a href="https://templewallet.com/">Temple wallet</a> : an easy to
+          use Tezos wallet in your browser
+        </li>
+        <li>
+          [ ] <a href="https://docs.docker.com/engine/install/">Docker</a> you
+          cannot do anything without containers today ...
+        </li>
+      </ul>
+      <blockquote>
+        <p>
+          ⚠️ 🐳 About Taqueria : taqueria is using software images from Docker
+          to run Ligo, etc ... Docker should be running on your machine 🐋
+        </p>
+      </blockquote>
+    </section>
+    <section>
+      <h1>📜 Smart contract</h1>
+      <section>
+        <h2>Step 1 : Create folder &amp; file</h2>
+        <blockquote>
+          <p>
+            Note : We will use CLI here but you can also use GUI from the IDE or
+            Taqueria plugin
+          </p>
+        </blockquote>
+        <pre class="hljs language-bash"><code>taq init training1
 <span class="hljs-built_in">cd</span> training1
 taq install @taqueria/plugin-ligo
 taq create contract pokeGame.jsligo
 </code></pre>
-</section>
-<section>
-<h2>Step 2 : Edit pokeGame.jsligo</h2>
-<p>Remove the default code and paste this code instead</p>
-<pre class="hljs"><code>type storage = unit;
+      </section>
+      <section>
+        <h2>Step 2 : Edit pokeGame.jsligo</h2>
+        <p>Remove the default code and paste this code instead</p>
+        <pre class="hljs"><code>type storage = unit;
 
 type parameter = |[&quot;Poke&quot;];
 
@@ -136,86 +199,147 @@ const main = ([action, store]: [parameter, storage]): return_ =&gt; {
   });
 };
 </code></pre>
-<p>Every contract requires to respect this convention :</p>
-<ul>
-<li>an entrypoint, <strong>main</strong> by default, with a mandatory signature taking 2 parameters and a return :
-<ul>
-<li><strong>parameter</strong> : the contract <code>parameter</code></li>
-<li><strong>storage</strong> : the on-chain storage (can be any type, here <code>unit</code> by default)</li>
-<li><strong>return_</strong> : a list of <code>operation</code> and a storage</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>Doc : https://ligolang.org/docs/advanced/entrypoints-contracts</p>
-</blockquote>
-<p>Pattern matching is an important feature in Ligo. We need a switch on the entrypoint function to manage different actions. We use <code>match</code> to evaluate the parameter and call the appropriate <code>poke</code> function</p>
-<blockquote>
-<p>Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching</p>
-</blockquote>
-<pre class="hljs language-javascript"><code>match (action, {
+        <p>Every contract requires to respect this convention :</p>
+        <ul>
+          <li>
+            an entrypoint, <strong>main</strong> by default, with a mandatory
+            signature taking 2 parameters and a return :
+            <ul>
+              <li>
+                <strong>parameter</strong> : the contract <code>parameter</code>
+              </li>
+              <li>
+                <strong>storage</strong> : the on-chain storage (can be any
+                type, here <code>unit</code> by default)
+              </li>
+              <li>
+                <strong>return_</strong> : a list of <code>operation</code> and
+                a storage
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <blockquote>
+          <p>Doc : https://ligolang.org/docs/advanced/entrypoints-contracts</p>
+        </blockquote>
+        <p>
+          Pattern matching is an important feature in Ligo. We need a switch on
+          the entrypoint function to manage different actions. We use
+          <code>match</code> to evaluate the parameter and call the appropriate
+          <code>poke</code> function
+        </p>
+        <blockquote>
+          <p>
+            Doc
+            https://ligolang.org/docs/language-basics/unit-option-pattern-matching
+          </p>
+        </blockquote>
+        <pre class="hljs language-javascript"><code>match (action, {
         <span class="hljs-title class_">Poke</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">poke</span>(store)
     }
 </code></pre>
-<p><code>Poke</code> is a <code>parameter</code> from <code>variant</code> type. It is a bit equivalent of Enum type in javascript</p>
-<pre class="hljs language-javascript"><code>type parameter = [<span class="hljs-string">&quot;Poke&quot;</span>];
+        <p>
+          <code>Poke</code> is a <code>parameter</code> from
+          <code>variant</code> type. It is a bit equivalent of Enum type in
+          javascript
+        </p>
+        <pre
+          class="hljs language-javascript"
+        ><code>type parameter = [<span class="hljs-string">&quot;Poke&quot;</span>];
 </code></pre>
-<blockquote>
-<p>Doc https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types</p>
-</blockquote>
-</section>
-<section>
-<h2>Step 3 : Write the poke function</h2>
-<p>We want to store every caller address poking the contract. Let's redefine storage, and then add the caller to the set of poke guys</p>
-<p>At line 1, replace :</p>
-<pre class="hljs"><code>type storage = set&lt;address&gt;;
+        <blockquote>
+          <p>
+            Doc
+            https://ligolang.org/docs/language-basics/unit-option-pattern-matching#variant-types
+          </p>
+        </blockquote>
+      </section>
+      <section>
+        <h2>Step 3 : Write the poke function</h2>
+        <p>
+          We want to store every caller address poking the contract. Let's
+          redefine storage, and then add the caller to the set of poke guys
+        </p>
+        <p>At line 1, replace :</p>
+        <pre class="hljs"><code>type storage = set&lt;address&gt;;
 </code></pre>
-<p>Before main function, add :</p>
-<pre class="hljs"><code>const poke = (store: storage): return_ =&gt; {
+        <p>Before main function, add :</p>
+        <pre class="hljs"><code>const poke = (store: storage): return_ =&gt; {
   return [list([]) as list&lt;operation&gt;, Set.add(Tezos.get_source(), store)];
 };
 </code></pre>
-<p>Set library has specific usage :</p>
-<blockquote>
-<p>Doc https://ligolang.org/docs/language-basics/sets-lists-tuples#sets</p>
-</blockquote>
-<p>Here, we get the caller address using <code>Tezos.get_source()</code>. Tezos library provides useful function for manipulating blockchain objects</p>
-<blockquote>
-<p>Doc https://ligolang.org/docs/reference/current-reference</p>
-</blockquote>
-</section>
-<section>
-<h2>Step 4 : Try to poke</h2>
-<p>The LIGO command-line interpreter provides sub-commands to directly test your LIGO code</p>
-<blockquote>
-<p>Doc : https://ligolang.org/docs/advanced/testing</p>
-</blockquote>
-<p>Compile contract (to check any error, and prepare the michelson outputfile to deploy later) :</p>
-<pre class="hljs language-bash"><code>taq compile pokeGame.jsligo
+        <p>Set library has specific usage :</p>
+        <blockquote>
+          <p>
+            Doc https://ligolang.org/docs/language-basics/sets-lists-tuples#sets
+          </p>
+        </blockquote>
+        <p>
+          Here, we get the caller address using <code>Tezos.get_source()</code>.
+          Tezos library provides useful function for manipulating blockchain
+          objects
+        </p>
+        <blockquote>
+          <p>Doc https://ligolang.org/docs/reference/current-reference</p>
+        </blockquote>
+      </section>
+      <section>
+        <h2>Step 4 : Try to poke</h2>
+        <p>
+          The LIGO command-line interpreter provides sub-commands to directly
+          test your LIGO code
+        </p>
+        <blockquote>
+          <p>Doc : https://ligolang.org/docs/advanced/testing</p>
+        </blockquote>
+        <p>
+          Compile contract (to check any error, and prepare the michelson
+          outputfile to deploy later) :
+        </p>
+        <pre class="hljs language-bash"><code>taq compile pokeGame.jsligo
 </code></pre>
-<p>Taqueria is creating the Michelson file output on <code>artifacts</code> folder</p>
-<p>To compile an initial storage with taqueria, edit the new file <code>pokeGame.storageList.jsligo</code></p>
-<p>Replace current code by</p>
-<pre class="hljs"><code>#include &quot;pokeGame.jsligo&quot;
+        <p>
+          Taqueria is creating the Michelson file output on
+          <code>artifacts</code> folder
+        </p>
+        <p>
+          To compile an initial storage with taqueria, edit the new file
+          <code>pokeGame.storageList.jsligo</code>
+        </p>
+        <p>Replace current code by</p>
+        <pre class="hljs"><code>#include &quot;pokeGame.jsligo&quot;
 const default_storage = Set.empty as set&lt;address&gt;;
 </code></pre>
-<p>Compile all now</p>
-<pre class="hljs language-bash"><code>taq compile pokeGame.jsligo
+        <p>Compile all now</p>
+        <pre class="hljs language-bash"><code>taq compile pokeGame.jsligo
 </code></pre>
-<p>It compiles both source code and storage now. (You can also pass an argument -e to change the environment target for your storage initialization)</p>
-<p>Let's simulate the Poke call using <code>taq simulate</code><br>
-We will pass the contract parameter <code>Poke()</code> and the initial on-chain storage with an empty set</p>
-<p>Edit the new file <code>pokeGame.parameterList.jsligo</code></p>
-<pre class="hljs"><code>#include &quot;pokeGame.jsligo&quot;
+        <p>
+          It compiles both source code and storage now. (You can also pass an
+          argument -e to change the environment target for your storage
+          initialization)
+        </p>
+        <p>
+          Let's simulate the Poke call using <code>taq simulate</code><br />
+          We will pass the contract parameter <code>Poke()</code> and the
+          initial on-chain storage with an empty set
+        </p>
+        <p>Edit the new file <code>pokeGame.parameterList.jsligo</code></p>
+        <pre class="hljs"><code>#include &quot;pokeGame.jsligo&quot;
 const default_parameter = Poke();
 </code></pre>
-<p>Run simulation now (you will need tezos client plugin for simulation)</p>
-<pre class="hljs language-bash"><code>taq install @taqueria/plugin-tezos-client
+        <p>
+          Run simulation now (you will need tezos client plugin for simulation)
+        </p>
+        <pre
+          class="hljs language-bash"
+        ><code>taq install @taqueria/plugin-tezos-client
 taq compile pokeGame.jsligo
 taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 </code></pre>
-<p>Output should give :</p>
-<pre class="hljs"><code>┌─────────────┬──────────────────────────────────────────────┐
+        <p>Output should give :</p>
+        <pre
+          class="hljs"
+        ><code>┌─────────────┬──────────────────────────────────────────────┐
 │ Contract    │ Result                                       │
 ├─────────────┼──────────────────────────────────────────────┤
 │ pokeGame.tz │ storage                                      │
@@ -227,60 +351,98 @@ taq simulate pokeGame.tz --param pokeGame.parameter.default_parameter.tz
 │             │                                              │
 └─────────────┴──────────────────────────────────────────────┘
 </code></pre>
-<p>You can notice that the instruction will store the address of the caller into the traces storage</p>
-</section>
-<section>
-<h2>Step 5 : Configure your wallet to get free Tez</h2>
-<section>
-<h3>Local testnet wallet</h3>
-<p>Flextesa local testnet includes already some accounts with XTZ (alice,bob,...), so you don't really need to configure something</p>
-</section>
-<section>
-<h3>Ghostnet testnet wallet</h3>
-<p>⚠️ Taqueria will require an account (mainly to deploy your contract), the first time you will try to deploy a contract it will generate a new implicit account you will have to fill with XTZ</p>
-<p>Force Taqueria to generate this account</p>
-<pre class="hljs language-bash"><code>taq install @taqueria/plugin-taquito
+        <p>
+          You can notice that the instruction will store the address of the
+          caller into the traces storage
+        </p>
+      </section>
+      <section>
+        <h2>Step 5 : Configure your wallet to get free Tez</h2>
+        <section>
+          <h3>Local testnet wallet</h3>
+          <p>
+            Flextesa local testnet includes already some accounts with XTZ
+            (alice,bob,...), so you don't really need to configure something
+          </p>
+        </section>
+        <section>
+          <h3>Ghostnet testnet wallet</h3>
+          <p>
+            ⚠️ Taqueria will require an account (mainly to deploy your
+            contract), the first time you will try to deploy a contract it will
+            generate a new implicit account you will have to fill with XTZ
+          </p>
+          <p>Force Taqueria to generate this account</p>
+          <pre
+            class="hljs language-bash"
+          ><code>taq install @taqueria/plugin-taquito
 taq deploy pokeGame.tz -e <span class="hljs-string">&quot;testing&quot;</span>
 </code></pre>
-<p>You should get this kind of log</p>
-<pre class="hljs"><code>Warning: the faucet field in network configs has been deprecated and will be ignored
+          <p>You should get this kind of log</p>
+          <pre
+            class="hljs"
+          ><code>Warning: the faucet field in network configs has been deprecated and will be ignored
 A keypair with public key hash tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb was generated for you.
 To fund this account:
 1. Go to https://teztnets.xyz and click &quot;Faucet&quot; of the target testnet
 2. Copy and paste the above key into the 'wallet address field
 3. Request some Tez (Note that you might need to wait for a few seconds for the network to register the funds)
 </code></pre>
-<section>
-<h4>Configure Temple</h4>
-<p>Open your Temple browser extension or on your mobile phone. Do the initial setup.
-Once you are done, go to Settings (click on the avatar icon, or display Temple in full page) and click on <code>Import account</code> &gt; <code>Private key</code> tab</p>
-<p>Copy the private key from the .taq/config.json file at this path <code>network/ghostnet/accounts/taqRootAccount/privateKey</code> to Temple text input</p>
-</section>
-<section>
-<h4>Send free XTZ to your account</h4>
-<p>Go to a web faucet like <a href="https://faucet.marigold.dev/">Marigold faucet here</a>.
-Connect with your wallet on <code>Ghostnet</code> and ask for free <code>XTZ</code></p>
-<p>Now you have 💰 !!!</p>
-</section>
-</section>
-</section>
-<section>
-<h2>Step 6 : Deploy to Ghostnet testnet</h2>
-<p>Retry to deploy to testing env</p>
-<pre class="hljs language-bash"><code>taq deploy pokeGame.tz -e <span class="hljs-string">&quot;testing&quot;</span>
+          <section>
+            <h4>Configure Temple</h4>
+            <p>
+              Open your Temple browser extension or on your mobile phone. Do the
+              initial setup. Once you are done, go to Settings (click on the
+              avatar icon, or display Temple in full page) and click on
+              <code>Import account</code> &gt; <code>Private key</code> tab
+            </p>
+            <p>
+              Copy the private key from the .taq/config.json file at this path
+              <code>network/ghostnet/accounts/taqRootAccount/privateKey</code>
+              to Temple text input
+            </p>
+          </section>
+          <section>
+            <h4>Send free XTZ to your account</h4>
+            <p>
+              Go to a web faucet like
+              <a href="https://faucet.marigold.dev/">Marigold faucet here</a>.
+              Connect with your wallet on <code>Ghostnet</code> and ask for free
+              <code>XTZ</code>
+            </p>
+            <p>Now you have 💰 !!!</p>
+          </section>
+        </section>
+      </section>
+      <section>
+        <h2>Step 6 : Deploy to Ghostnet testnet</h2>
+        <p>Retry to deploy to testing env</p>
+        <pre
+          class="hljs language-bash"
+        ><code>taq deploy pokeGame.tz -e <span class="hljs-string">&quot;testing&quot;</span>
 </code></pre>
-<p>HOORAY 🎊 your smart contract is ready on the Ghostnet !</p>
-<pre class="hljs"><code>┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬─────────────────────────────────────┐
+        <p>HOORAY 🎊 your smart contract is ready on the Ghostnet !</p>
+        <pre
+          class="hljs"
+        ><code>┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬─────────────────────────────────────┐
 │ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination                         │
 ├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼─────────────────────────────────────┤
-│ pokeGame.tz │ KT19jEAyrvsMzY6DQ42UsR6KF3duKHJMJyPZ │ pokeGame │ 0                │ https://ghostnet.tezos.marigold.dev │
+│ pokeGame.tz │ KT19jEAyrvsMzY6DQ42UsR6KF3duKHJMJyPZ │ pokeGame │ 0                │ https://ghostnet.ecadinfra.com      │
 └─────────────┴──────────────────────────────────────┴──────────┴──────────────────┴─────────────────────────────────────┘
 </code></pre>
-</section>
-<section>
-<h2>Step 7 : (Optional) deploy locally with flextesa</h2>
-<p>You can deploy locally Tezos on your local machine, but we require to use later an indexer (this service exists already on Ghostnet for free, not necessary to install one locally on testnets). For your knowledge, below the step to deploy locally. Also you can change some parameter to point to another protocol version</p>
-<pre class="hljs language-bash"><code>taq install @taqueria/plugin-flextesa
+      </section>
+      <section>
+        <h2>Step 7 : (Optional) deploy locally with flextesa</h2>
+        <p>
+          You can deploy locally Tezos on your local machine, but we require to
+          use later an indexer (this service exists already on Ghostnet for
+          free, not necessary to install one locally on testnets). For your
+          knowledge, below the step to deploy locally. Also you can change some
+          parameter to point to another protocol version
+        </p>
+        <pre
+          class="hljs language-bash"
+        ><code>taq install @taqueria/plugin-flextesa
 
 <span class="hljs-comment"># it takes some minutes the first time</span>
 taq start sandbox <span class="hljs-built_in">local</span>
@@ -289,41 +451,60 @@ taq start sandbox <span class="hljs-built_in">local</span>
 taq list accounts <span class="hljs-built_in">local</span>
 
 </code></pre>
-<p>Deploy the contract on <code>development</code> environment</p>
-<p>You need to install taquito plugin first to originate the contract</p>
-<pre class="hljs language-bash"><code>taq install @taqueria/plugin-taquito
+        <p>Deploy the contract on <code>development</code> environment</p>
+        <p>
+          You need to install taquito plugin first to originate the contract
+        </p>
+        <pre
+          class="hljs language-bash"
+        ><code>taq install @taqueria/plugin-taquito
 
 taq deploy pokeGame.tz -e <span class="hljs-string">&quot;development&quot;</span>
 </code></pre>
-<pre class="hljs"><code>┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬────────────────────────┐
+        <pre
+          class="hljs"
+        ><code>┌─────────────┬──────────────────────────────────────┬──────────┬──────────────────┬────────────────────────┐
 │ Contract    │ Address                              │ Alias    │ Balance In Mutez │ Destination            │
 ├─────────────┼──────────────────────────────────────┼──────────┼──────────────────┼────────────────────────┤
 │ pokeGame.tz │ KT1Hd83xLy1tRJLtNjPW69gVCP5sYvKkPF9Q │ pokeGame │ 0                │ http://localhost:20000 │
 └─────────────┴──────────────────────────────────────┴──────────┴──────────────────┴────────────────────────┘
 </code></pre>
-</section>
-</section>
-<section>
-<h1>👷 Dapp</h1>
-<section>
-<h2>Step 1 : Create react app</h2>
-<pre class="hljs language-bash"><code>yarn create react-app app --template typescript
+      </section>
+    </section>
+    <section>
+      <h1>👷 Dapp</h1>
+      <section>
+        <h2>Step 1 : Create react app</h2>
+        <pre
+          class="hljs language-bash"
+        ><code>yarn create react-app app --template typescript
 
 <span class="hljs-built_in">cd</span> app
 </code></pre>
-<p>Add taquito, tzkt indexer lib</p>
-<pre class="hljs language-bash"><code>yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk  @dipdup/tzkt-api
+        <p>Add taquito, tzkt indexer lib</p>
+        <pre
+          class="hljs language-bash"
+        ><code>yarn add @taquito/taquito @taquito/beacon-wallet @airgap/beacon-sdk  @dipdup/tzkt-api
 yarn add -D @airgap/beacon-types
 </code></pre>
-<blockquote>
-<p>⚠️ ⚠️ ⚠️ Last React version uses <code>react-script 5.x</code> , follow these steps to rewire webpack for all encountered missing libraries : https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues</p>
-</blockquote>
-<blockquote>
-<p>For example, in my case, I installed this :</p>
-<pre class="hljs language-bash"><code>yarn add --dev react-app-rewired process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
+        <blockquote>
+          <p>
+            ⚠️ ⚠️ ⚠️ Last React version uses <code>react-script 5.x</code> ,
+            follow these steps to rewire webpack for all encountered missing
+            libraries :
+            https://github.com/ChainSafe/web3.js#troubleshooting-and-known-issues
+          </p>
+        </blockquote>
+        <blockquote>
+          <p>For example, in my case, I installed this :</p>
+          <pre
+            class="hljs language-bash"
+          ><code>yarn add --dev react-app-rewired process crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url path-browserify
 </code></pre>
-<p>and my <code>config-overrides.js</code> file was :</p>
-<pre class="hljs language-js"><code><span class="hljs-keyword">const</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;webpack&quot;</span>);
+          <p>and my <code>config-overrides.js</code> file was :</p>
+          <pre
+            class="hljs language-js"
+          ><code><span class="hljs-keyword">const</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;webpack&quot;</span>);
 
 <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">override</span>(<span class="hljs-params">config</span>) {
   <span class="hljs-keyword">const</span> fallback = config.<span class="hljs-property">resolve</span>.<span class="hljs-property">fallback</span> || {};
@@ -348,8 +529,8 @@ yarn add -D @airgap/beacon-types
   <span class="hljs-keyword">return</span> config;
 };
 </code></pre>
-<p>then I change the script in package.json by</p>
-<pre class="hljs"><code>...
+          <p>then I change the script in package.json by</p>
+          <pre class="hljs"><code>...
 &quot;scripts&quot;: {
    &quot;start&quot;: &quot;react-app-rewired start&quot;,
    &quot;build&quot;: &quot;react-app-rewired build&quot;,
@@ -358,14 +539,24 @@ yarn add -D @airgap/beacon-types
 },
 ...
 </code></pre>
-<p>⚠️</p>
-</blockquote>
-<p>This was painful 😕, but it was the worst so far</p>
-<section>
-<h3>Generate Typescript classes from Michelson code</h3>
-<p>Taqueria is able to generate Typescript classes for our React application. It will take the definition of your smart contract and generate the contract entrypoint functions, type definitions, etc ...</p>
-<p>To get typescript classes from taqueria plugin, get back to root folder running :</p>
-<pre class="hljs language-bash"><code><span class="hljs-built_in">cd</span> ..
+          <p>⚠️</p>
+        </blockquote>
+        <p>This was painful 😕, but it was the worst so far</p>
+        <section>
+          <h3>Generate Typescript classes from Michelson code</h3>
+          <p>
+            Taqueria is able to generate Typescript classes for our React
+            application. It will take the definition of your smart contract and
+            generate the contract entrypoint functions, type definitions, etc
+            ...
+          </p>
+          <p>
+            To get typescript classes from taqueria plugin, get back to root
+            folder running :
+          </p>
+          <pre
+            class="hljs language-bash"
+          ><code><span class="hljs-built_in">cd</span> ..
 
 taq install @taqueria/plugin-contract-types
 
@@ -373,18 +564,25 @@ taq generate types ./app/src
 
 <span class="hljs-built_in">cd</span> ./app
 </code></pre>
-<p>Start the dev server</p>
-<pre class="hljs language-bash"><code>yarn run start
+          <p>Start the dev server</p>
+          <pre class="hljs language-bash"><code>yarn run start
 </code></pre>
-<p>Open your browser at : http://localhost:3000/
-Your app should be running</p>
-</section>
-</section>
-<section>
-<h2>Step 2 : Connect / disconnect the wallet</h2>
-<p>We will declare 2 React Button components and a display of address and balance while connected</p>
-<p>Edit src/App.tsx file</p>
-<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NetworkType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@airgap/beacon-types&quot;</span>;
+          <p>
+            Open your browser at : http://localhost:3000/ Your app should be
+            running
+          </p>
+        </section>
+      </section>
+      <section>
+        <h2>Step 2 : Connect / disconnect the wallet</h2>
+        <p>
+          We will declare 2 React Button components and a display of address and
+          balance while connected
+        </p>
+        <p>Edit src/App.tsx file</p>
+        <pre
+          class="hljs language-typescript"
+        ><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NetworkType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@airgap/beacon-types&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">BeaconWallet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/beacon-wallet&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">TezosToolkit</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/taquito&quot;</span>;
 <span class="hljs-keyword">import</span> { useEffect, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;
@@ -444,13 +642,23 @@ Your app should be running</p>
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;
 </code></pre>
-<p>Let's create the 2 missing src component files and put code in it. On <code>src</code> folder, create these files.</p>
-<pre class="hljs language-bash"><code><span class="hljs-built_in">touch</span> app/src/ConnectWallet.tsx
+        <p>
+          Let's create the 2 missing src component files and put code in it. On
+          <code>src</code> folder, create these files.
+        </p>
+        <pre
+          class="hljs language-bash"
+        ><code><span class="hljs-built_in">touch</span> app/src/ConnectWallet.tsx
 <span class="hljs-built_in">touch</span> app/src/DisconnectWallet.tsx
 </code></pre>
-<p>ConnectWallet button will create an instance wallet, get user permissions via a popup and then retrieve account information</p>
-<p>Edit ConnectWallet.tsx</p>
-<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NetworkType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@airgap/beacon-sdk&quot;</span>;
+        <p>
+          ConnectWallet button will create an instance wallet, get user
+          permissions via a popup and then retrieve account information
+        </p>
+        <p>Edit ConnectWallet.tsx</p>
+        <pre
+          class="hljs language-typescript"
+        ><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">NetworkType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@airgap/beacon-sdk&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">BeaconWallet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/beacon-wallet&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">TezosToolkit</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/taquito&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">Dispatch</span>, <span class="hljs-title class_">SetStateAction</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;
@@ -499,8 +707,13 @@ Your app should be running</p>
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">ConnectButton</span>;
 </code></pre>
-<p>DisconnectWallet button will clean wallet instance and all linked objects</p>
-<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">BeaconWallet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/beacon-wallet&quot;</span>;
+        <p>
+          DisconnectWallet button will clean wallet instance and all linked
+          objects
+        </p>
+        <pre
+          class="hljs language-typescript"
+        ><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">BeaconWallet</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@taquito/beacon-wallet&quot;</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">Dispatch</span>, <span class="hljs-title class_">SetStateAction</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;react&quot;</span>;
 
 <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ButtonProps</span> {
@@ -532,28 +745,53 @@ Your app should be running</p>
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">DisconnectButton</span>;
 </code></pre>
-<p>Save both file, the dev server should refresh the page</p>
-<p>As Temple is configured well, Click on Connect button</p>
-<p>On the popup, select your Temple wallet, then your account and connect. ⚠️ Do not forget to stay on the &quot;ghostnet&quot; testnet</p>
-<p><img src="./doc/logged.png" alt=""></p>
-<p>🎊 your are &quot;logged&quot;</p>
-<p>Click on the Disconnect button to logout to test it</p>
-</section>
-<section>
-<h2>Step 3 : List poke contracts via an indexer</h2>
-<p>Remember that you deployed your contract previously.
-Instead of querying heavily the rpc node to search where is located your contract and get back some information about it, we can use an indexer. We can consider it as an enriched cache API on top of rpc node. In this example, we will use the tzkt indexer</p>
-<p><a href="https://github.com/stedolan/jq">Install jq</a></p>
-<p>On <code>package.json</code>, change the <code>start script</code> line, prefixing with <code>jq</code> command to create an new env var pointing to your last smart contract address on testing env :</p>
-<pre class="hljs language-bash"><code>    <span class="hljs-string">&quot;start&quot;</span>: <span class="hljs-string">&quot;jq -r &#x27;\&quot;REACT_APP_CONTRACT_ADDRESS=\&quot; + last(.tasks[]).output[0].address&#x27; ../.taq/testing-state.json &gt; .env &amp;&amp; react-app-rewired start&quot;</span>,
+        <p>Save both file, the dev server should refresh the page</p>
+        <p>As Temple is configured well, Click on Connect button</p>
+        <p>
+          On the popup, select your Temple wallet, then your account and
+          connect. ⚠️ Do not forget to stay on the &quot;ghostnet&quot; testnet
+        </p>
+        <p><img src="./doc/logged.png" alt="" /></p>
+        <p>🎊 your are &quot;logged&quot;</p>
+        <p>Click on the Disconnect button to logout to test it</p>
+      </section>
+      <section>
+        <h2>Step 3 : List poke contracts via an indexer</h2>
+        <p>
+          Remember that you deployed your contract previously. Instead of
+          querying heavily the rpc node to search where is located your contract
+          and get back some information about it, we can use an indexer. We can
+          consider it as an enriched cache API on top of rpc node. In this
+          example, we will use the tzkt indexer
+        </p>
+        <p><a href="https://github.com/stedolan/jq">Install jq</a></p>
+        <p>
+          On <code>package.json</code>, change the
+          <code>start script</code> line, prefixing with <code>jq</code> command
+          to create an new env var pointing to your last smart contract address
+          on testing env :
+        </p>
+        <pre
+          class="hljs language-bash"
+        ><code>    <span class="hljs-string">&quot;start&quot;</span>: <span class="hljs-string">&quot;jq -r &#x27;\&quot;REACT_APP_CONTRACT_ADDRESS=\&quot; + last(.tasks[]).output[0].address&#x27; ../.taq/testing-state.json &gt; .env &amp;&amp; react-app-rewired start&quot;</span>,
 </code></pre>
-<p>You are pointing now to the last contract deployed on Ghostnet by taqueria</p>
-<p>We will add a button to fetch all similar contracts to the one you deployed, then we display the list</p>
-<p>Now, edit App.tsx to add 1 import on top of the file</p>
-<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Contract</span>, <span class="hljs-title class_">ContractsService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@dipdup/tzkt-api&quot;</span>;
+        <p>
+          You are pointing now to the last contract deployed on Ghostnet by
+          taqueria
+        </p>
+        <p>
+          We will add a button to fetch all similar contracts to the one you
+          deployed, then we display the list
+        </p>
+        <p>Now, edit App.tsx to add 1 import on top of the file</p>
+        <pre
+          class="hljs language-typescript"
+        ><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Contract</span>, <span class="hljs-title class_">ContractsService</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@dipdup/tzkt-api&quot;</span>;
 </code></pre>
-<p>Before the <code>return</code> , add this section for the fetch</p>
-<pre class="hljs language-typescript"><code><span class="hljs-keyword">const</span> contractsService = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ContractsService</span>({
+        <p>Before the <code>return</code> , add this section for the fetch</p>
+        <pre
+          class="hljs language-typescript"
+        ><code><span class="hljs-keyword">const</span> contractsService = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ContractsService</span>({
   <span class="hljs-attr">baseUrl</span>: <span class="hljs-string">&quot;https://api.ghostnet.tzkt.io&quot;</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">&quot;&quot;</span>,
   <span class="hljs-attr">withCredentials</span>: <span class="hljs-literal">false</span>,
@@ -572,8 +810,12 @@ Instead of querying heavily the rpc node to search where is located your contrac
   })();
 };
 </code></pre>
-<p>On the return 'html templating' section, add this after the display of the user balance div <code>I am {userAddress} with {userBalance} mutez</code>, add this :</p>
-<pre class="hljs language-typescript"><code>&lt;br /&gt;
+        <p>
+          On the return 'html templating' section, add this after the display of
+          the user balance div
+          <code>I am {userAddress} with {userBalance} mutez</code>, add this :
+        </p>
+        <pre class="hljs language-typescript"><code>&lt;br /&gt;
 <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{fetchContracts}</span>&gt;</span>Fetch contracts<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
   {contracts.map((contract) =&gt;
@@ -581,17 +823,25 @@ Instead of querying heavily the rpc node to search where is located your contrac
   )}
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
 </code></pre>
-<p>Save your file, and <strong>re-run</strong> your server , it will generate the .env file containing the last deployed contracts 😃</p>
-<pre class="hljs language-bash"><code>yarn run start
+        <p>
+          Save your file, and <strong>re-run</strong> your server , it will
+          generate the .env file containing the last deployed contracts 😃
+        </p>
+        <pre class="hljs language-bash"><code>yarn run start
 </code></pre>
-<p>Go to the browser. click on <code>Fetch contracts</code> button</p>
-<p><img src="doc/deployedcontracts.png" alt=""></p>
-<p>🎊 Congrats ! you are able to list all similar deployed contracts</p>
-</section>
-<section>
-<h2>Step 4 : Poke your contract</h2>
-<p>Add this new function inside the App function, it will call the entrypoint to poke</p>
-<pre class="hljs language-typescript"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">PokeGameWalletType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./pokeGame.types&#x27;</span>;
+        <p>Go to the browser. click on <code>Fetch contracts</code> button</p>
+        <p><img src="doc/deployedcontracts.png" alt="" /></p>
+        <p>🎊 Congrats ! you are able to list all similar deployed contracts</p>
+      </section>
+      <section>
+        <h2>Step 4 : Poke your contract</h2>
+        <p>
+          Add this new function inside the App function, it will call the
+          entrypoint to poke
+        </p>
+        <pre
+          class="hljs language-typescript"
+        ><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">PokeGameWalletType</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./pokeGame.types&#x27;</span>;
 
 ...
 
@@ -607,16 +857,37 @@ Instead of querying heavily the rpc node to search where is located your contrac
     }
   };
 </code></pre>
-<blockquote>
-<p>⚠️ Normally we should call <code>c.methods.poke()</code> function , but with a unique entrypoint, Michelson is required a unique <code>default</code> name instead of having the name of the function. Also be careful because all entrypoints naming are converting to lowercase whatever variant variable name you can have on source file.</p>
-</blockquote>
-<p>Then replace the line displaying the contract address <code>{contracts.map((contract) =&gt; &lt;div&gt;{contract.address}&lt;/div&gt;)}</code> by this one that will add a Poke button</p>
-<pre class="hljs language-html"><code>    {contracts.map((contract) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{contract.address} <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span>poke(contract)}&gt;Poke<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>)}
+        <blockquote>
+          <p>
+            ⚠️ Normally we should call <code>c.methods.poke()</code> function ,
+            but with a unique entrypoint, Michelson is required a unique
+            <code>default</code> name instead of having the name of the
+            function. Also be careful because all entrypoints naming are
+            converting to lowercase whatever variant variable name you can have
+            on source file.
+          </p>
+        </blockquote>
+        <p>
+          Then replace the line displaying the contract address
+          <code
+            >{contracts.map((contract) =&gt;
+            &lt;div&gt;{contract.address}&lt;/div&gt;)}</code
+          >
+          by this one that will add a Poke button
+        </p>
+        <pre
+          class="hljs language-html"
+        ><code>    {contracts.map((contract) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{contract.address} <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span>poke(contract)}&gt;Poke<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>)}
 </code></pre>
-<blockquote>
-<p>There is a Taqueria bug on unique entrypoint: https://github.com/ecadlabs/taqueria/issues/1128
-Go to ./app/src/pokeGame.types.ts and rewrite these lines</p>
-<pre class="hljs language-typescript"><code><span class="hljs-keyword">type</span> <span class="hljs-title class_">Methods</span> = {
+        <blockquote>
+          <p>
+            There is a Taqueria bug on unique entrypoint:
+            https://github.com/ecadlabs/taqueria/issues/1128 Go to
+            ./app/src/pokeGame.types.ts and rewrite these lines
+          </p>
+          <pre
+            class="hljs language-typescript"
+          ><code><span class="hljs-keyword">type</span> <span class="hljs-title class_">Methods</span> = {
   <span class="hljs-attr">default</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;;
 };
 
@@ -624,33 +895,52 @@ Go to ./app/src/pokeGame.types.ts and rewrite these lines</p>
   <span class="hljs-attr">default</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;;
 };
 </code></pre>
-</blockquote>
-<p>Save and see the page refreshed, then click on Poke button</p>
-<p><img src="doc/pokecontracts.png" alt=""></p>
-<p>🎊 If you have enough Tz on your wallet for the gas, then it should have successfully call the contract and added you to the list of poke guyz</p>
-</section>
-<section>
-<h2>Step 5 : Display poke guys</h2>
-<p>To verify that on the page, we can display the list of poke guyz directly on the page</p>
-<p>Replace again the html contracts line by this one</p>
-<pre class="hljs language-html"><code><span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>address<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>people<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>action<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
+        </blockquote>
+        <p>Save and see the page refreshed, then click on Poke button</p>
+        <p><img src="doc/pokecontracts.png" alt="" /></p>
+        <p>
+          🎊 If you have enough Tz on your wallet for the gas, then it should
+          have successfully call the contract and added you to the list of poke
+          guyz
+        </p>
+      </section>
+      <section>
+        <h2>Step 5 : Display poke guys</h2>
+        <p>
+          To verify that on the page, we can display the list of poke guyz
+          directly on the page
+        </p>
+        <p>Replace again the html contracts line by this one</p>
+        <pre
+          class="hljs language-html"
+        ><code><span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>address<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>people<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>action<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
     {contracts.map((contract) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{borderStyle:</span> &quot;<span class="hljs-attr">dotted</span>&quot;}}&gt;</span>{contract.address}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{borderStyle:</span> &quot;<span class="hljs-attr">dotted</span>&quot;}}&gt;</span>{contract.storage.join(&quot;, &quot;)}<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{borderStyle:</span> &quot;<span class="hljs-attr">dotted</span>&quot;}}&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span>poke(contract)}&gt;Poke<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>)}
     <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
 </code></pre>
-<p>Contracts are displaying its people now</p>
-<p><img src="doc/table.png" alt=""></p>
-<blockquote>
-<p>ℹ️ Wait around few second for blockchain confirmation and click on <code>fetch contracts</code> to refresh the list</p>
-</blockquote>
-<p>🎊 Congratulation, you have completed this first dapp training</p>
-</section>
-</section>
-<section>
-<h1>🌴 Conclusion 🌞</h1>
-<p>Now, you are able to create any Smart Contract using Ligo and create a complete Dapp via Taqueria/Taquito.</p>
-<p>On next training, you will learn how to call a Smart contract inside a Smart Contract and use the callback, write unit test, etc ...</p>
-<p><a href="https://github.com/marigold-dev/training-dapp-2">➡️ NEXT</a></p>
-</section>
-
+        <p>Contracts are displaying its people now</p>
+        <p><img src="doc/table.png" alt="" /></p>
+        <blockquote>
+          <p>
+            ℹ️ Wait around few second for blockchain confirmation and click on
+            <code>fetch contracts</code> to refresh the list
+          </p>
+        </blockquote>
+        <p>🎊 Congratulation, you have completed this first dapp training</p>
+      </section>
+    </section>
+    <section>
+      <h1>🌴 Conclusion 🌞</h1>
+      <p>
+        Now, you are able to create any Smart Contract using Ligo and create a
+        complete Dapp via Taqueria/Taquito.
+      </p>
+      <p>
+        On next training, you will learn how to call a Smart contract inside a
+        Smart Contract and use the callback, write unit test, etc ...
+      </p>
+      <p>
+        <a href="https://github.com/marigold-dev/training-dapp-2">➡️ NEXT</a>
+      </p>
+    </section>
   </body>
 </html>

@@ -11,12 +11,15 @@ import { PokeGameWalletType } from "./pokeGame.types";
 function App() {
   api.defaults.baseUrl = "https://api.ghostnet.tzkt.io";
 
-  const Tezos = new TezosToolkit("https://ghostnet.tezos.marigold.dev");
-  const wallet = new BeaconWallet({
-    name: "Training",
-    preferredNetwork: NetworkType.GHOSTNET,
-  });
-  Tezos.setWalletProvider(wallet);
+  const [Tezos, setTezos] = useState<TezosToolkit>(
+    new TezosToolkit("https://ghostnet.ecadinfra.com")
+  );
+  const [wallet, setWallet] = useState<BeaconWallet>(
+    new BeaconWallet({
+      name: "Training",
+      preferredNetwork: NetworkType.GHOSTNET,
+    })
+  );
 
   useEffect(() => {
     (async () => {
@@ -50,7 +53,7 @@ function App() {
       "" + contract.address
     );
     try {
-      const op = await c.methods.default().send();
+      const op = await c.methodsObject.default().send();
       await op.confirmation();
       alert("Tx done");
     } catch (error: any) {
@@ -63,6 +66,7 @@ function App() {
       <header className="App-header">
         <ConnectButton
           Tezos={Tezos}
+          setTezos={setTezos}
           setUserAddress={setUserAddress}
           setUserBalance={setUserBalance}
           wallet={wallet}
@@ -77,34 +81,34 @@ function App() {
         <div>
           I am {userAddress} with {userBalance} mutez
         </div>
-
-        <br />
-        <div>
-          <button onClick={fetchContracts}>Fetch contracts</button>
-          <table>
-            <thead>
-              <tr>
-                <th>address</th>
-                <th>people</th>
-                <th>action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {contracts.map((contract) => (
-                <tr>
-                  <td style={{ borderStyle: "dotted" }}>{contract.address}</td>
-                  <td style={{ borderStyle: "dotted" }}>
-                    {contract.storage.join(", ")}
-                  </td>
-                  <td style={{ borderStyle: "dotted" }}>
-                    <button onClick={() => poke(contract)}>Poke</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </header>
+
+      <br />
+      <div>
+        <button onClick={fetchContracts}>Fetch contracts</button>
+        <table>
+          <thead>
+            <tr>
+              <th>address</th>
+              <th>people</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contracts.map((contract) => (
+              <tr>
+                <td style={{ borderStyle: "dotted" }}>{contract.address}</td>
+                <td style={{ borderStyle: "dotted" }}>
+                  {contract.storage.join(", ")}
+                </td>
+                <td style={{ borderStyle: "dotted" }}>
+                  <button onClick={() => poke(contract)}>Poke</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

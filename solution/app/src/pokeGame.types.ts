@@ -1,12 +1,14 @@
 
 import { ContractAbstractionFromContractType, WalletContractAbstractionFromContractType } from './type-utils';
-import { address } from './type-aliases';
+import { address, unit } from './type-aliases';
 
 export type Storage = Array<address>;
 
 type Methods = {
     default: () => Promise<void>;
 };
+
+export type DefaultParams = unit
 
 type MethodsObject = {
     default: () => Promise<void>;

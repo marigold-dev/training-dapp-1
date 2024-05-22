@@ -59,11 +59,11 @@
         },
         {
             "type": "npm",
-            "name": "@taqueria/plugin-octez-client"
+            "name": "@taqueria/plugin-taquito"
         },
         {
             "type": "npm",
-            "name": "@taqueria/plugin-taquito"
+            "name": "@taqueria/plugin-octez-client"
         },
         {
             "type": "npm",

@@ -10,34 +10,34 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@airgap/beacon-sdk": "^4.0.10",
-    "@taquito/beacon-wallet": "^17.3.1",
-    "@taquito/taquito": "^17.3.1",
+    "@airgap/beacon-sdk": "^4.2.2",
+    "@taquito/beacon-wallet": "20.0.0-RC.0",
+    "@taquito/taquito": "20.0.0-RC.0",
     "@tzkt/sdk-api": "^2.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@airgap/beacon-types": "^4.0.10",
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react-swc": "^3.3.2",
+    "@airgap/beacon-types": "^4.2.2",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
     "assert": "^2.1.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
-    "eslint": "^8.45.0",
+    "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
+    "eslint-plugin-react-refresh": "^0.4.6",
     "https-browserify": "^1.0.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "typescript": "^5.0.2",
+    "typescript": "^5.2.2",
     "url": "^0.11.3",
-    "vite": "^4.4.5"
+    "vite": "^5.2.0"
   }
 }

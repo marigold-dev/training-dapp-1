@@ -1,5 +1,5 @@
 {
-  "name": "training",
+  "name": "solution",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@taqueria/plugin-contract-types": "^0.40.0",
-    "@taqueria/plugin-ligo": "^0.40.0",
-    "@taqueria/plugin-octez-client": "^0.40.0",
-    "@taqueria/plugin-taquito": "^0.40.0"
+    "@taqueria/plugin-contract-types": "^0.53.0",
+    "@taqueria/plugin-ligo": "^0.53.0",
+    "@taqueria/plugin-octez-client": "^0.53.0",
+    "@taqueria/plugin-taquito": "^0.53.0"
   }
 }

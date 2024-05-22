@@ -8,10 +8,12 @@ type ButtonProps = {
   setUserAddress: Dispatch<SetStateAction<string>>;
   setUserBalance: Dispatch<SetStateAction<number>>;
   wallet: BeaconWallet;
+  setTezos: Dispatch<SetStateAction<TezosToolkit>>;
 };
 
 const ConnectButton = ({
   Tezos,
+  setTezos,
   setUserAddress,
   setUserBalance,
   wallet,
@@ -21,7 +23,7 @@ const ConnectButton = ({
       await wallet.requestPermissions({
         network: {
           type: NetworkType.GHOSTNET,
-          rpcUrl: "https://ghostnet.tezos.marigold.dev",
+          rpcUrl: "https://ghostnet.ecadinfra.com",
         },
       });
       // gets user's address
@@ -29,6 +31,9 @@ const ConnectButton = ({
       const balance = await Tezos.tz.getBalance(userAddress);
       setUserBalance(balance.toNumber());
       setUserAddress(userAddress);
+
+      Tezos.setWalletProvider(wallet);
+      setTezos(Tezos);
     } catch (error) {
       console.log(error);
     }
