@@ -708,7 +708,7 @@ Replace again the html previous line `{contracts ...}` with this one
 
 Contracts are displaying their people now
 
-![](doc/table.png)
+![](/img/tutorials/dapp-table.png)
 
 > :information_source: Wait around few second for blockchain confirmation and click on `fetch contracts` to refresh the list
 
