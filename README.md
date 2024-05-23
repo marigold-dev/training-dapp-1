@@ -57,10 +57,10 @@ When you're ready, move to the next section [Create your minimum dApp on Tezos](
 
 ---
 
-title: "Part 1: Create your minimum dApp on Tezos"
-authors: "Benjamin Fuentes"
+title: 'Part 1: Create your minimum dApp on Tezos'
+authors: 'Benjamin Fuentes (Marigold)'
 last_update:
-date: 27 November 2023
+date: 22 May 2024
 
 ---
 
@@ -75,7 +75,7 @@ Taqueria manages the project structure and keeps it up to date.
 For example, when you deploy a new smart contract, Taqueria automatically updates the web app to send transactions to that new smart contract.
 Follow these steps to set up a Taqueria project:
 
-On the command-line terminal, run these commands to set up a Taqueria project and install the Ligo and Taquito plugins:
+On the command-line terminal, run these commands to set up a Taqueria project and install the LIGO and Taquito plugins:
 
 ```bash
 taq init training
@@ -89,7 +89,7 @@ taq create contract pokeGame.jsligo
 
 1. Edit the **pokeGame.jsligo** file. Remove the default code and paste this code instead.
 
-   ```ligolang
+   ```jsligo
    export type storage = unit;
 
    type return_ = [list<operation>, storage];
@@ -103,13 +103,13 @@ taq create contract pokeGame.jsligo
    Every contract has to follow these rules :
 
    - At least one entrypoint, annotated with **@entry** , with a mandatory signature taking 2 arguments **\*(parameter, storage)** and a return type. An entrypoint is a function that is exposed as an external API.
-     - **parameter**: the entrypoint parameter. Mandatory and can be of any type. For example: an (ignored) variable starting with`_` here, and of type `unit` (the type void on Ligo).
-     - **storage**: the on-chain storage. Mandatory and can be of any type. For example, here we use the type `unit`. It is recommended to add an `export` keyword before the type definition as it is a good practice to export it when you are required to write unit tests from another Ligo file.
+     - **parameter**: the entrypoint parameter. Mandatory and can be of any type. For example: an (ignored) variable starting with`_` here, and of type `unit` (the type void on LIGO).
+     - **storage**: the on-chain storage. Mandatory and can be of any type. For example, here we use the type `unit`. It is recommended to add an `export` keyword before the type definition as it is a good practice to export it when you are required to write unit tests from another LIGO file.
      - **return\_**: a mandatory pair of list of `operation` and the storage type (defined earlier). Return type naming is free but don't use an existing keyword like **return**.
 
-   [Have a look on the Entrypoints contracts documentation](/smart-contracts/entrypoints)>
+   [Have a look at the Entrypoints contracts documentation](/smart-contracts/entrypoints)>
 
-   > Note: Previous versions of LIGO used a single main function instead of a function for each entrypoint. This syntax is still valid, but it is harder to read and deprecated in Ligo V1.
+   > Note: Previous versions of LIGO used a single main function instead of a function for each entrypoint. This syntax is still valid, but it is harder to read and deprecated in LIGO V1.
    >
    > A `Poke` variant parameter is generated from the `poke` entrypoint function under the hood. A variant is more or less equivalent of the Enum type in Javascript. A default main function is generated and act like as a dispatcher for each of your entrypoints. It means that this painful boilerplate is no more needed on the new syntax.
 
@@ -121,13 +121,13 @@ taq create contract pokeGame.jsligo
 
    At line 1, replace the line with:
 
-   ```ligolang
+   ```jsligo
    export type storage = set<address>;
    ```
 
 1. Replace the `poke` function with:
 
-   ```ligolang
+   ```jsligo
    @entry
    const poke = (_: unit, store: storage): return_ => {
      return [list([]), Set.add(Tezos.get_source(), store)]
@@ -136,7 +136,7 @@ taq create contract pokeGame.jsligo
 
    Explanation:
 
-   - The Ligo Set library has a function **add** to add one element to the Set of items. There is no concept of Class in Ligo, you use a library to apply functions on objects.
+   - The LIGO Set library has a function **add** to add one element to the Set of items. There is no concept of Class in LIGO, you use a library to apply functions on objects.
    - A list of operations is required to return. An empty list is returned here as there is no other contract to call.
 
    [Have a look at the Set library documentation](https://ligolang.org/docs/language-basics/sets-lists-tuples#sets)
@@ -145,15 +145,15 @@ taq create contract pokeGame.jsligo
 
    Here, get the caller address using `Tezos.get_source()`. Tezos library provides useful functions for manipulating blockchain objects.
 
-   [Have a look on the Tezos library documentation](https://ligolang.org/docs/reference/current-reference)
+   [Have a look at the Tezos library documentation](https://ligolang.org/docs/reference/current-reference)
 
 ## Simulate a call on your smart contract
 
-The Ligo command-line provides sub-commands to test your Ligo code.
+The LIGO command-line provides sub-commands to test your Ligo code.
 
 [Have a look at the Testing Framework documentation](https://ligolang.org/docs/advanced/testing)
 
-1. Compile the contract with Taqueria (Force to use a specific Ligo version with `TAQ_LIGO_IMAGE` Taqueria environment variable).
+1. Compile the contract with Taqueria (Force to use a specific LIGO version with `TAQ_LIGO_IMAGE` Taqueria environment variable).
 
 ```bash
 TAQ_LIGO_IMAGE=ligolang/ligo:1.6.0 taq compile pokeGame.jsligo
@@ -163,9 +163,9 @@ Taqueria is generating the `.tz` Michelson file in the `artifacts`` folder. The 
 
 [Have a look on the Michelson documentation](https://tezos.gitlab.io/active/michelson.html)
 
-1. Taqueria is generating two additional files, edit the first file `pokeGame.storageList.`jsligo` replacing the current code with:
+1. Taqueria is generating two additional files, edit the first file `pokeGame.storageList.jsligo` replacing the current code with:
 
-   ```ligolang
+   ```jsligo
    #import "pokeGame.jsligo" "Contract"
 
    const default_storage = Set.empty as set<address>;
@@ -188,7 +188,7 @@ Taqueria is generating the `.tz` Michelson file in the `artifacts`` folder. The 
 
 1. Edit the second file **pokeGame.parameterList.jsligo**
 
-   ```ligolang
+   ```jsligo
    #import "pokeGame.jsligo" "Contract"
    const default_parameter: parameter_of Contract = Poke();
    ```
@@ -237,7 +237,7 @@ The default Tezos testing testnet is called **Ghostnet**.
    Warning: the faucet field in network configs has been deprecated and will be ignored.
    A keypair with public key hash tz1XXXXXXXXXXXXXXXXXXXXXX was generated for you.
    To fund this account:
-   1. Go to https://teztnets.xyz and click "Faucet" of the target testnet.
+   1. Go to https://teztnets.com and click "Faucet" of the target testnet.
    2. Copy and paste the above key into the 'wallet address field.
    3. Request some Tez (Note that you might need to wait for a few seconds for the network to register the funds).
    No operations performed.
@@ -280,7 +280,7 @@ The default Tezos testing testnet is called **Ghostnet**.
 
 ## Create the frontend
 
-Create a React app
+### Create a React app
 
 ```bash
 yarn create vite
@@ -657,11 +657,11 @@ Instead of querying heavily the RPC node to search where are located all other s
 
 ### Poke your contract
 
-Import the Taqueria-generated types on **app/src/App.tsx**.
+1. Import the Taqueria-generated types on **app/src/App.tsx**.
 
-```typescript
-import { PokeGameWalletType } from "./pokeGame.types";
-```
+   ```typescript
+   import { PokeGameWalletType } from "./pokeGame.types";
+   ```
 
 1. Add this new function after the previous fetch function, it calls the entrypoint for poking.
 
